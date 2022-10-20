@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/19 05:52:29 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/20 09:49:54 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,24 @@ void	*ft_lexer(void *arg);
 /******************************************************************************/
 /**********************************  PARSING  *********************************/
 /******************************************************************************/
-int		ft_check_first_token(t_list **token);
-int		ft_check_last_token(t_list *token);
+int		check_quotes_word(t_list *token);
+int		wrong_next(t_list *token);
+int		wrong_pipe(t_list *token);
+int		wrong_rd(t_list *token);
+
+int		is_heredoc(t_list *token);
+int		is_rd_in(t_list *token);
+int		is_rd_out(t_list *token);
+int		is_append(t_list *token);
+int		is_pipes(t_list *token);
+
+int		init_syntaxer(t_syntaxer synt);
+int		check_syntax(t_list *token, t_syntaxer synt);
+int		ft_syntaxer(t_list **token, t_syntaxer synt);
+
+int		init_function(t_func fct);
+void	ft_function(t_list **token, t_func fct);
+
 int		ft_parser(t_list **token);
 
 /******************************************************************************/
@@ -66,11 +82,11 @@ void	*ft_rm_quotes(t_list *token);
 void	ft_quotes(t_list **token);
 
 /******************************************************************************/
-/**********************************   ENV  ************************************/
+/***********************************  ENV  ************************************/
 /******************************************************************************/
 t_env	ft_init_env(char **env);
 t_var	*ft_init_var(t_list **env_list);
-// char	*change_shlvl(char *s);
+
 void	find_in_env(t_env *envp, char *var_name, char *(*f)());
 t_env	ft_getenv(char **env);
 
@@ -90,7 +106,7 @@ int		ft_export(t_list *token, t_env envp);
 int		ft_env(t_env *envp, t_list *token);
 
 void	ft_exec(t_list **token, t_env envp);
-void	ft_exec(t_list **token, t_env envp);
+// void	ft_exec(t_list **token, t_env envp);
 void	*ft_cmd(t_list **token);
 
 /******************************************************************************/
@@ -121,13 +137,14 @@ char	*ft_strjoin(char *s1, char *s2);
 char	*ft_substr(char *s, int start, size_t len);
 
 /* List utils */
+t_list	*ft_lstnew(void *content);
+t_list	*ft_lstlast(t_list *lst);
 int		ft_lstsize(t_list *lst);
+void	ft_lst_prevlast(t_list **list);
 void	ft_lstadd_back(t_list **alst, t_list *new);
 void	ft_lstadd_front(t_list **alst, t_list *new);
 void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
-t_list	*ft_lstnew(void *content);
-t_list	*ft_lstlast(t_list *lst);
 void	*ft_lstmap(t_list *lst, void *(*f)(void*), void (*del)(void*));
 
 /* Minishell utils */

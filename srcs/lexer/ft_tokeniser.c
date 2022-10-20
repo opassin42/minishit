@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 16:19:11 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/19 20:26:39 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/20 00:27:41 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ static void	*ft_fill_token(char *s, char *m_char)
 		tmp = ft_meta_char(s, *s);
 	else
 		tmp = ft_normal_char(s, m_char);
-	return ((void *)tmp);
+	if (tmp)
+		return ((void *)tmp);
+	return (NULL);
 }
 
 void	*ft_tokeniser(void *arg, char *m_char)

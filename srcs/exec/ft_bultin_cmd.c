@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:31:33 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/19 23:34:27 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/20 10:06:37 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_init_cmd_struct(t_cmd *cmd)
 {
 	cmd->id = 0;
-	cmd->errnb = 0;
+	cmd->err_no = 0;
 	cmd->status = 0;
 	cmd->pid = 0;
 	cmd->fd_in = 0;
@@ -60,21 +60,21 @@ void	ft_cmd_addback(t_cmd **cmd, t_cmd *new_cmd)
 	}
 }
 
-void	*first_cmd(t_list **token)
-{
-	t_list	*tmp;
-	t_cmd	*cmd;
+// void	*first_cmd(t_list **token)
+// {
+// 	t_list	*tmp;
+// 	t_cmd	*cmd;
 
-	tmp = *token;
-	if (tmp->type == WORD)
-	{
-		cmd = ft_new_cmd(tmp);
-		if (!cmd)
-			return (NULL);
-		return ((void *)cmd);
-	}
-	return (NULL);
-}
+// 	tmp = *token;
+// 	if (tmp->type == WORD)
+// 	{
+// 		cmd = ft_new_cmd(tmp);
+// 		if (!cmd)
+// 			return (NULL);
+// 		return ((void *)cmd);
+// 	}
+// 	return (NULL);
+// }
 
 int	count_arg_nb(t_list *token)
 {
@@ -84,7 +84,7 @@ int	count_arg_nb(t_list *token)
 	token = token->next;
 	while (token)
 	{
-		if (token->type != WORD && token->type != SPACE)
+		if (token->type != WORD && token->type != VOID)
 			break ;
 		++i;
 		token = token->next;
@@ -99,24 +99,19 @@ char	**malloc_arg(t_list *token)
 	char	**param;
 
 	arg_nb = count_arg_nb(token);
-	printf("arg_nb = %d\n", arg_nb);
 	if (!arg_nb)
 		return (NULL);
 	param = malloc(sizeof(char *) * (arg_nb + 1));
 	if (!param)
 		return (NULL);
-	// param = ()ft_memset();
 	i = 0;
 	token = token->next;
 	while (token && i < arg_nb)
 	{
 		param[i] = ft_strdup((char *)token->val);
-		printf ("param[%d] = %s\n", i, param[i]);
 		token = token->next;
 		++i;
 	}
-	// if (!i)
-	// 	param[i] = ft_strdup("");
 	return (param);
 }
 
@@ -141,15 +136,22 @@ void	*ft_cmd(t_list **token)
 	cmd = create_cmd(tmp);
 	if (!cmd)
 		return (NULL);
+	printf("SEG_VALUE1\n");
 	while (tmp)
 	{
 		if (tmp->type == PIPE)
 		{
 			tmp = tmp->next;
-			ft_cmd_addback(&cmd, create_cmd(tmp));
+			if (tmp)
+			{
+				if (tmp->type == VOID)
+					tmp = tmp->next;
+				ft_cmd_addback(&cmd, create_cmd(tmp));
+			}
 		}
 		tmp = tmp->next;
 	}
+	printf("SEG_VALUE2\n");
 	return ((void *)cmd);
 }
 
