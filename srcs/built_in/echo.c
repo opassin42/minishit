@@ -6,7 +6,7 @@
 /*   By: opassin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 03:21:16 by opassin           #+#    #+#             */
-/*   Updated: 2022/10/23 13:00:43 by opassin          ###   ########.fr       */
+/*   Updated: 2022/10/23 16:09:39 by opassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,30 @@
 #include <string.h>
 #include <errno.h>
 #include <limits.h>
+#include "../../include/minishell.h"
 
 /*
  * is_n_opt : check les arguments
  * Type        : integer
  * Parametre : chaine de caracteres
- * Valeur de retrour : 0 en cas d'erreur (FALSE), 1 en cas de success (TRUE)
+ * Valeur de retrour : -1 en cas d'erreur (FAIL), 0 en cas de success (SUCCESS)
  */
 int	is_n_opt(char *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	if (str[i] != '-')
+	if (str[0] != '-')
 		return (0);
 	else
 	{
 		while (str[++i])
 		{
 			if (str[i] != 'n')
-				return (0);
+				return (FAIL);
 		}
 	}
-	return (1);
+	return (SUCCESS);
 }
 
 /*
@@ -49,16 +50,16 @@ int	is_n_opt(char *str)
  on recoit ++arg en parametre
  * Valeur de retour : 1 en cas d'erreur, 0 en cas de succes
  */
-int	echo(char **arg)
+int	ft_echo(char **arg)
 {
 	int	nflag;
 
 	nflag = 0;
-	while (is_n_opt(*(++arg)))
+	while (is_n_opt(*(++arg)) == SUCCESS)
 		nflag = 1;
 	while (*arg != NULL)
 		printf("%s", *arg++);
 	if (!nflag)
 		printf("\n");
-	return (0);
+	return (SUCCESS);
 }
