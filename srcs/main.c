@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/20 10:07:40 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/23 18:23:42 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	print_token(t_list *token)
 	printf("\n\e[0;31mTOKEN :\e[0m\n");
 	while (token)
 	{
-		printf("[\e[0;33m%s - %s\e[0m]\n", (char *)token->val, token->expand);
+		// printf("[\e[0;33m%s - %s\e[0m]\n", (char *)token->val, token->expand);
+		printf("[\e[0;33m%s\e[0m]\n", (char *)token->val);
 		token = token->next;
 	}
 }
@@ -75,7 +76,7 @@ int	main(int ac, char **av, char **env)
 	char	*tmp;
 	t_list	*token;
 	t_env	envp;
-	// t_cmd	*cmd;
+	t_cmd	*cmd;
 
 	(void)ac;
 	(void)av;
@@ -95,8 +96,9 @@ int	main(int ac, char **av, char **env)
 				{
 					ft_expander(&token, envp);
 					ft_exec(&token, envp);
-					// cmd = ft_cmd(&token);
-					// print_cmd(cmd);
+					cmd = ft_cmd(&token);
+					if (cmd)
+						print_cmd(cmd);
 					print_token(token);
 					ft_free_token(&token, free);
 					token = NULL;

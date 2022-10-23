@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 00:51:18 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/20 09:43:00 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:23:42 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,16 @@ static int	ft_check_last_token(t_list *token)
 	return (EXIT_SUCCESS);
 }
 
-int	init_syntaxer(t_syntaxer synt)
-{
-	synt[0] = wrong_next;
-	synt[1] = wrong_pipe;
-	synt[2] = wrong_rd;
-	synt[3] = check_quotes_word;
-	return (EXIT_SUCCESS);
-}
-
 int	check_syntax(t_list *token, t_syntaxer synt)
 {
 	int	i;
+	int	ret;
 
 	i = 0;
 	while (i < 4)
 	{
-		if (synt[i](token))
+		ret = synt[i](token);
+		if (ret)
 			return (EXIT_FAILURE);
 		++i;
 	}

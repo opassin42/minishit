@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/20 09:49:54 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/23 19:16:52 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,15 @@ int		ft_cd(char *path);
 int		ft_export(t_list *token, t_env envp);
 int		ft_env(t_env *envp, t_list *token);
 
+/* Exec */
+t_cmd	*ft_new_cmd(t_list *token);
+t_cmd	*ft_last_cmd(t_cmd *cmd);
+void	ft_cmd_addback(t_cmd **cmd, t_cmd *new_cmd);
+void	**fill_arg(t_list *token, char **param, int arg_nb);
+void	rm_space_after_cmd(t_cmd *cmd);
+
+void	ft_init_cmd_struct(t_cmd *cmd, void *name);
 void	ft_exec(t_list **token, t_env envp);
-// void	ft_exec(t_list **token, t_env envp);
 void	*ft_cmd(t_list **token);
 
 /******************************************************************************/
@@ -135,6 +142,7 @@ char	**ft_split(char *s, char c);
 char	**free_double_p(char **s);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_substr(char *s, int start, size_t len);
+char	*ft_strtrim(char *s1, char *set);
 
 /* List utils */
 t_list	*ft_lstnew(void *content);

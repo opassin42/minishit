@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: opassin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 03:21:16 by opassin           #+#    #+#             */
-/*   Updated: 2022/10/23 16:09:39 by opassin          ###   ########.fr       */
+/*   Updated: 2022/10/23 17:42:25 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ int	is_n_opt(char *str)
 		while (str[++i])
 		{
 			if (str[i] != 'n')
-				return (FAIL);
+				return (EXIT_FAILURE);
 		}
 	}
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
 /*
@@ -55,11 +55,11 @@ int	ft_echo(char **arg)
 	int	nflag;
 
 	nflag = 0;
-	while (is_n_opt(*(++arg)) == SUCCESS)
+	while (is_n_opt(*(++arg)) == EXIT_SUCCESS)
 		nflag = 1;
 	while (*arg != NULL)
 		printf("%s", *arg++);
 	if (!nflag)
 		printf("\n");
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }

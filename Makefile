@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/10/20 08:21:22 by ccouliba         ###   ########.fr        #
+#    Updated: 2022/10/23 17:41:36 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,9 @@ SRCS =	srcs/main.c \
 		srcs/built_in/ft_env.c \
 		srcs/built_in/ft_export.c \
 		srcs/built_in/ft_unset.c \
-		srcs/built_in/ft_echo.c \
-		srcs/built_in/ft_pwd.c \
-		srcs/built_in/ft_cd.c \
+		srcs/built_in/echo.c \
+		srcs/built_in/pwd.c \
+		srcs/built_in/cd.c \
 		srcs/built_in/ft_exit.c \
 		srcs/built_in/ft_error.c \
 		srcs/lexer/ft_tokeniser.c \
@@ -45,6 +45,10 @@ SRCS =	srcs/main.c \
 		srcs/env/ft_find_in_env.c \
 		srcs/env/getenv_utils.c \
 		srcs/exec/ft_bultin_cmd.c \
+		srcs/exec/ft_cmd.c \
+		srcs/exec/cmd_utils.c \
+		srcs/exec/ft_route.c \
+		srcs/exec/ft_exec.c \
 		utils/ft_init.c \
 		utils/ft_split.c \
 		utils/lib_utils.c \
