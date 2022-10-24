@@ -6,14 +6,13 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/24 04:31:51 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/25 00:17:14 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// void	ft_exec(t_env *envp, t_cmd *cmd)
-// {
-// 	if (!ft_strcmp(cmd->name, "env"))
-// 		ft_env(envp, cmd);
-// }
+void	ft_exec(t_env *envp, t_cmd *cmd)
+{
+    
+}

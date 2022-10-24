@@ -6,16 +6,10 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 03:21:16 by opassin           #+#    #+#             */
-/*   Updated: 2022/10/25 00:23:23 by opassin          ###   ########.fr       */
+/*   Updated: 2022/10/25 00:31:24 by opassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <errno.h>
-#include <limits.h>
 #include "../../include/minishell.h"
 
 /*
@@ -59,7 +53,10 @@ int	ft_echo(t_env *envp, t_cmd *cmd)
 	(void)envp;
 	arg = cmd->arg;
 	nflag = 0;
-	if (arg)
+
+if (!arg)
+		return (printf("\n"), EXIT_SUCCESS);
+	while (*arg)
 	{
 		while (*arg && is_n_opt(*(arg) == EXIT_SUCCESS))
 		{

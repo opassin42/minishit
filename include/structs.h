@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:47 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/24 22:01:02 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/25 00:23:31 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ typedef struct s_cmd
 
 typedef struct s_builtin
 {
-	char	*key;
+	char	*name;
 	int		(*f)();
 }					t_builtin;
 
