@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 03:21:16 by opassin           #+#    #+#             */
-/*   Updated: 2022/10/25 00:13:36 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/25 00:24:30 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static int	is_n_opt(char *str)
  on recoit ++arg en parametre
  * Valeur de retour : 1 en cas d'erreur, 0 en cas de succes
  */
-// int	ft_echo(char **arg)
 int	ft_echo(t_env *envp, t_cmd *cmd)
 {
 	int		nflag;

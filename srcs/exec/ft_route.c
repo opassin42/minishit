@@ -6,17 +6,17 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:49:33 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/25 00:23:36 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/25 00:36:09 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// static void	ft_init_builtin(t_builtin builtin)
-// {
-// 	builtin[0] = ft_echo;
-// 	builtin[1] = ft_env;
-// }
+static void	ft_init_builtin(t_builtin builtin)
+{
+	builtin[0] = ft_echo;
+	builtin[1] = ft_env;
+}
 
 // void	ft_route(t_list **token, t_env envp, void (*f)())
 // {

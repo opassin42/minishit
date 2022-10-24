@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:47 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/25 00:23:31 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/25 00:34:56 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,17 @@ typedef struct s_cmd
 
 typedef struct s_builtin
 {
-	char	*name;
-	int		(*f)();
-}					t_builtin;
+	char			*name;
+	int				(*f)();
+}				t_builtin;
 
+typedef struct s_exec
+{
+	t_builtin		*builtin;
+}				t_exec;
 
 typedef int(*t_func[5])(t_list *);
 typedef int(*t_syntaxer[4])(t_list *);
-typedef int(*t_exec[7])(t_env *, t_cmd *);
+typedef int(*t_execution[7])(t_env *, t_cmd *);
 
 #endif
