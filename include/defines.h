@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:52 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/11 01:06:54 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/23 14:05:29 by opassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # define M_CHAR "|><\"' "
 # define QUOTE_LIST "'\""
 # define BUFFER_SIZE 1024
+# define FAIL -1
+# define SUCCESS 0
 
 /*
 ** ANSI COLORS

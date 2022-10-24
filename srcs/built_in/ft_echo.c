@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 03:21:16 by opassin           #+#    #+#             */
-/*   Updated: 2022/10/24 22:22:48 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/25 00:03:24 by opassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	is_n_opt(char *str)
 
 	i = 0;
 	if (str[0] != '-')
-		return (0);
+		return (EXIT_FAILURE);
 	else
 	{
 		while (str[++i])
@@ -59,14 +59,25 @@ int	ft_echo(t_env *envp, t_cmd *cmd)
 	(void)envp;
 	arg = cmd->arg;
 	nflag = 0;
-	// if (!arg)
-	// 	return (printf("\n"), EXIT_SUCCESS);
-	while (*arg && is_n_opt(*(arg++)) == EXIT_SUCCESS)
-		nflag = 1;
+	 if (!arg)
+	 	return (printf("\n"), EXIT_SUCCESS);
+	while (*arg)
+	{
+		if (is_n_opt(*arg) == EXIT_SUCCESS)
+		{
+			nflag = 1;
+			arg++;
+		}
+		else
+			break;
+	}
 	while (*arg != NULL)
-		printf("%s", *arg++);
+	{	
+		printf("%s", *(arg++));
+		if (*arg != NULL)
+			printf(" ");
+	}
 	if (!nflag)
 		printf("\n");
-	printf ("IN ECHO.\n");
 	return (EXIT_SUCCESS);
 }
