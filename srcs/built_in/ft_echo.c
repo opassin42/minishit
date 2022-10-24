@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 03:21:16 by opassin           #+#    #+#             */
-/*   Updated: 2022/10/23 17:42:25 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/24 22:22:48 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
  * Parametre : chaine de caracteres
  * Valeur de retrour : -1 en cas d'erreur (FAIL), 0 en cas de success (SUCCESS)
  */
-int	is_n_opt(char *str)
+static int	is_n_opt(char *str)
 {
 	size_t	i;
 
@@ -50,16 +50,23 @@ int	is_n_opt(char *str)
  on recoit ++arg en parametre
  * Valeur de retour : 1 en cas d'erreur, 0 en cas de succes
  */
-int	ft_echo(char **arg)
+// int	ft_echo(char **arg)
+int	ft_echo(t_env *envp, t_cmd *cmd)
 {
-	int	nflag;
+	int		nflag;
+	char	**arg;
 
+	(void)envp;
+	arg = cmd->arg;
 	nflag = 0;
-	while (is_n_opt(*(++arg)) == EXIT_SUCCESS)
+	// if (!arg)
+	// 	return (printf("\n"), EXIT_SUCCESS);
+	while (*arg && is_n_opt(*(arg++)) == EXIT_SUCCESS)
 		nflag = 1;
 	while (*arg != NULL)
 		printf("%s", *arg++);
 	if (!nflag)
 		printf("\n");
+	printf ("IN ECHO.\n");
 	return (EXIT_SUCCESS);
 }

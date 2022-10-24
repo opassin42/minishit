@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/23 19:16:52 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/24 04:30:56 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,21 +100,20 @@ int		ft_size_of_env(t_var *var);
 /*********************************  BUILT_IN  *********************************/
 /******************************************************************************/
 int		ft_pwd(void);
-int		ft_echo(char **string);
+int		ft_echo(t_env *envp, t_cmd *cmd);
 int		ft_cd(char *path);
 int		ft_export(t_list *token, t_env envp);
-int		ft_env(t_env *envp, t_list *token);
+int		ft_env(t_env *envp, t_cmd *cmd);
 
 /* Exec */
 t_cmd	*ft_new_cmd(t_list *token);
 t_cmd	*ft_last_cmd(t_cmd *cmd);
 void	ft_cmd_addback(t_cmd **cmd, t_cmd *new_cmd);
-void	**fill_arg(t_list *token, char **param, int arg_nb);
-void	rm_space_after_cmd(t_cmd *cmd);
-
 void	ft_init_cmd_struct(t_cmd *cmd, void *name);
-void	ft_exec(t_list **token, t_env envp);
 void	*ft_cmd(t_list **token);
+
+void	ft_exec(t_env *envp, t_cmd *cmd);
+void	ft_route(t_env *envp, t_cmd *cmd);
 
 /******************************************************************************/
 /**********************************  UTILS  ***********************************/
@@ -160,7 +159,6 @@ void	print_token(t_list *token);
 void	ft_print_env(t_var *var);
 void	ft_free_token(t_list **token, void (*clr)(void*));
 void	ft_add_history(void *s);
-int		check_env_option(t_list *token);
 void	*ft_void_skipper(t_list **token);
 
 /******************************************************************************/

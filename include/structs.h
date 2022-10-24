@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:47 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/23 19:14:10 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/24 22:01:02 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,18 @@ typedef struct s_cmd
 	char			*rd;
 	char			*name;
 	char			**arg;
-	// t_list			*arg;
 	struct s_cmd	*next;
 }				t_cmd;
 
+typedef struct s_builtin
+{
+	char	*key;
+	int		(*f)();
+}					t_builtin;
+
+
 typedef int(*t_func[5])(t_list *);
 typedef int(*t_syntaxer[4])(t_list *);
+typedef int(*t_exec[7])(t_env *, t_cmd *);
 
 #endif

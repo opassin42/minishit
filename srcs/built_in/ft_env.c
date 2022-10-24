@@ -6,19 +6,11 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:41:35 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/09 17:52:50 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/24 05:30:54 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-int	check_env_option(t_list *token)
-{
-	if (!ft_strcmp(token->val, "env") && token->next)
-		if (token->next->type == WORD)
-			return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
 
 void	ft_print_env(t_var *var)
 {
@@ -29,19 +21,18 @@ void	ft_print_env(t_var *var)
 	}
 }
 
-int	ft_env(t_env *envp, t_list *token)
+int	ft_env(t_env *envp, t_cmd *cmd)
 {
+	char	**tmp;
 	t_var	*var;
 
 	var = envp->var;
 	if (!var)
 		return (EXIT_FAILURE);
-	if (check_env_option(token))
-	{
-		printf ("minishell: env: '%s': No such file or directory\n",
-			(char *)token->next->val);
-		return (EXIT_FAILURE);
-	}
-	ft_print_env(var);
-	return (EXIT_SUCCESS);
+	if (!cmd->arg)
+		return (ft_print_env(var), (EXIT_SUCCESS));
+	else
+		tmp = cmd->arg;
+	printf ("minishell: env: '%s': No such file or directory\n", *tmp);
+	return (EXIT_FAILURE);
 }

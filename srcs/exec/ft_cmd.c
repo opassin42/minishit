@@ -6,65 +6,67 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:30 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/23 19:16:16 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/24 05:33:35 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_init_cmd_struct(t_cmd *cmd, void *name)
+static void	*define_arg(t_list *token)
 {
-	cmd->id = 0;
-	cmd->err_no = 0;
-	cmd->status = 0;
-	cmd->pid = 0;
-	cmd->fd_in = 0;
-	cmd->fd_out = 0;
-	cmd->rd = NULL;
-	cmd->name = (char *)name;
-	cmd->arg = NULL;
-}
+	t_list	*tmp;
+	t_list	*arg;
 
-int	count_arg_nb(t_list *token)
-{
-	int	i;
-
-	i = 0;
 	token = token->next;
-	while (token)
+	if (!token)
+		return (NULL);
+	if (token->type == WORD)
+		arg = ft_lstnew(token->val);
+	else if (token->type == VOID)
+		arg = NULL;
+	else
+		return (NULL);
+	tmp = token->next;
+	while (tmp)
 	{
-		if (token->type != WORD && token->type != VOID)
+		if (tmp->type == VOID)
+			tmp = tmp->next;
+		if (tmp->type == WORD)
+			ft_lstadd_back(&arg, ft_lstnew(tmp->val));
+		else
 			break ;
-		++i;
-		token = token->next;
+		tmp = tmp->next;
 	}
-	return (i);
+	return (arg);
 }
 
-char	**malloc_arg(t_list *token)
+static char	**ft_arg(t_list *token)
 {
-	int		arg_nb;
+	int		i;
 	char	**param;
 
-	arg_nb = count_arg_nb(token);
-	if (!arg_nb)
-		return (NULL);
-	printf ("arg_nb = %d\n", arg_nb);
-	param = malloc(sizeof(char *) * (arg_nb + 1));
+	if (!token)
+		return ((char **) NULL);
+	param = malloc(sizeof(char *) * (ft_lstsize(token) + 1));
 	if (!param)
 		return (NULL);
-	token = token->next;
-	if (token->type == VOID)
+	i = 0;
+	while (token)
+	{
+		param[i] = ft_strdup((char *)token->val);
+		if (!param[i])
+			return ((char **) NULL);
 		token = token->next;
-	param = (char **)fill_arg(token, param, arg_nb);
-	if (!param)
-		return (NULL);
+		++i;
+	}
+	param[i] = 0;
 	return (param);
 }
 
-void	*create_cmd(t_list *token)
+static void	*create_cmd(t_list *token)
 {
 	t_cmd	*cmd;
+	t_list	*tmp;
 
 	if (token->type == WORD)
 	{
@@ -72,7 +74,8 @@ void	*create_cmd(t_list *token)
 		if (!cmd)
 			return (NULL);
 		ft_init_cmd_struct(cmd, token->val);
-		cmd->arg = malloc_arg(token);
+		tmp = (t_list *)define_arg(token);
+		cmd->arg = ft_arg(tmp);
 		if (!cmd->arg)
 			cmd->arg = (char **) NULL;
 	}
