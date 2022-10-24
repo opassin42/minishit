@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/24 04:30:56 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/25 00:21:05 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int		ft_size_of_env(t_var *var);
 /******************************************************************************/
 /*********************************  BUILT_IN  *********************************/
 /******************************************************************************/
-int		ft_pwd(void);
+int		ft_pwd(t_env *envp, t_cmd *cmd);
 int		ft_echo(t_env *envp, t_cmd *cmd);
 int		ft_cd(char *path);
 int		ft_export(t_list *token, t_env envp);
@@ -113,7 +113,7 @@ void	ft_init_cmd_struct(t_cmd *cmd, void *name);
 void	*ft_cmd(t_list **token);
 
 void	ft_exec(t_env *envp, t_cmd *cmd);
-void	ft_route(t_env *envp, t_cmd *cmd);
+int	ft_route(t_env *envp, t_cmd *cmd);
 
 /******************************************************************************/
 /**********************************  UTILS  ***********************************/

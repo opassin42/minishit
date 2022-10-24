@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:49:33 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/24 05:30:02 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/25 00:23:36 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 // 		ft_env(&envp, tmp);
 // }
 
-void	ft_route(t_env *envp, t_cmd *cmd)
+int	ft_route(t_env *envp, t_cmd *cmd)
 {
 	while (cmd)
 	{
@@ -37,6 +37,8 @@ void	ft_route(t_env *envp, t_cmd *cmd)
 			ft_echo(envp, cmd);
 		if (!ft_strcmp(cmd->name, "env"))
 			ft_env(envp, cmd);
+		if (!ft_strcmp(cmd->name, "pwd"))
+			ft_pwd(envp, cmd);
 		cmd = cmd->next;
 	}
 	// else if (!ft_strcmp(cmd, "exit"))
