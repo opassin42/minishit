@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 03:21:16 by opassin           #+#    #+#             */
-/*   Updated: 2022/10/25 00:31:24 by opassin          ###   ########.fr       */
+/*   Updated: 2022/10/25 04:33:21 by opassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,9 @@ int	ft_echo(t_env *envp, t_cmd *cmd)
 	(void)envp;
 	arg = cmd->arg;
 	nflag = 0;
-
-if (!arg)
-		return (printf("\n"), EXIT_SUCCESS);
 	while (*arg)
 	{
-		while (*arg && is_n_opt(*(arg) == EXIT_SUCCESS))
+		while (*arg && (is_n_opt(*arg) == EXIT_SUCCESS))
 		{
 			nflag = 1;
 			arg++;

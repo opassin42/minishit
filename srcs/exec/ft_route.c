@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:49:33 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/25 00:23:36 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/25 00:46:47 by opassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 // 	if (!ft_strcmp(tmp->val, "env"))
 // 		ft_env(&envp, tmp);
 // }
-
 int	ft_route(t_env *envp, t_cmd *cmd)
 {
 	while (cmd)
@@ -51,4 +50,5 @@ int	ft_route(t_env *envp, t_cmd *cmd)
 	// 	ft_pwd(envp, cmd);
 	// else if (!ft_strcmp(cmd, "unset"))
 	// 	ft_unset(envp, cmd);
+	return (0);
 }
