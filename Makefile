@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/10/24 02:46:09 by ccouliba         ###   ########.fr        #
+#    Updated: 2022/10/27 18:45:15 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRCS =	srcs/main.c \
 		srcs/parser/ft_parser_utils.c \
 		srcs/parser/ft_parser_utils2.c \
 		srcs/expander/ft_expander.c \
+		srcs/expander/ft_expander_1.c \
 		srcs/expander/ft_expander_utils.c \
 		srcs/expander/ft_recompose.c \
 		srcs/expander/ft_quotes.c \
@@ -45,8 +46,8 @@ SRCS =	srcs/main.c \
 		srcs/env/getenv_utils.c \
 		srcs/exec/ft_bultin_cmd.c \
 		srcs/exec/ft_cmd.c \
-		srcs/exec/cmd_utils.c \
-		srcs/exec/ft_route.c \
+		srcs/exec/exec_utils.c \
+		srcs/exec/ft_router.c \
 		srcs/exec/ft_exec.c \
 		utils/ft_init.c \
 		utils/ft_split.c \

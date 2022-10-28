@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/24 22:16:45 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/27 22:33:31 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,21 @@ void	print_new_token(t_list **token)
 void	print_cmd(t_cmd *cmd)
 {
 	int		i;
-	char	**arg;
+	char	**param;
 
 	printf("\n\e[0;31mCMD :\e[0m\n");
 	while (cmd)
 	{
 		printf("cmd : [\e[0;33m%s\e[0m]\n", (char *)cmd->name);
-		if (cmd->arg)
+		if (cmd->param)
 		{
-			i = -1;
-			arg = cmd->arg;
-			while (arg[++i])
-				printf("\targ : [\e[0;33m%s\e[0m]\n", arg[i]);
+			i = 0;
+			param = cmd->param;
+			while (param[i])
+			{
+				printf("\tparam[%d] : [\e[0;33m%s\e[0m]\n", i, param[i]);
+				++i;
+			}
 		}
 		cmd = cmd->next;
 	}
@@ -96,11 +99,9 @@ int	main(int ac, char **av, char **env)
 					ft_expander(&token, envp);
 					cmd = ft_cmd(&token);
 					if (cmd)
-					{
-						print_cmd(cmd);
-						ft_route(&envp, cmd);
-					}
-					// print_token(token);
+						ft_exec(&envp, cmd);
+						// print_cmd(cmd);
+					print_token(token);
 					ft_free_token(&token, free);
 					token = NULL;
 				}

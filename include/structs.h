@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:47 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/25 00:34:56 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/27 17:01:35 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,23 +91,35 @@ typedef struct s_cmd
 	int				fd_out;
 	char			*rd;
 	char			*name;
+	char			**param;
 	char			**arg;
+	char			*bin;
 	struct s_cmd	*next;
 }				t_cmd;
 
 typedef struct s_builtin
 {
-	char			*name;
+	char			*key;
+	// int				status;
 	int				(*f)();
 }				t_builtin;
 
-typedef struct s_exec
+/*
+** Have to create a sighandler that i will mute in the parent process
+** ctrl + d -> quitte le shell, l'instance en cours (0)
+** ctrl + d -> Comme si exit(0)
+** ctrl + c -> affiche un nouveau prompt sur une nouvelle ligne (130).
+** ctrl + \ -> ne fait rien (131)
+*/
+typedef struct g_status
 {
-	t_builtin		*builtin;
-}				t_exec;
+	int				ret;
+	int				sigint;
+	int				sigquit;
+}				t_status;
 
 typedef int(*t_func[5])(t_list *);
 typedef int(*t_syntaxer[4])(t_list *);
-typedef int(*t_execution[7])(t_env *, t_cmd *);
+typedef int(*t_exec[7])(t_env *, t_cmd *);
 
 #endif

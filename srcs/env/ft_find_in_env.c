@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 23:14:14 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/19 04:43:02 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/25 09:01:21 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,5 @@ void	find_in_env(t_env *envp, char *var_name, char *(*f)())
 			(var->value) = f((var->value));
 		var = var->next;
 	}
+	return ;
 }

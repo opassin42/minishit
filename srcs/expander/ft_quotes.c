@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 17:35:35 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/09/26 18:20:58 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/27 21:06:12 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,18 @@ int	ft_open_quotes(t_list *token)
 void	*ft_rm_quotes(t_list *token)
 {
 	char	*tmp;
+	char	*sub;
 
 	if (ft_check_quotes(token))
 	{
 		tmp = (char *)token->val;
 		if (!ft_open_quotes(token) && ft_strlen(tmp) > 2)
-			return ((void *)ft_substr(tmp, 1, ft_strlen(tmp) - 2));
+		{
+			sub = (void *)ft_substr(tmp, 1, ft_strlen(tmp) - 2);
+			if (!sub)
+				return (ft_strdup(""));
+			return (sub);
+		}
 	}
 	return (token->val);
 }

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/25 00:21:05 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/27 22:31:27 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,10 @@ int		ft_parser(t_list **token);
 int		ft_alnum_underscore(int c);
 int		check_simple_quotes(char *s);
 int		ft_get_dollar_pos(char *s);
-void	expand_flag(t_list *token);
-char	*ft_extract_value(t_env envp, char *name);
+char	*find_value(t_env *envp, char *var_name);
 
-void	*var_name(char *str, int start);
-void	*ft_var_value(t_env *envp, char *var);
-
-void	*ft_recompose(t_list **token);
 void	ft_expander(t_list **token, t_env envp);
+void	*ft_recompose(t_list **token);
 /*
 ** QUOTES REMOVING (after expander)
 */
@@ -109,11 +105,13 @@ int		ft_env(t_env *envp, t_cmd *cmd);
 t_cmd	*ft_new_cmd(t_list *token);
 t_cmd	*ft_last_cmd(t_cmd *cmd);
 void	ft_cmd_addback(t_cmd **cmd, t_cmd *new_cmd);
-void	ft_init_cmd_struct(t_cmd *cmd, void *name);
-void	*ft_cmd(t_list **token);
+char	**ft_malloc_double_p(t_list *token);
 
+
+void	*ft_cmd(t_list **token);
+int		ft_non_builtin(t_env *envp, t_cmd *cmd, char **path);
+void	ft_router(t_env *envp, t_cmd *cmd);
 void	ft_exec(t_env *envp, t_cmd *cmd);
-int	ft_route(t_env *envp, t_cmd *cmd);
 
 /******************************************************************************/
 /**********************************  UTILS  ***********************************/

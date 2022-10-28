@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 16:19:11 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/20 00:27:41 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/25 03:32:04 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	*ft_tokeniser(void *arg, char *m_char)
 	if (!arg || !m_char)
 		return (NULL);
 	s = (char *)arg;
+	// better protection
 	tmp = ft_fill_token(s, m_char);
 	if (tmp)
 	{

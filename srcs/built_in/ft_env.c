@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:41:35 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/24 05:30:54 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/25 04:25:30 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ int	ft_env(t_env *envp, t_cmd *cmd)
 	var = envp->var;
 	if (!var)
 		return (EXIT_FAILURE);
-	if (!cmd->arg)
+	if (!cmd->param)
 		return (ft_print_env(var), (EXIT_SUCCESS));
 	else
-		tmp = cmd->arg;
+		tmp = cmd->param;
 	printf ("minishell: env: '%s': No such file or directory\n", *tmp);
 	return (EXIT_FAILURE);
 }

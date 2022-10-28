@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 04:45:05 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/13 07:04:50 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/27 22:29:59 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,33 +32,25 @@ int	ft_get_dollar_pos(char *s)
 	int	i;
 
 	i = 0;
-	while (s[i] && s[i] != '$')
+	while (s[i])
+	{
+		if (s[i] == '$')
+			break ;
 		++i;
+	}
 	return (i);
 }
 
-void	expand_flag(t_list *token)
-{
-	char	*s;
-
-	s = (char *)token->val;
-	if (!check_simple_quotes(s) && ft_strchr(s, '$'))
-		token->exp_flag = 1;
-	else
-		token->exp_flag = 0;
-	return ;
-}
-
-char	*ft_extract_value(t_env envp, char *name)
+char	*find_value(t_env *envp, char *var_name)
 {
 	t_var	*var;
 
-	var = envp.var;
-	if (!name)
+	var = envp->var;
+	if (!var_name || (*var_name == '$' && !(*var_name + 1)))
 		return (NULL);
 	while (var)
 	{
-		if (!ft_strcmp(var->name, name))
+		if (!ft_strcmp(var->name, var_name))
 			return (var->value);
 		var = var->next;
 	}

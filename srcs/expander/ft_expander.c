@@ -6,103 +6,93 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 00:00:49 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/20 00:34:10 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/27 18:51:14 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	*var_name(char *str, int start)
-{
-	int		i;
-	char	*tmp;
+// void	expand_flag(t_list *token)
+// {
+// 	char	*s;
 
-	if (!str)
-		return (NULL);
-	i = start + 1;
-	tmp = NULL;
-	while (str[i])
-	{
-		if (ft_alnum_underscore(str[i]))
-		{
-			tmp = (void *)ft_substr(str, start, i - start);
-			if (tmp)
-				return (tmp);
-			return (NULL);
-		}
-		++i;
-	}
-	return (NULL);
-}
+// 	s = (char *)token->val;
+// 	if (!check_simple_quotes(s) && ft_strchr(s, '$'))
+// 		token->exp_flag = 1;
+// 	else
+// 		token->exp_flag = 0;
+// 	return ;
+// }
 
-void	*var_value(t_env envp, char *name)
-{
-	char	*tmp;
+// void	*var_value(t_env envp, char *name)
+// {
+// 	char	*tmp;
 
-	if (!name)
-		return (NULL);
-	tmp = ft_extract_value(envp, name);
-	if (!tmp)
-		return (ft_strdup(""));
-	return (tmp);
-}
+// 	if (!name)
+// 		return (NULL);
+// 	tmp = find_value(&envp, name);
+// 	if (!tmp)
+// 		return (ft_strdup(""));
+// 	return (tmp);
+// }
 
-static char	*check_name(char *name)
-{
-	char	*tmp;
+// static char	*check_name(char *name)
+// {
+// 	char	*tmp;
 
-	if (!name)
-		return (NULL);
-	tmp = NULL;
-	if (*(name + 1))
-		tmp = name + 1;
-	else
-		tmp = ft_strdup("");
-	return (tmp);
-}
+// 	if (!name)
+// 		return (NULL);
+// 	tmp = NULL;
+// 	if (*(name + 1))
+// 		tmp = name + 1;
+// 	else
+// 		tmp = ft_strdup("");
+// 	return (tmp);
+// }
 
-/*
-**
-*/
-static char	*expand(t_env envp, char *s)
-{
-	int		i;
-	char	*name;
-	char	*value;
+// /*
+// **
+// */
+// static char	*expand(t_env envp, char *s)
+// {
+// 	int		i;
+// 	char	*name;
+// 	char	*value;
 
-	i = ft_get_dollar_pos(s);
-	if (!i)
-		return (ft_strdup(""));
-	name = (char *)var_name(s, i + 1);
-	if (!name)
-		return (NULL);
-	if (ft_is_digit(*name))
-		return (check_name(name));
-	value = (char *)var_value(envp, name);
-	if (!value)
-		return (free(name), free(value), ft_strdup(""));
-	return (free(name), value);
-}
+// 	i = ft_get_dollar_pos(s);
+// 	if (!i)
+// 		return (ft_strdup(""));
+// 	name = (char *)var_name(s, i + 1);
+// 	if (!name)
+// 		return (NULL);
+// 	// printf("name : [%s]\n", name);
+// 	if (ft_is_digit(*name))
+// 		return (check_name(name));
+// 	value = (char *)var_value(envp, name);
+// 	if (!value)
+// 		return (free(name), free(value), ft_strdup(""));
+// 	return (free(name), value);
+// }
 
-/*
-** Correct
-** I may recompose (ft_recompose) right here, (before/after) removing quotes
-*/
-void	ft_expander(t_list **token, t_env envp)
-{
-	t_list	*tmp;
+// /*
+// ** Correct
+// ** I may recompose (ft_recompose) right here, (before/after) removing quotes
+// */
+// void	ft_expander(t_list **token, t_env envp)
+// {
+// 	t_list	*tmp;
 
-	tmp = *token;
-	while (tmp)
-	{
-		expand_flag(tmp);
-		if (tmp->exp_flag)
-			tmp->expand = expand(envp, (char *)tmp->val);
-		else
-			tmp->expand = (char *)ft_rm_quotes(tmp);
-			// tmp->expand = (char *)tmp->val;
-		tmp = tmp->next;
-	}
-	// ft_recompose(token);
-	// ft_quotes(token);
-}
+// 	tmp = *token;
+// 	while (tmp)
+// 	{
+// 		expand_flag(tmp);
+// 		if (tmp->exp_flag)
+// 			tmp->expand = expand(envp, (char *)tmp->val);
+// 		else
+// 			tmp->expand = (char *)tmp->val;
+// 			// tmp->expand = (char *)ft_rm_quotes(tmp);
+// 		tmp = tmp->next;
+// 	}
+// 	// ft_recompose(token);
+// 	ft_quotes(token);
+// }
