@@ -17,10 +17,12 @@ typedef struct s_upvarenv
 	char *oldpwd;
 	char *pwd;
 	char *tmp;
+	char *path;
 }	t_upvarenv;
 
 static int		upenv(t_env *envp,  t_upvarenv *upvarenv)
 {
+	upvarenv->pwd = get_pwd();
 	up_in_env(envp, "OLDPWD", upvarenv->oldpwd);
 	up_in_env(envp, "PWD", upvarenv->pwd);
 	return (0);
@@ -40,13 +42,14 @@ static t_upvarenv	*init_upvarenv(void)
 	tmp->oldpwd = NULL;
 	tmp->pwd = NULL;
 	tmp->tmp = NULL;
+	tmp->path = NULL;
 	return (tmp);
 }
 
-void	ft_upenv(t_upvarenv *upvarenv, t_env *envp, char *s1, char *s2, char *path)
+void	ft_upenv(t_upvarenv *upvarenv, t_env *envp, char *s1, char *s2)
 {
-	if (path && !ft_strcmp(s1, path))
-		upvarenv->tmp = path;
+	if (upvarenv->path != NULL && !ft_strcmp(s1, upvarenv->path))
+		upvarenv->tmp = upvarenv->path;
 	else
 		upvarenv->tmp = ft_strdup(get_in_env(envp, s1));
 	upvarenv->oldpwd = ft_strdup(get_in_env(envp, s2));
@@ -59,7 +62,6 @@ int		ft_chdir(t_env *envp, t_upvarenv *upvarenv)
 	{
 		if(upenv(envp, upvarenv) != 0)
 			return (1);
-		//up_in_env(envp, "PWD", pwd);
 		free(upvarenv);
 		return (0);
 	}
@@ -86,28 +88,25 @@ int		ft_no_home(t_upvarenv *upvarenv)
  int ft_cd(t_env *envp, t_cmd *cmd)
 {
 	t_upvarenv *upvarenv;
-	char *path;
 
 	upvarenv = init_upvarenv();
-	path = NULL;
 	if (!cmd->param || !ft_strcmp(*cmd->param, "~"))
-		ft_upenv(upvarenv, envp, "HOME", "PWD", path);
+		ft_upenv(upvarenv, envp, "HOME", "PWD");
 	else
 	{
-		path = ft_strdup(*cmd->param);
-		if (ft_strlen(path) == 0)
+		upvarenv->path = ft_strdup(*cmd->param);
+		if (ft_strlen(upvarenv->path) == 0)
 			return (ft_no_home(upvarenv));
 		else
 		{
-			if(!ft_strcmp(path, "-"))
-				ft_upenv(upvarenv, envp, "OLDPWD", "PWD", path);
-			else if (path[0] == '/' || path[0] == '.' || (path[0] == '.' && path[1] == '.'))
-				ft_upenv(upvarenv, envp, path, "PWD", path);
+			if(!ft_strcmp(upvarenv->path, "-"))
+				ft_upenv(upvarenv, envp, "OLDPWD", "PWD");
+			else if (upvarenv->path[0] == '/' || upvarenv->path[0] == '.' || (upvarenv->path[0] == '.' && upvarenv->path[1] == '.'))
+				ft_upenv(upvarenv, envp, upvarenv->path, "PWD");
 			else
 			{
-				upvarenv->tmp = ft_strjoin(get_in_env(envp, "PWD"), path);
+				upvarenv->tmp = ft_strjoin(get_in_env(envp, "PWD"), upvarenv->path);
 				upvarenv->oldpwd = ft_strdup(get_in_env(envp, "PWD"));
-				upvarenv->pwd = upvarenv->tmp;
 			}
 		}
 	}

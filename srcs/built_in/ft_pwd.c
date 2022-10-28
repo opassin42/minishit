@@ -37,3 +37,17 @@ int	ft_pwd(t_env *envp, t_cmd *cmd)
 	printf ("minishell: pwd: too many arguments\n");
 	return (EXIT_FAILURE);
 }
+
+char	*get_pwd(void)
+{
+	char	buff[PATH_MAX];
+
+	if (getcwd(buff, sizeof(buff)) == NULL)
+	{
+		printf("error: %s", strerror(errno));
+		return (NULL);
+	}
+	else
+		return (ft_strdup(buff));
+	return (NULL);
+}
