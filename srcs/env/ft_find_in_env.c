@@ -38,3 +38,34 @@ void	find_in_env(t_env *envp, char *var_name, char *(*f)())
 	}
 	return ;
 }
+
+char	*get_in_env(t_env *envp, char *name)
+{
+	t_var	*var;
+
+	var = envp->var;
+	if (var)
+	{	
+		while (var)
+		{
+			if (!ft_strcmp(var->name, name))
+				return (var->value);
+			var = var->next;
+		}
+	}
+	return (NULL);
+}
+
+void	up_in_env(t_env *envp, char *var_name, char *s)
+{
+	t_var	*var;
+
+	var = envp->var;
+	while (var)
+	{
+		if (!ft_strcmp(var->name, var_name))
+			(var->value) = s;
+		var = var->next;
+	}
+	return ;
+}

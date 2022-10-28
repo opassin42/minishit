@@ -12,6 +12,16 @@
 
 #include "../include/minishell.h"
 
+char	*ft_shellname(t_env *envp)
+{
+	char *tmp;
+
+	tmp = get_in_env(envp, "PWD");
+	tmp = ft_strjoin("\e[0;32m", tmp);
+	tmp = ft_strjoin(tmp, ":$>\e[0m");
+	return (tmp);
+}
+
 void	ft_add_history(void *s)
 {
 	if (s && ft_white_spaces(s))
@@ -75,7 +85,6 @@ void	ft_print_and_free(t_list **token)
 int	main(int ac, char **av, char **env)
 {
 	char	*s;
-	char	*tmp;
 	t_list	*token;
 	t_env	envp;
 	t_cmd	*cmd;
@@ -83,11 +92,10 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	s = NULL;
-	tmp = "\e[0;32mminishell:$>\e[0m ";
 	envp = ft_getenv(env);
 	while (42)
 	{
-		s = readline((const char *)tmp);
+		s = readline((const char *)ft_shellname(&envp));
 		if (s && *s && ft_not_only_space((void *)s))
 		{
 			ft_add_history((void *)s);

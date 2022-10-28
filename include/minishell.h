@@ -84,6 +84,8 @@ t_env	ft_init_env(char **env);
 t_var	*ft_init_var(t_list **env_list);
 
 void	find_in_env(t_env *envp, char *var_name, char *(*f)());
+char	*get_in_env(t_env *envp, char *name);
+void	up_in_env(t_env *envp, char *var_name, char *s);
 t_env	ft_getenv(char **env);
 
 char	*ft_var_name(char *s);
