@@ -6,12 +6,13 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/27 23:22:13 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/10/28 05:20:06 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+<<<<<<< HEAD
 static char	*bin_path(t_cmd *cmd, char **path)
 {
 	int		i;
