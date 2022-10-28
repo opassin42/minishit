@@ -12,7 +12,6 @@
 
 #include "../../include/minishell.h"
 
-<<<<<<< HEAD
 static char	*bin_path(t_cmd *cmd, char **path)
 {
 	int		i;

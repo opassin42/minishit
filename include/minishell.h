@@ -97,7 +97,7 @@ int		ft_size_of_env(t_var *var);
 /******************************************************************************/
 int		ft_pwd(t_env *envp, t_cmd *cmd);
 int		ft_echo(t_env *envp, t_cmd *cmd);
-int		ft_cd(char *path);
+int		ft_cd(t_env *envp, t_cmd *cmd);
 int		ft_export(t_list *token, t_env envp);
 int		ft_env(t_env *envp, t_cmd *cmd);
 
