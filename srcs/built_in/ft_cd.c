@@ -46,32 +46,6 @@ static t_upvarenv	*init_upvarenv(void)
 	return (tmp);
 }
 
-void	ft_upenv(t_upvarenv *upvarenv, t_env *envp, char *s1, char *s2)
-{
-	if (upvarenv->path != NULL && !ft_strcmp(s1, upvarenv->path))
-		upvarenv->tmp = upvarenv->path;
-	else if (upvarenv->path[0] == 126 && upvarenv->path[1])
-		upvarenv->tmp = ft_strdup(ft_strjoin(get_in_env(envp, "HOME"), upvarenv->path));
-	else
-		upvarenv->tmp = ft_strdup(get_in_env(envp, s1));
-	upvarenv->oldpwd = ft_strdup(get_in_env(envp, s2));
-	upvarenv->pwd = upvarenv->tmp;
-}
-
-int		ft_chdir(t_env *envp, t_upvarenv *upvarenv)
-{
-	if(!chdir(upvarenv->tmp))
-	{
-		if(upenv(envp, upvarenv) != 0)
-			return (1);
-		free(upvarenv);
-		return (0);
-	}
-	free(upvarenv);
-	return (1);
-}
-
-
 int		ft_no_home(t_upvarenv *upvarenv)
 {
 	free(upvarenv);
@@ -89,6 +63,39 @@ int 	is_alphanum(t_upvarenv *upvarenv)
 	return (0);
 }
 
+void	ft_upenv(t_upvarenv *upvarenv, t_env *envp, char *s1, char *s2)
+{
+	if (upvarenv->path == NULL)
+		upvarenv->tmp = ft_strdup(get_in_env(envp, "HOME"));
+	else if (upvarenv->path != NULL && !ft_strcmp(s1, upvarenv->path))
+		upvarenv->tmp = upvarenv->path;
+	else if (upvarenv->path[0] == '~' && upvarenv->path[1])
+		upvarenv->tmp = ft_strdup(ft_strjoin(get_in_env(envp, "HOME"), ++(upvarenv->path)));
+	else if (is_alphanum(upvarenv))
+	{
+		upvarenv->path = ft_strjoin("/", upvarenv->path);
+		upvarenv->tmp = ft_strdup(ft_strjoin(get_in_env(envp, "PWD"), upvarenv->path));
+	}
+	else
+		upvarenv->tmp = ft_strdup(get_in_env(envp, s1));
+	upvarenv->oldpwd = ft_strdup(get_in_env(envp, s2));
+	upvarenv->pwd = upvarenv->tmp;
+}
+
+int		ft_chdir(t_env *envp, t_upvarenv *upvarenv)
+{
+	if(!chdir(upvarenv->tmp))
+	{
+		if(upenv(envp, upvarenv) != 0)
+			return (1);
+		free(upvarenv);
+		return (0);
+	}
+	printf("minishell: cd: %s: %s", ++upvarenv->path, strerror(errno));
+   	return (errno);
+	free(upvarenv);
+	return (1);
+}
 
 /*
  * ft_cd 		: Change Directory 
@@ -96,13 +103,11 @@ int 	is_alphanum(t_upvarenv *upvarenv)
  * Parametre	: aucun
  * Valeur de retour: 0 en cas de succes;
  */
- 
  int ft_cd(t_env *envp, t_cmd *cmd)
 {
 	t_upvarenv *upvarenv;
 
 	upvarenv = init_upvarenv();
-	printf("%s kkkkkkkkk", *cmd->param);
 	if (!cmd->param || !ft_strcmp(*cmd->param, "~"))
 		ft_upenv(upvarenv, envp, "HOME", "PWD");
 	else
@@ -117,11 +122,7 @@ int 	is_alphanum(t_upvarenv *upvarenv)
 			else if (upvarenv->path[0] == '/' || upvarenv->path[0] == '.' || (upvarenv->path[0] == '.' && upvarenv->path[1] == '.'))
 				ft_upenv(upvarenv, envp, upvarenv->path, "PWD");
 			else if(is_alphanum(upvarenv))
-			{
-					ft_upenv(upvarenv, envp, "HOME", "PWD");
-				//upvarenv->tmp = ft_strjoin(get_in_env(envp, "PWD"), upvarenv->path);
-				//upvarenv->oldpwd = ft_strdup(get_in_env(envp, "PWD"));
-			}
+				ft_upenv(upvarenv, envp, "PWD", "PWD");
 		}
 	}
 	return((int)ft_chdir(envp, upvarenv));
