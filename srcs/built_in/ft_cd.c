@@ -23,7 +23,7 @@ static int	upenv(t_env *envp, t_upvarenv *upvarenv)
 	upvarenv->pwd = get_pwd();
 	up_in_env(envp, "OLDPWD", upvarenv->oldpwd);
 	up_in_env(envp, "PWD", upvarenv->pwd);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 /*
@@ -53,7 +53,7 @@ static t_upvarenv	*init_upvarenv(void)
  * ft_upenv 	: update la valeur des variable d'environnement OLDPWD et PWD
  * Type 		: void
  * Parametre	: struct upvarenv, list env, chaines de characteres s1 et s2
- * Valeur de retour: aucune
+ * Return value : aucune
  */
 static void	ft_upenv(t_upvarenv *upvarenv, t_env *envp, char *s1, char *s2)
 {
@@ -87,21 +87,20 @@ static int	ft_chdir(t_env *envp, t_upvarenv *upvarenv)
 	if (!chdir(upvarenv->tmp))
 	{
 		if (upenv(envp, upvarenv) != 0)
-			return (1);
+			return (EXIT_FAILURE);
 		free(upvarenv);
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 	printf("minishell: cd: %s: %s", ++upvarenv->path, strerror(errno));
-	return (errno);
 	free(upvarenv);
-	return (1);
+	return (EXIT_FAILURE);
 }
 
 /*
  * ft_cd 		: Change Directory 
  * Type 		: integer
  * Parametre	: aucun
- * Valeur de retour: 0 en cas de succes;
+ * Return value : 0 en cas de succes;
  */
 int	ft_cd(t_env *envp, t_cmd *cmd)
 {

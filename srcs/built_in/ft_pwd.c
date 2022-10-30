@@ -15,8 +15,8 @@
 /*
  * PWD  		: print Working Directory 
  * Type 		: integer
- * Parametre	: aucun
- * Valeur de retour:  errno en cas d'erreur, zero en cas de succes;
+ * Parameter	: lsit env, list cmd
+ * Return value : errno in case of fail, 0 in case of succes;
  */
 int	ft_pwd(t_env *envp, t_cmd *cmd)
 {
@@ -38,6 +38,13 @@ int	ft_pwd(t_env *envp, t_cmd *cmd)
 	return (EXIT_FAILURE);
 }
 
+/*
+ * get_pwd 		: return the current Working Directory 
+ * Type 		: string
+ * Parameter	: void
+ * Return value : NULL in case of fail, current directory's
+ * path in case of succes;
+ */
 char	*get_pwd(void)
 {
 	char	buff[PATH_MAX];
