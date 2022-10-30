@@ -22,31 +22,30 @@ static void	free_var(t_var *var)
 int	ft_unset(t_env *envp, t_cmd *cmd)
 {
 	t_var	*var;
-	t_var	*var_next;
 	t_var	*tmp;
 	char	*var_name;
 
 	var = envp->var;
 	var_name = *cmd->param;
+	if (!var_name || ft_strcmp(var->name, var_name))
+		return (EXIT_FAILURE);
 	if (!ft_strcmp(var->name, var_name))
 	{
 		envp->var = var->next;
-		ft_free(var);
+		free_var(var);
 	}
 	else
 	{
-		var_next = var->next;
 		while (var)
 		{
-			if (var_next && !ft_strcmp(var_next->name, var_name))
+			if (var->next && !ft_strcmp(var->next->name, var_name))
 			{
-				tmp = var_next->next;
-				ft_free(var_next);
+				tmp = var->next->next;
+				free_var(var->next);
 				var->next = tmp;
 				return (EXIT_SUCCESS);
 			}
 			var = var->next;
-			var_next = var->next;
 		}
 	}
 	return (EXIT_FAILURE);
