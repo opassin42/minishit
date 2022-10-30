@@ -110,6 +110,8 @@ void	ft_cmd_addback(t_cmd **cmd, t_cmd *new_cmd);
 char	**ft_malloc_double_p(t_list *token);
 
 char	*get_pwd(void);
+int		is_alphanum(t_upvarenv *upvarenv);
+int		ft_no_home(t_upvarenv *upvarenv);
 void	*ft_cmd(t_list **token);
 int		ft_non_builtin(t_env *envp, t_cmd *cmd, char **path);
 void	ft_router(t_env *envp, t_cmd *cmd);

@@ -12,15 +12,13 @@
 
 #include "../../include/minishell.h"
 
-typedef struct s_upvarenv
-{
-	char *oldpwd;
-	char *pwd;
-	char *tmp;
-	char *path;
-}	t_upvarenv;
-
-static int		upenv(t_env *envp,  t_upvarenv *upvarenv)
+/*
+ * init_upvarenv : (utils) update oldpwd and pwd 
+ * Type 		 : static int
+ * Parameter	 : integer
+ * Return value  : 0 in success
+ */
+static int	upenv(t_env *envp, t_upvarenv *upvarenv)
 {
 	upvarenv->pwd = get_pwd();
 	up_in_env(envp, "OLDPWD", upvarenv->oldpwd);
@@ -28,13 +26,18 @@ static int		upenv(t_env *envp,  t_upvarenv *upvarenv)
 	return (0);
 }
 
+/*
+ * init_upvarenv : init the struct upvarenv
+ * Type 		 : static struct (t_upvarenv)
+ * Parameter	 : void
+ * Return value  : tmp (struct upvarenv)
+ */
 static t_upvarenv	*init_upvarenv(void)
 {
-	t_upvarenv *tmp;
+	t_upvarenv	*tmp;
 
-
-	tmp = (t_upvarenv*)malloc(sizeof(t_upvarenv));
-	if(!tmp)
+	tmp = (t_upvarenv *) malloc (sizeof (t_upvarenv));
+	if (!tmp)
 	{
 		printf("minishell: cd: allocate error\n");
 		return (NULL);
@@ -46,35 +49,26 @@ static t_upvarenv	*init_upvarenv(void)
 	return (tmp);
 }
 
-int		ft_no_home(t_upvarenv *upvarenv)
-{
-	free(upvarenv);
-	printf("minishell: cd: HOME not set\n");
-	return (1);
-}
-
-int 	is_alphanum(t_upvarenv *upvarenv)
-{
-
-	if ((upvarenv->path[0] >= 65 && upvarenv->path[0] <= 90)
-		|| (upvarenv->path[0] >= 97 && upvarenv->path[0] <= 122)
-		|| (upvarenv->path[0] == 126 && upvarenv->path[1] == 47))
-		return (1);
-	return (0);
-}
-
-void	ft_upenv(t_upvarenv *upvarenv, t_env *envp, char *s1, char *s2)
+/*
+ * ft_upenv 	: update la valeur des variable d'environnement OLDPWD et PWD
+ * Type 		: void
+ * Parametre	: struct upvarenv, list env, chaines de characteres s1 et s2
+ * Valeur de retour: aucune
+ */
+static void	ft_upenv(t_upvarenv *upvarenv, t_env *envp, char *s1, char *s2)
 {
 	if (upvarenv->path == NULL)
 		upvarenv->tmp = ft_strdup(get_in_env(envp, "HOME"));
 	else if (upvarenv->path != NULL && !ft_strcmp(s1, upvarenv->path))
 		upvarenv->tmp = upvarenv->path;
 	else if (upvarenv->path[0] == '~' && upvarenv->path[1])
-		upvarenv->tmp = ft_strdup(ft_strjoin(get_in_env(envp, "HOME"), ++(upvarenv->path)));
+		upvarenv->tmp = ft_strdup(ft_strjoin(get_in_env(envp, "HOME"),
+					++(upvarenv->path)));
 	else if (is_alphanum(upvarenv))
 	{
 		upvarenv->path = ft_strjoin("/", upvarenv->path);
-		upvarenv->tmp = ft_strdup(ft_strjoin(get_in_env(envp, "PWD"), upvarenv->path));
+		upvarenv->tmp = ft_strdup(ft_strjoin(get_in_env(envp, "PWD"),
+					upvarenv->path));
 	}
 	else
 		upvarenv->tmp = ft_strdup(get_in_env(envp, s1));
@@ -82,17 +76,23 @@ void	ft_upenv(t_upvarenv *upvarenv, t_env *envp, char *s1, char *s2)
 	upvarenv->pwd = upvarenv->tmp;
 }
 
-int		ft_chdir(t_env *envp, t_upvarenv *upvarenv)
+/*
+ * ft_chdir 	: Change Directory utils
+ * Type 		: integer
+ * Parameter	: list env, struct upvarenv
+ * Return value : 0 in case of success or 1 in case of fail
+ */
+static int	ft_chdir(t_env *envp, t_upvarenv *upvarenv)
 {
-	if(!chdir(upvarenv->tmp))
+	if (!chdir(upvarenv->tmp))
 	{
-		if(upenv(envp, upvarenv) != 0)
+		if (upenv(envp, upvarenv) != 0)
 			return (1);
 		free(upvarenv);
 		return (0);
 	}
 	printf("minishell: cd: %s: %s", ++upvarenv->path, strerror(errno));
-   	return (errno);
+	return (errno);
 	free(upvarenv);
 	return (1);
 }
@@ -103,9 +103,9 @@ int		ft_chdir(t_env *envp, t_upvarenv *upvarenv)
  * Parametre	: aucun
  * Valeur de retour: 0 en cas de succes;
  */
- int ft_cd(t_env *envp, t_cmd *cmd)
+int	ft_cd(t_env *envp, t_cmd *cmd)
 {
-	t_upvarenv *upvarenv;
+	t_upvarenv	*upvarenv;
 
 	upvarenv = init_upvarenv();
 	if (!cmd->param || !ft_strcmp(*cmd->param, "~"))
@@ -117,17 +117,14 @@ int		ft_chdir(t_env *envp, t_upvarenv *upvarenv)
 			return (ft_no_home(upvarenv));
 		else
 		{
-			if(!ft_strcmp(upvarenv->path, "-"))
+			if (!ft_strcmp(upvarenv->path, "-"))
 				ft_upenv(upvarenv, envp, "OLDPWD", "PWD");
-			else if (upvarenv->path[0] == '/' || upvarenv->path[0] == '.' || (upvarenv->path[0] == '.' && upvarenv->path[1] == '.'))
+			else if (upvarenv->path[0] == '/' || upvarenv->path[0] == '.'
+				|| (upvarenv->path[0] == '.' && upvarenv->path[1] == '.'))
 				ft_upenv(upvarenv, envp, upvarenv->path, "PWD");
-			else if(is_alphanum(upvarenv))
+			else if (is_alphanum(upvarenv))
 				ft_upenv(upvarenv, envp, "PWD", "PWD");
 		}
 	}
-	return((int)ft_chdir(envp, upvarenv));
+	return ((int)ft_chdir(envp, upvarenv));
 }
-
-	
-
-

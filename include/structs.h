@@ -118,6 +118,14 @@ typedef struct g_status
 	int				sigquit;
 }				t_status;
 
+typedef struct s_upvarenv
+{
+	char	*oldpwd;
+	char	*pwd;
+	char	*tmp;
+	char	*path;
+}	t_upvarenv;
+
 typedef int(*t_func[5])(t_list *);
 typedef int(*t_syntaxer[4])(t_list *);
 typedef int(*t_exec[7])(t_env *, t_cmd *);
