@@ -12,41 +12,37 @@
 
 #include "../../include/minishell.h"
 
-static void	free_var(t_var *var)
+
+int		get_nb_var(t_env * envp, t_cmd *new_cmd)
 {
-	free(var->name);
-	free(var->value);
-	var = NULL;
+	int	i;
+
+	i = 0;
+	while (cmd[i]->param)
+		i++;
+	return (i;)
 }
 
-int	ft_unset(t_env *envp, t_cmd *cmd)
+int	ft_unset(t_env *envp, t_cmd *cmd, int i)
 {
-	t_var	*var;
-	t_var	*tmp;
-	char	*var_name;
+	char	*var;
+	char	*var_cmd;
+	char	*tmp;
 
+	tmp = NULL;
 	var = envp->var;
-	var_name = *cmd->param;
-	if (!var_name || ft_strcmp(var->name, var_name))
-		return (EXIT_FAILURE);
-	if (!ft_strcmp(var->name, var_name))
+	while(i--)
 	{
-		envp->var = var->next;
-		free_var(var);
-	}
-	else
-	{
-		while (var)
+		while(var->name)
 		{
-			if (var->next && !ft_strcmp(var->next->name, var_name))
+			if (ft_strcmp(var->name, *cmd->param))
 			{
-				tmp = var->next->next;
-				free_var(var->next);
-				var->next = tmp;
-				return (EXIT_SUCCESS);
+				ft_delete_var("var->name");
+				cmd->param++;
+				break;
 			}
 			var = var->next;
 		}
 	}
-	return (EXIT_FAILURE);
+	
 }
