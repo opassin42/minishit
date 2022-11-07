@@ -12,11 +12,11 @@
 
 #include "../include/minishell.h"
 
-char	*ft_shellname(t_env *envp)
+char	*ft_shellname(void)
 {
 	char *tmp;
 
-	tmp = get_in_env(envp, "PWD");
+	tmp = get_pwd();
 	tmp = ft_strjoin("\e[0;32m", tmp);
 	tmp = ft_strjoin(tmp, ":$>\e[0m");
 	return (tmp);
@@ -95,7 +95,7 @@ int	main(int ac, char **av, char **env)
 	envp = ft_getenv(env);
 	while (42)
 	{
-		s = readline((const char *)ft_shellname(&envp));
+		s = readline((const char *)ft_shellname());
 		if (s && *s && ft_not_only_space((void *)s))
 		{
 			ft_add_history((void *)s);
