@@ -12,8 +12,13 @@
 
 #include "../../include/minishell.h"
 
-
-int		get_nb_var(t_cmd *cmd)
+/*
+Type : Integer
+Arg : list cmd
+Role: calculate the nb of arg in parameter
+Return value: nb of arg >> i (integer) 
+*/
+int	get_nb_var(t_cmd *cmd)
 {
 	int	i;
 
@@ -26,6 +31,12 @@ int		get_nb_var(t_cmd *cmd)
 	return (i);
 }
 
+/*
+Type : Void
+Arg : t_var (structure of env's variable)
+Role: free the env variable element passed in parameter
+Return value: none 
+*/
 void	ft_free_var(t_var *var)
 {
 	free(var->name);
@@ -34,6 +45,13 @@ void	ft_free_var(t_var *var)
 	var = NULL;
 }
 
+/*
+Type : Void
+Arg : [envp] -> pointer to the first environment's element
+	  [var_name] -> variable name to delete (string) 
+Role: delete the env variable whose the name has passed in parameter
+Return value: none
+*/
 void	ft_delete_var(t_env *envp, char *var_name)
 {
 	t_var	*prev;
@@ -62,6 +80,13 @@ void	ft_delete_var(t_env *envp, char *var_name)
 	return ;
 }
 
+/*
+Type : Integer
+Arg : [envp] -> pointer to the first environment's element (struct t_env, cf: structs.h)
+	  [cmd] -> pointer to the first cmd's element which is the arguments of the cmd (struct t_cmd, cf: structs.h)
+Role: unset all the named variable passed in command line
+Return value: this builtin always return 0 in case of success
+*/
 int	ft_unset(t_env *envp, t_cmd *cmd)
 {
 	t_var	*var;
@@ -69,22 +94,24 @@ int	ft_unset(t_env *envp, t_cmd *cmd)
 
 	if (cmd)
 		nb_var = get_nb_var(cmd);
-	while(nb_var--)
+	while (nb_var--)
 	{
 		if (envp->var)
 			var = envp->var;
 		else
 			return (0);
-		while(var->name != NULL && *cmd->param != NULL)
+		while (var && *cmd->param)
 		{
 			if (!ft_strcmp(var->name, *cmd->param))
 			{
 				ft_delete_var(envp, var->name);
 				cmd->param++;
-				break;
+				break ;
 			}
 			var = var->next;
 		}
+		if (!var)
+			cmd->param++;
 	}
 	return (0);
 }
