@@ -163,6 +163,11 @@ void	ft_print_env(t_var *var);
 void	ft_free_token(t_list **token, void (*clr)(void*));
 void	ft_add_history(void *s);
 void	*ft_void_skipper(t_list **token);
+t_gblst	*init_gbc(void *elem);
+int		ft_gbc(void *gblst);
+int		add_gb(void *gblst, void *elem);
+
+
 
 /******************************************************************************/
 /**********************************  ERRORS  **********************************/

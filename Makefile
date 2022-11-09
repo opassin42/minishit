@@ -57,7 +57,8 @@ SRCS =	srcs/main.c \
 		utils/lib_utils4.c \
 		utils/list_utils.c \
 		utils/list_utils2.c \
-		utils/ft_builtins_utils.c
+		utils/ft_builtins_utils.c \
+		utils/ft_garbage_collector.c
 		
 OBJS = $(SRCS:.c=.o)
 

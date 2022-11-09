@@ -56,6 +56,12 @@ typedef enum s_function
 	ZERO
 }				t_function;
 
+typedef struct s_gblst
+{
+	void			*addr;
+	struct s_gblst 	*next;
+}				t_gblst;				
+
 typedef struct s_list
 {
 	int				exp_flag;
