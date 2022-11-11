@@ -14,7 +14,7 @@
 
 t_gblst	*init_gbc(void *elem)
 {
-	t_gblst el;
+	t_gblst *el;
 
 	el = malloc (sizeof(t_gblst));
 	if (!elem)
@@ -28,10 +28,10 @@ int	add_gb(void *gblst, void *elem)
 {
 	t_gblst *tmp;
 
-	tmp = (t_gblst)gblst;
+	tmp = gblst;
 	while (tmp)
 		tmp = tmp->next;
-	tmp = init_gbc(void *elem);
+	tmp = init_gbc(elem);
 	if (tmp)
 		return (0);
 	return (1);
@@ -39,14 +39,14 @@ int	add_gb(void *gblst, void *elem)
 
 int	ft_gbc(void *gblst)
 {
-	void	*tmp;
+	t_gblst	*tmp;
 
-	tmp = gblst;
+	tmp = (t_gblst*)gblst;
 	while (tmp)
 	{
-		gblst = gblst->next;
-		free(tmp);
-		tmp = gblst;
+		tmp = tmp->next;
+		free(gblst);
+		gblst = tmp;
 	}
-	return (1)
+	return (1);
 }
