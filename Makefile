@@ -44,7 +44,6 @@ SRCS =	srcs/main.c \
 		srcs/env/ft_getenv.c \
 		srcs/env/ft_find_in_env.c \
 		srcs/env/getenv_utils.c \
-		srcs/exec/ft_bultin_cmd.c \
 		srcs/exec/ft_cmd.c \
 		srcs/exec/exec_utils.c \
 		srcs/exec/ft_router.c \
@@ -58,7 +57,8 @@ SRCS =	srcs/main.c \
 		utils/list_utils.c \
 		utils/list_utils2.c \
 		utils/ft_builtins_utils.c \
-		utils/ft_garbage_collector.c
+		utils/ft_garbage_collector.c \
+		utils/signals.c
 		
 OBJS = $(SRCS:.c=.o)
 
@@ -88,6 +88,6 @@ re: fclean all
 
 leak: re
 	@echo "				$(_BG_CYAN)LEAK TEST$(_END) (valgrind)"
-	@valgrind ./$(NAME)
+	@valgrind --suppressions=leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all ./$(NAME)
 
 .PHONY : all clean fclean re leak

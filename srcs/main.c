@@ -12,6 +12,7 @@
 
 #include "../include/minishell.h"
 
+
 char	*ft_shellname(void)
 {
 	char *tmp;
@@ -82,6 +83,9 @@ void	ft_print_and_free(t_list **token)
 	printf("Syntax error.\n");
 }
 
+	t_gc *start;
+
+
 int	main(int ac, char **av, char **env)
 {
 	char	*s;
@@ -92,8 +96,11 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	s = NULL;
+	start = NULL;
 	envp = ft_getenv(env);
-	while (42)
+	signal(SIGINT, intHandler);
+	
+	while (keepRunning)
 	{
 		s = readline((const char *)ft_shellname());
 		if (s && *s && ft_not_only_space((void *)s))
@@ -109,19 +116,23 @@ int	main(int ac, char **av, char **env)
 					if (cmd)
 						ft_exec(&envp, cmd);
 						// print_cmd(cmd);
+					//printList(start);
 					print_token(token);
-					ft_free_token(&token, free);
+					//ft_free_token(&token, free);
 					token = NULL;
 				}
-				else
-					ft_print_and_free(&token);
+				//else
+				//	ft_print_and_free(&token);
 			}
 		}
 		free(s);
 	}
-	if (token)
+	/*if (token)
 		ft_free_token(&token, free);
 	if (s)
-		free(s);
+		free(s);*/
+	gc_free();
+	system("leaks minishell");
+	//printList(start);
 	return (0);
 }

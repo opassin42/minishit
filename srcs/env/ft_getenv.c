@@ -25,14 +25,6 @@ static char	*change_shlvl(char *s)
 	return (ft_itoa(shlvl + 1));
 }
 
-// static char	*change_oldpwd(char *path)
-// {
-// 	char	*s;
-
-// 	s = path;
-// 	return (s);
-// }
-
 t_env	ft_init_env(char **env)
 {
 	int		i;
@@ -73,8 +65,7 @@ t_env	ft_getenv(char **env)
 
 	envp = ft_init_env(env);
 	envp.var = ft_init_var(&envp.list);
-	ft_free_token(&envp.list, free);
+	//ft_free_token(&envp.list, free);
 	find_in_env(&envp, "SHLVL", change_shlvl);
-	// find_in_env(&envp, "OLDPWD", change_oldpwd);
 	return (envp);
 }

@@ -16,9 +16,12 @@ t_cmd	*ft_new_cmd(t_list *token)
 {
 	t_cmd	*cmd;
 
-	cmd = malloc(sizeof(t_cmd));
+	cmd =  (t_cmd*)push_top(&start, sizeof(t_cmd));
 	if (!cmd)
+	{
+		gc_free();
 		return (NULL);
+	}
 	cmd->name = (char *)token->val;
 	cmd->next = NULL;
 	return (cmd);
@@ -52,9 +55,12 @@ char	**ft_malloc_double_p(t_list *token)
 
 	if (!token)
 		return ((char **) NULL);
-	param = malloc(sizeof(char *) * (ft_lstsize(token) + 1));
+	param = (char**)push_top(&start, sizeof(char *) * (ft_lstsize(token) + 1));
 	if (!param)
+	{
+		gc_free();
 		return (NULL);
+	}
 	i = 0;
 	while (token)
 	{

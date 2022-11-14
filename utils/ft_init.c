@@ -38,10 +38,13 @@ void	*ft_realloc(char *s, size_t new_len)
 	len = (size_t)ft_strlen(s);
 	if (len < new_len || len > new_len)
 	{
-		p = malloc(sizeof(char) * ((int)new_len + 1));
+		p = (char *)push_top(&start, sizeof(char) * ((int)new_len + 1));
 		p = (char *)ft_memcpy(p, s, ft_strlen(s));
 		if (!p)
+		{
+			gc_free();
 			return (NULL);
+		}
 		return ((void *)p);
 	}
 	return ((void *)s);

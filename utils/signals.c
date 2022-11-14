@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.h                                              :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsaada <dsaada@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/25 19:17:43 by dsaada            #+#    #+#             */
-/*   Updated: 2022/07/30 13:10:49 by dsaada           ###   ########.fr       */
+/*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
+/*   Updated: 2022/10/27 22:31:27 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PWD_H
-# define PWD_H
-# include "../../minishell.h"
+#include "../include/minishell.h"
 
-char	*get_cwd(void);
+void intHandler(int sig) 
+{
+    keepRunning = 0;
 
-#endif
+    if (sig)
+    {
+        gc_free();
+        printf("\n");
+        exit(0);
+    }
+}
+

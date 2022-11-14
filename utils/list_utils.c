@@ -16,7 +16,12 @@ t_list	*ft_lstnew(void *content)
 {
 	t_list	*new;
 
-	new = malloc(sizeof(t_list));
+	new = (t_list*)push_top(&start, sizeof(t_list));
+	if (!new)
+	{
+		gc_free();
+		return (NULL);
+	}
 	new->val = content;
 	new->next = NULL;
 	return (new);

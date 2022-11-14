@@ -25,5 +25,6 @@
 # include <sys/types.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 
 #endif

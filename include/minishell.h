@@ -163,16 +163,23 @@ void	ft_print_env(t_var *var);
 void	ft_free_token(t_list **token, void (*clr)(void*));
 void	ft_add_history(void *s);
 void	*ft_void_skipper(t_list **token);
-t_gblst	*init_gbc(void *elem);
-int		ft_gbc(void *gblst);
-int		add_gb(void *gblst, void *elem);
-
-
+void    *push_top(t_gc **head, size_t data_size);
+void 	printList(t_gc 	*node);
+void	gc_free(void);
 
 /******************************************************************************/
 /**********************************  ERRORS  **********************************/
 /******************************************************************************/
 /* Builtin errors*/
 void	export_error(char *s);
+
+/******************************************************************************/
+/**********************************  SIGNALS  **********************************/
+/******************************************************************************/
+void intHandler(int dummy) ;
+
+
+extern t_gc *start;
+static volatile int keepRunning = 1;
 
 #endif

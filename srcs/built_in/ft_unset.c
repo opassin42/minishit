@@ -39,10 +39,13 @@ Return value: none
 */
 void	ft_free_var(t_var *var)
 {
-	free(var->name);
-	free(var->value);
-	var->next = NULL;
-	var = NULL;
+	if (var)
+	{
+		free(var->name);
+		free(var->value);
+		var->next = NULL;
+		var = NULL;
+	}
 }
 
 /*
@@ -92,6 +95,7 @@ int	ft_unset(t_env *envp, t_cmd *cmd)
 	t_var	*var;
 	int		nb_var;
 
+	nb_var = 0;
 	if (cmd)
 		nb_var = get_nb_var(cmd);
 	while (nb_var--)

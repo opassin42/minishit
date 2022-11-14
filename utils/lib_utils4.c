@@ -56,9 +56,11 @@ char	*ft_itoa(int n)
 
 	nb = n;
 	len = get_size(nb);
-	res = malloc(sizeof(char) * (len + 1));
-	if (!res)
+	res = push_top(&start, sizeof(char) * (len + 1));
+	if (!res){
+		gc_free();
 		return (NULL);
+	}
 	res[len] = '\0';
 	if (nb == 0)
 		res[0] = '0';
