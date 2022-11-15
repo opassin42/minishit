@@ -1,0 +1,317 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    expander.txt                                       :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/09/15 00:00:49 by ccouliba          #+#    #+#              #
+#    Updated: 2022/10/06 05:08:56 by ccouliba         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+#include "../../include/minishell.h"
+
+static void	check_var_name()
+{
+}
+
+static void	*var_name(char *str, int index)
+{
+	int		i;
+	int		start;
+
+	if (!str)
+		return (NULL);
+	i = index;
+	while (str[i++])
+	{
+		if (ft_alnum_underscore(str[i]))
+			break ;
+	}
+	return ((void *)ft_substr(str, index, i));
+}
+
+/******************************************************************************/
+/**********************************  OLDER  ***********************************/
+/******************************************************************************/
+static void	*ft_var_to_expand(char *str)
+{
+	int		i;
+	int		start;
+
+	if (!str)
+		return (NULL);
+	start = ft_get_dollar_pos(str) + 1;
+	i = start;
+	while (str[i] && !ft_alnum_underscore(str[i]))
+		++i;
+	return ((void *)ft_substr(str, start, i - start));
+}
+
+/*
+** Get the value of the var into the env list
+*/
+void	*ft_var_value(t_env *envp, char *var)
+{
+	int		i;
+	char	*line;
+	char	**tmp;
+
+	i = 0;
+	line = (char *)ft_cmp_var(&envp->list, var);
+	if (!line)
+		return (NULL);
+	tmp = ft_split((char *)line, '=');
+	if (!tmp)
+		return (NULL);
+	while (line[i] && line[i] != '=')
+		++i;
+	if (line[i] && line[i] == '=')
+	{
+		++i;
+		if (!ft_strcmp(tmp[0], var))
+			return ((void *)&line[i]);
+	}
+	return (NULL);
+}
+
+/*
+** Create a string with the var to expand if it does exist
+*/
+void	*ft_expand_val(t_env *envp, char *var, t_list *token, void *(*f)())
+{
+	int		i;
+	char	*str;
+	char	*tmp;
+	char	*definitive_val;
+
+	str = (char *)token->val;
+	tmp = ft_substr(str, 0, ft_get_dollar_pos(str));
+	if (!tmp)
+		return (NULL);
+	token->expand_val = f(envp, var);
+	if (!token->expand_val)
+		definitive_val = tmp;
+	else
+		definitive_val = ft_strjoin(tmp, token->expand_val);
+	tmp = NULL;
+	i = ft_get_dollar_pos(str) + ft_strlen(var);
+	while (str[i] && !ft_alnum_underscore(str[i]))
+		++i;
+	tmp = &str[i]; // here is the problem !!!
+	definitive_val = ft_strjoin(definitive_val, tmp);
+	return ((void *)definitive_val);
+}
+
+void	*ft_expand(t_env *envp, t_list *token)
+{
+	char	*var;
+
+	var = (char *)ft_var_to_expand((char *)token->val);
+	if (*var == '\'')
+		return (var);
+	token->val = (char *)ft_expand_val(envp, var, token, ft_var_value);
+	token->expand_flag = 0;
+	return (token->val);
+}
+
+/*
+** If (*var) is digit -> ERROR
+*/
+void	ft_expander(t_list **token, t_env *envp)
+{
+	t_list	*tmp;
+
+	tmp = *token;
+	while (tmp)
+	{
+		if (ft_check_expand(tmp))
+			tmp->val = ft_expand(envp, tmp);
+		tmp = tmp->next;
+	}
+	ft_quotes(token);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_expander.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/15 00:00:49 by ccouliba          #+#    #+#             */
+/*   Updated: 2022/10/06 05:04:53 by ccouliba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../include/minishell.h"
+
+static void	check_var_name()
+{
+}
+
+static void	*var_name(char *str, int index)
+{
+	int		i;
+	int		start;
+
+	if (!str)
+		return (NULL);
+	i = index;
+	while (str[i++])
+	{
+		if (ft_alnum_underscore(str[i]))
+			break ;
+	}
+	return ((void *)ft_substr(str, index, i));
+}
+
+/******************************************************************************/
+/**********************************  OLDER  ***********************************/
+/******************************************************************************/
+static void	*ft_var_to_expand(char *str)
+{
+	int		i;
+	int		start;
+
+	if (!str)
+		return (NULL);
+	start = ft_get_dollar_pos(str) + 1;
+	i = start;
+	while (str[i] && !ft_alnum_underscore(str[i]))
+		++i;
+	return ((void *)ft_substr(str, start, i - start));
+}
+
+/*
+** Get the value of the var into the env list
+*/
+void	*ft_var_value(t_env *envp, char *var)
+{
+	int		i;
+	char	*line;
+	char	**tmp;
+
+	i = 0;
+	line = (char *)ft_cmp_var(&envp->list, var);
+	if (!line)
+		return (NULL);
+	tmp = ft_split((char *)line, '=');
+	if (!tmp)
+		return (NULL);
+	while (line[i] && line[i] != '=')
+		++i;
+	if (line[i] && line[i] == '=')
+	{
+		++i;
+		if (!ft_strcmp(tmp[0], var))
+			return ((void *)&line[i]);
+	}
+	return (NULL);
+}
+
+/*
+** Create a string with the var to expand if it does exist
+*/
+void	*ft_expand_val(t_env *envp, char *var, t_lisint	ft_alnum_underscore(int c)
+{
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')
+		|| (c >= '0' && c <= '9') || c == '_')
+		return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
+}
+
+int	check_double_quotes(t_list *token)
+{
+	char	*tmp;
+
+	tmp = (char *)token->val;
+	if ((*tmp == '"' && ft_strchr(tmp, '$')) || ft_strchr(tmp, '$'))
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
+
+int	ft_get_dollar_pos(char *s)
+{
+	int		i;
+
+	i = 0;
+	while (s[i] && s[i] != '$')
+		++i;
+	return (i);
+}
+
+int	ft_check_expand(t_list *token)
+{
+	char	*str;
+	t_list	*tmp;
+
+	tmp = token;
+	str = tmp->val;
+	if (*str == '$' || (ft_check_quotes(token) && !ft_open_quotes(token)
+			&& check_double_quotes(token)))
+	{
+		tmp->expand_flag = 1;
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
+
+/*
+** Compare the given value to the values in the env
+** Return the node witch matches
+*/
+void	*ft_cmp_var(t_list **env, char *var)
+{
+	t_list	*tmp;
+
+	tmp = *env;
+	if (!var)
+		return (NULL);
+	while (tmp)
+	{
+		if (!ft_strncmp((char *)tmp->val, var, ft_strlen(var)))
+			return (tmp->val);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+	else
+		definitive_val = ft_strjoin(tmp, token->expand_val);
+	tmp = NULL;
+	i = ft_get_dollar_pos(str) + ft_strlen(var);
+	while (str[i] && !ft_alnum_underscore(str[i]))
+		++i;
+	tmp = &str[i]; // here is the problem !!!
+	definitive_val = ft_strjoin(definitive_val, tmp);
+	return ((void *)definitive_val);
+}
+
+void	*ft_expand(t_env *envp, t_list *token)
+{
+	char	*var;
+
+	var = (char *)ft_var_to_expand((char *)token->val);
+	if (*var == '\'')
+		return (var);
+	token->val = (char *)ft_expand_val(envp, var, token, ft_var_value);
+	token->expand_flag = 0;
+	return (token->val);
+}
+
+/*
+** If (*var) is digit -> ERROR
+*/
+void	ft_expander(t_list **token, t_env *envp)
+{
+	t_list	*tmp;
+
+	tmp = *token;
+	while (tmp)
+	{
+		if (ft_check_expand(tmp))
+			tmp->val = ft_expand(envp, tmp);
+		tmp = tmp->next;
+	}
+	ft_quotes(token);
+}
