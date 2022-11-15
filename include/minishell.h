@@ -166,6 +166,7 @@ void	*ft_void_skipper(t_list **token);
 void    *push_top(t_gc **head, size_t data_size);
 void 	printList(t_gc 	*node);
 void	gc_free(void);
+void	ft_pop_in_gc(t_gc **start, void *p);
 
 /******************************************************************************/
 /**********************************  ERRORS  **********************************/

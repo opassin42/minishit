@@ -45,6 +45,7 @@ void	ft_free_var(t_var *var)
 		free(var->value);
 		var->next = NULL;
 		var = NULL;
+
 	}
 }
 
@@ -64,8 +65,9 @@ void	ft_delete_var(t_env *envp, char *var_name)
 	var = envp->var;
 	if (!ft_strcmp(var->name, var_name))
 	{
-		envp->var = envp->var->next;
+		tmp = envp->var->next;
 		ft_free_var(var);
+		var = tmp;
 		return ;
 	}
 	while (var->next)
@@ -74,7 +76,6 @@ void	ft_delete_var(t_env *envp, char *var_name)
 		{
 			prev = var;
 			tmp = var->next->next;
-			ft_free_var(var->next);
 			prev->next = tmp;
 			return ;
 		}
