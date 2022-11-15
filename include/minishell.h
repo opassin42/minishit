@@ -100,9 +100,25 @@ int		ft_size_of_env(t_var *var);
 int		ft_pwd(t_env *envp, t_cmd *cmd);
 int		ft_echo(t_env *envp, t_cmd *cmd);
 int		ft_cd(t_env *envp, t_cmd *cmd);
-int		ft_export(t_list *token, t_env envp);
 int		ft_env(t_env *envp, t_cmd *cmd);
 int		ft_unset(t_env *envp, t_cmd *cmd);
+
+/* Unset */
+int		get_nb_var(t_cmd *cmd);
+void	ft_free_var(t_var *var);
+void	ft_delete_var(t_env *envp, char *var_name);
+
+
+
+/* Export*/
+int		is_valid_name(char *str);
+char	*split_name(t_cmd *cmd, int i);
+char	*split_value(t_cmd *cmd, int i);
+t_var	*ft_new_var_env(t_cmd *cmd, int i);
+int		ft_export(t_env *envp, t_cmd *cmd);
+void	ft_export_env(t_var *var);
+void	ft_swap(t_var *a, t_var *b);
+
 
 /* Exec */
 t_cmd	*ft_new_cmd(t_list *token);

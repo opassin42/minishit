@@ -38,9 +38,8 @@ static void	ft_init_builtin(t_builtin *builtin)
 	builtin[3].f = ft_cd;
 	builtin[4].key = "unset";
 	builtin[4].f = ft_unset;
-
-	// builtin[3].key = "export";
-	// builtin[3].f = ft_export;
+	builtin[5].key = "export";
+	builtin[5].f = ft_export;
 	// builtin[6].key = "exit";
 	// builtin[6].f = ft_exit;
 }
@@ -51,7 +50,7 @@ static int	which_builtin(t_builtin *builtin, t_cmd *cmd)
 	int	cmp;
 
 	i = -1;
-	while (++i < 5)
+	while (++i < 6)
 	{
 		cmp = ft_strcmp(builtin[i].key, cmd->name);
 		if (!cmp)
@@ -71,7 +70,7 @@ void	ft_router(t_env *envp, t_cmd *cmd)
 {
 	int			ret;
 	char		**path;
-	t_builtin	builtin[5];
+	t_builtin	builtin[6];
 
 	ft_init_builtin(builtin);
 	ret = which_builtin(builtin, cmd);
