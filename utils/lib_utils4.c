@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 04:32:24 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/06 04:34:08 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:47:09 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,11 @@ char	*ft_itoa(int n)
 
 	nb = n;
 	len = get_size(nb);
-	res = malloc(sizeof(char) * (len + 1));
-	if (!res)
+	res = push_top(&start, sizeof(char) * (len + 1));
+	if (!res){
+		gc_free();
 		return (NULL);
+	}
 	res[len] = '\0';
 	if (nb == 0)
 		res[0] = '0';

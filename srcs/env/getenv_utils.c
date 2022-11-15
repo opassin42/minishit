@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 03:28:46 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/14 23:27:27 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:42:13 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,21 @@ char	*ft_var_name(char *s)
 t_var	*ft_new_var(t_list *token)
 {
 	int		end;
-	int		start;
+	int		begin;
 	char	*str;
 	t_var	*var;
 
 	str = (char *)token->val;
-	var = malloc(sizeof(t_var));
+	var = (t_var*)push_top(&start, sizeof(t_var));
 	if (!var)
+	{
+		gc_free();
 		return (NULL);
+	}
 	var->name = ft_var_name(str);
-	if (!var->name)
-		return (NULL);
-	start = ft_strlen(var->name) + 1;
+	begin = ft_strlen(var->name) + 1;
 	end = ft_strlen(str) - 1;
-	var->value = ft_substr(str, start, end);
-	if (!var->value)
-		return (NULL);
+	var->value = ft_substr(str, begin, end);
 	var->next = NULL;
 	return (var);
 }
@@ -73,6 +72,7 @@ int	ft_size_of_env(t_var *var)
 {
 	int	i;
 
+	i = 0;
 	if (var)
 	{
 		i = 0;

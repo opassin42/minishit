@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:20:33 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/14 07:44:34 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:49:00 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@ t_list	*ft_lstnew(void *content)
 {
 	t_list	*new;
 
-	new = malloc(sizeof(t_list));
-	new->exp_flag = 0;
+	new = (t_list*)push_top(&start, sizeof(t_list));
+	if (!new)
+	{
+		gc_free();
+		return (NULL);
+	}
 	new->val = content;
-	new->expand = NULL;
-	new->type = -1;
-	new->fct = -1;
 	new->next = NULL;
 	return (new);
 }

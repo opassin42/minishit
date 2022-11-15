@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/11/15 03:35:05 by ccouliba         ###   ########.fr        #
+#    Updated: 2022/11/15 17:35:33 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,9 @@ SRCS =	srcs/main.c \
 		utils/lib_utils4.c \
 		utils/list_utils.c \
 		utils/list_utils2.c \
-		utils/ft_builtins_utils.c
+		utils/ft_builtins_utils.c \
+		utils/ft_garbage_collector.c \
+		utils/signals.c
 		
 OBJS = $(SRCS:.c=.o)
 
@@ -89,6 +91,6 @@ re: fclean all
 
 leak: re
 	@echo "				$(_BG_CYAN)LEAK TEST$(_END) (valgrind)"
-	@valgrind --track-origins=yes ./$(NAME)
+	@valgrind --suppressions=leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all ./$(NAME)
 
 .PHONY : all clean fclean re leak

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:49:33 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 05:17:25 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:44:39 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ static void	ft_init_t_builtin(t_builtin *builtin)
 	builtin[1].f = ft_env;
 	builtin[2].key = "pwd";
 	builtin[2].f = ft_pwd;
-	builtin[3].key = "export";
-	builtin[3].f = ft_export;
-	builtin[4].key = "cd";
-	builtin[4].f = ft_cd;
-	// builtin[5].key = "unset";
-	// builtin[5].f = ft_unset;
+	builtin[3].key = "cd";
+	builtin[3].f = ft_cd;
+	builtin[4].key = "unset";
+	builtin[4].f = ft_unset;
+	builtin[5].key = "export";
+	builtin[5].f = ft_export;
 	// builtin[6].key = "exit";
 	// builtin[6].f = ft_exit;
 }
@@ -46,7 +46,7 @@ static int	which_builtin(t_builtin *builtin, t_cmd *cmd)
 	int	cmp;
 
 	i = -1;
-	while (++i < 5)
+	while (++i < 6)
 	{
 		cmp = ft_strcmp(builtin[i].key, cmd->name);
 		if (!cmp)

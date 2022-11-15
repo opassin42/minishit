@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 08:51:23 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:23:54 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,23 @@ int		ft_size_of_env(t_var *var);
 int		ft_pwd(t_env *envp, t_cmd *cmd);
 int		ft_echo(t_env *envp, t_cmd *cmd);
 int		ft_cd(t_env *envp, t_cmd *cmd);
-int		ft_export(t_list *token, t_env envp);
 int		ft_env(t_env *envp, t_cmd *cmd);
+int		ft_unset(t_env *envp, t_cmd *cmd);
+
+/* Unset */
+int		get_nb_var(t_cmd *cmd);
+void	ft_free_var(t_var *var);
+void	ft_delete_var(t_env *envp, char *var_name);
+
+/* Export*/
+int		is_valid_name(char *str);
+char	*split_name(t_cmd *cmd, int i);
+char	*split_value(t_cmd *cmd, int i);
+t_var	*ft_new_var_env(t_cmd *cmd, int i);
+int		ft_export(t_env *envp, t_cmd *cmd);
+void	ft_export_env(t_var *var);
+void	ft_swap(t_var *a, t_var *b);
+
 
 /* Exec */
 t_cmd	*ft_new_cmd(t_list *token);
@@ -115,11 +130,10 @@ char	**ft_malloc_double_p(t_list *token);
 char	*get_pwd(void);
 int		is_alphanum(t_upvarenv *upvarenv);
 int		ft_no_home(t_upvarenv *upvarenv);
-void	ft_init_cmd_struct(t_cmd *cmd, char *key);
 void	*ft_cmd(t_list **token);
 int		ft_non_builtin(t_env *envp, t_cmd *cmd, char **path);
-int		ft_router(t_env *envp, t_cmd *cmd);
-int		ft_exec(t_env *envp, t_cmd *cmd);
+void	ft_router(t_env *envp, t_cmd *cmd);
+void	ft_exec(t_env *envp, t_cmd *cmd);
 
 /******************************************************************************/
 /**********************************  UTILS  ***********************************/
@@ -171,6 +185,10 @@ void	ft_print_env(t_var *var);
 void	ft_free_token(t_list **token, void (*clr)(void*));
 void	ft_add_history(void *s);
 void	*ft_void_skipper(t_list **token);
+void    *push_top(t_gc **head, size_t data_size);
+void 	printList(t_gc 	*node);
+void	gc_free(void);
+void	ft_pop_in_gc(t_gc **start, void *p);
 
 /******************************************************************************/
 /**********************************  ERRORS  **********************************/
@@ -178,6 +196,13 @@ void	*ft_void_skipper(t_list **token);
 /* Builtin errors*/
 void	export_error(char *s);
 
-// g_status	status;
+/******************************************************************************/
+/**********************************  SIGNALS  *********************************/
+/******************************************************************************/
+void intHandler(int dummy) ;
+
+
+extern t_gc *start;
+static volatile int keepRunning = 1;
 
 #endif

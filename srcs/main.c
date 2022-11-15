@@ -6,20 +6,18 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 10:40:56 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:28:56 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	g_status;
-
-char	*ft_shellname(t_env *envp)
+char	*ft_shellname(void)
 {
-	char	*tmp;
+	char *tmp;
 
-	tmp = get_in_env(envp, "PWD");
-	tmp = ft_strjoin("\e[1;32m", tmp);
+	tmp = get_pwd();
+	tmp = ft_strjoin("\e[0;32m", tmp);
 	tmp = ft_strjoin(tmp, ":$>\e[0m");
 	return (tmp);
 }
@@ -74,7 +72,10 @@ int	main(int ac, char **av, char **env)
 		return (0);
 	envp = ft_getenv(env);
 	g_status = 0;
-	while (42)
+	start = NULL;
+	envp = ft_getenv(env);
+	signal(SIGINT, intHandler);
+	while (keepRunning)
 	{
 		s = readline((const char *)ft_shellname(&envp));
 		if (s && *s && ft_not_only_space((void *)s))

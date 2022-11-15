@@ -5,70 +5,73 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/28 03:11:54 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/04 17:24:38 by ccouliba         ###   ########.fr       */
+/*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
+/*   Updated: 2022/11/15 17:39:57 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	is_in_env(t_list **lst, char *s)
+/*int		is_valid_name(char *str)
 {
-	t_list	*tmp;
 
-	tmp = *lst;
-	while (tmp)
-	{
-		if (!ft_strcmp((char *)tmp->val, s))
-			return (EXIT_FAILURE);
-		tmp = tmp->next;
-	}
-	return (EXIT_SUCCESS);
+}*/
+
+char	*split_name(t_cmd *cmd, int i)
+{
+	char	*str;
+	int		name_size;
+
+	str = cmd->param[i];
+	name_size = ft_strchr(str, '=') - str;
+	return (ft_substr(str, 0, name_size));
 }
 
-static int	check_var_name(char *s)
+char	*split_value(t_cmd *cmd, int i)
 {
-	if (!s)
-		return (EXIT_FAILURE);
-	if ((ft_is_digit(*s) || !ft_isalpha(*s)) && *s != '_' && *s != '"')
-		return (export_error(s), EXIT_FAILURE);
-	if (!ft_strchr(s, '='))
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	char	*str;
+	int		value_size;
+
+	str = ft_strchr(cmd->param[i], '=');
+	value_size = (str + ft_strlen(cmd->param[i])) - str;
+	return (ft_substr(str, 0, value_size));
 }
 
-static void	ft_add_to_env(t_env envp, t_list *token)
+t_var	*ft_new_var_env(t_cmd *cmd, int i)
 {
-	void	*tmp;
+	t_var *var;
 
-	while (token)
+	var = push_top(&start, sizeof(t_var));
+	if (!var)
 	{
-		tmp = token->val;
-		if (check_var_name((char *)tmp))
-			break ;
-		if (!is_in_env(&envp.list, (char *)tmp))
-		{
-			tmp = (void *)expand(envp, tmp);
-			ft_lstadd_back(&envp.list, ft_lstnew(tmp));
-		}
-		token = token->next;
+		gc_free();
+		return (NULL);
 	}
-	return ;
+	var->name = split_name(cmd, i);
+	var->value = split_value(cmd, i);
+	var->next = NULL;
+	return (var);
 }
 
-int	ft_export(t_list *token, t_env envp)
+int	ft_export(t_env *envp, t_cmd *cmd)
 {
-	char	*cmd;
-	t_list	*tmp;
+	t_var	*var;
+	int		nb_var;
+	int		i;
 
-	cmd = NULL;
-	tmp = token;
-	while (tmp)
+	i = 0;
+	if (cmd)
+		nb_var = get_nb_var(cmd);
+	if(!cmd->param)
+		ft_export_env(envp->var);
+	if (envp->var)
+		var = envp->var;
+	while (var)
+		var = var->next;
+	while (i++ < nb_var)
 	{
-		cmd = (char *)tmp->val;
-		if (!ft_strcmp(cmd, "export") && tmp->next)
-			ft_add_to_env(envp, tmp->next);
-		tmp = tmp->next;
+		var = ft_new_var_env(cmd, i);
+		var = var->next;		
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }

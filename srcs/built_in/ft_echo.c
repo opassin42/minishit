@@ -6,12 +6,18 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 03:48:18 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/14 04:24:35 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:38:22 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/*
+ * is_n_opt     : check if the n option is present
+ * Type        : static integer
+ * Parameter   : string
+ * Return value : 1 in case of error or 0 in case of success
+ */
 static int	is_n_opt(char *str)
 {
 	size_t	i;
@@ -31,12 +37,10 @@ static int	is_n_opt(char *str)
 }
 
 /*
- * echo        : write paramuments to standard output
+ * ft_echo     : write paramuments to standard output
  * Type        : integer
- * Parametre : double tableau de caracteres,
- la premiere case etant reserver
- on recoit ++param en parametre
- * Valeur de retour : 1 en cas d'erreur, 0 en cas de succes
+ * Parameter   : the environment, the cmd list
+ * Return value : 1 en cas d'erreur, 0 en cas de succes
  */
 
 int	ft_echo(t_env *envp, t_cmd *cmd)

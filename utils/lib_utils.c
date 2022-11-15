@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 05:37:44 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/09/17 04:43:49 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:46:42 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,12 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s1 || !s2)
 		return (NULL);
 	len = ft_strlen(s1) + ft_strlen(s2);
-	join = malloc(sizeof(char) * (len + 1));
+	join = (char *)push_top(&start, sizeof(char) * (len + 1));
 	if (!join)
+	{
+		gc_free();
 		return (0);
+	}
 	else
 	{
 		ft_memcpy(join, s1, ft_strlen(s1));
@@ -61,9 +64,12 @@ void	*ft_strjoin_char(char *s1, char c)
 
 	i = 0;
 	len = ft_strlen(s1);
-	tab = (char *)malloc(sizeof(char) * (len + 2));
+	tab = (char *)push_top(&start, sizeof(char) * (len + 2));
 	if (!tab || s1)
+	{
+		gc_free();
 		return (NULL);
+	}
 	while (s1 && s1[i] != '\0')
 	{
 		tab[i] = s1[i];

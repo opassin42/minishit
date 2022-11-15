@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 00:51:18 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 06:56:35 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:15:52 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	check_syntax(t_list *token, t_syntaxer synt)
 
 int	ft_syntaxer(t_list **token, t_syntaxer synt)
 {
-	t_list		*tmp;
+	t_list	*tmp;
 
 	tmp = (t_list *)(*token);
 	if (ft_check_last_token(tmp) || ft_check_first_token(tmp))
