@@ -45,7 +45,6 @@ void	ft_free_var(t_var *var)
 		free(var->value);
 		var->next = NULL;
 		var = NULL;
-
 	}
 }
 
@@ -85,9 +84,9 @@ void	ft_delete_var(t_env *envp, char *var_name)
 }
 
 /*
-Type : Integer
-Arg : [envp] -> pointer to the first environment's element (struct t_env, cf: structs.h)
-	  [cmd] -> pointer to the first cmd's element which is the arguments of the cmd (struct t_cmd, cf: structs.h)
+Type : Integer 
+Arg : [envp] -> pointer to the first environment's element
+[cmd] -> pointer to the first cmd's element 
 Role: unset all the named variable passed in command line
 Return value: this builtin always return 0 in case of success
 */
@@ -96,27 +95,26 @@ int	ft_unset(t_env *envp, t_cmd *cmd)
 	t_var	*var;
 	int		nb_var;
 
-	nb_var = 0;
 	if (cmd)
 		nb_var = get_nb_var(cmd);
 	while (nb_var--)
 	{
 		if (envp->var)
-			var = envp->var;
-		else
-			return (0);
-		while (var && *cmd->param)
 		{
-			if (!ft_strcmp(var->name, *cmd->param))
+			var = envp->var;
+			while (var && *cmd->param)
 			{
-				ft_delete_var(envp, var->name);
-				cmd->param++;
-				break ;
+				if (!ft_strcmp(var->name, *cmd->param))
+				{
+					ft_delete_var(envp, var->name);
+					cmd->param++;
+					break ;
+				}
+				var = var->next;
 			}
-			var = var->next;
+			if (!var)
+				cmd->param++;
 		}
-		if (!var)
-			cmd->param++;
 	}
 	return (0);
 }

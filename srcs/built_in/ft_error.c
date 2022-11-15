@@ -24,7 +24,6 @@ void	export_error(char *s)
 		if (!tmp)
 			return ;
 		printf("minishell: export: '%s': bad option\n", *tmp);
-		//tmp = free_double_p(tmp);
 		return ;
 	}
 	printf("minishell: export: '%s': not a valid identifier\n", s);

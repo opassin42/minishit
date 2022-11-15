@@ -36,7 +36,7 @@ static t_upvarenv	*init_upvarenv(void)
 {
 	t_upvarenv	*tmp;
 
-	tmp = (t_upvarenv*)push_top(&start, sizeof(t_upvarenv));
+	tmp = push_top(&start, sizeof(t_upvarenv));
 	if (!tmp)
 	{
 		gc_free();
