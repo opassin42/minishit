@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 17:39:57 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/16 03:43:57 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ char	*split_value(t_cmd *cmd, int i)
 
 t_var	*ft_new_var_env(t_cmd *cmd, int i)
 {
-	t_var *var;
+	t_var	*var;
 
-	var = push_top(&start, sizeof(t_var));
+	var = (t_var *)push_top(&start, sizeof(t_var));
 	if (!var)
 	{
 		gc_free();
@@ -62,7 +62,7 @@ int	ft_export(t_env *envp, t_cmd *cmd)
 	i = 0;
 	if (cmd)
 		nb_var = get_nb_var(cmd);
-	if(!cmd->param)
+	if (!cmd->param)
 		ft_export_env(envp->var);
 	if (envp->var)
 		var = envp->var;
@@ -71,7 +71,7 @@ int	ft_export(t_env *envp, t_cmd *cmd)
 	while (i++ < nb_var)
 	{
 		var = ft_new_var_env(cmd, i);
-		var = var->next;		
+		var = var->next;
 	}
 	return (0);
 }

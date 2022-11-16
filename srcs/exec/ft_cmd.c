@@ -6,17 +6,17 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:30 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 17:33:10 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/16 05:58:03 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	assign_a_type(t_list **token)
+static void	assign_a_type(t_list *token)
 {
 	t_list	*tmp;
 
-	tmp = *token;
+	tmp = token;
 	while (tmp)
 	{
 		if (!word_type(tmp->val))
@@ -27,6 +27,21 @@ static void	assign_a_type(t_list **token)
 			tmp->type = RD;
 		tmp = tmp->next;
 	}
+}
+
+static void	ft_init_cmd_struct(t_cmd *cmd, char *key)
+{
+	cmd->id = 0;
+	cmd->err_no = 0;
+	cmd->status = 0;
+	cmd->pid = 0;
+	cmd->fd_in = 0;
+	cmd->fd_out = 0;
+	cmd->rd = NULL;
+	cmd->name = key;
+	cmd->param = (char **) NULL;
+	cmd->arg = (char **) NULL;
+	cmd->bin = NULL;
 }
 
 static void	*define_param(t_list *token)
@@ -88,15 +103,26 @@ static void	*make_cmd(t_list *token)
 	return ((void *)cmd);
 }
 
+static void	*final_token(t_list **token)
+{
+	t_list	*new;
+
+	if ((*token)->type == VOID)
+		*token = (*token)->next;
+	new = ft_tokenjoin(token);
+	if (!new)
+		return (NULL);
+	assign_a_type(new);
+	print_token(new);
+	return ((void *)new);
+}
+
 void	*ft_cmd(t_list **token)
 {
-	t_list	*tmp;
 	t_cmd	*cmd;
+	t_list	*tmp;
 
-	tmp = ft_tokenjoin(token);
-	if (!tmp)
-		return (NULL);
-	assign_a_type(&tmp);
+	tmp = final_token(token);
 	cmd = (t_cmd *)make_cmd(tmp);
 	if (!cmd)
 		return (NULL);

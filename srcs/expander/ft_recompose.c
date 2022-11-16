@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 08:11:34 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 17:34:10 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/16 06:14:56 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*substring(t_env envp, char *s)
 	return (tmp);
 }
 
-static char	*compose(t_env envp, char *val)
+char	*compose(t_env envp, char *val)
 {
 	char	*tmp;
 

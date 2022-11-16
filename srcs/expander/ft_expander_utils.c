@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 04:45:05 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 17:33:52 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/16 05:27:19 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	ft_alnum_underscore(int c)
 	return (EXIT_FAILURE);
 }
 
-int	check_simple_quotes(char *s)
+int	check_quotes(char *s, int c)
 {
-	if (*s == '\'')
+	if (*s == c)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
@@ -43,44 +43,19 @@ int	ft_get_dollar_pos(char *s)
 	return (i);
 }
 
-void	*var_name(char *str, int start)
+void	expand_quote_flag(t_list *token)
 {
-	int		i;
-	char	*tmp;
+	char	*s;
 
-	if (!str)
-		return (NULL);
-	i = start + 1;
-	if (!str[i])
-		return (NULL);
-	tmp = NULL;
-	if (!str[i + 1])
-		tmp = ft_strdup(&str[i]);
-	while (str[i++])
+	s = (char *)token->val;
+	token->quote = 0;
+	token->exp_flag = 0;
+	if (ft_strchr(s, '$') && *(s + 1))
 	{
-		if (ft_alnum_underscore(str[i]))
-		{
-			tmp = (void *)ft_substr(str, start, i - start);
-			if (!tmp)
-				return (NULL);
-			return (tmp);
-		}
+		if (!check_quotes(s, '\''))
+			token->exp_flag = 1;
+		if (check_quotes(s, '"'))
+			token->quote = 1;
 	}
-	return (NULL);
-}
-
-char	*find_value(t_env *envp, char *var_name)
-{
-	t_var	*var;
-
-	var = envp->var;
-	if (!var_name || (*var_name == '$' && !(*var_name + 1)))
-		return (NULL);
-	while (var)
-	{
-		if (!ft_strcmp(var->name, var_name))
-			return (var->value);
-		var = var->next;
-	}
-	return (ft_strdup(""));
+	return ;
 }

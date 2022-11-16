@@ -6,11 +6,37 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:45:01 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 17:34:46 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/16 06:21:05 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	*var_name(char *str, int start)
+{
+	int		i;
+	char	*tmp;
+
+	if (!str)
+		return (NULL);
+	i = start + 1;
+	if (!str[i])
+		return (NULL);
+	tmp = NULL;
+	if (!str[i + 1])
+		tmp = ft_strdup(&str[i]);
+	while (str[i++])
+	{
+		if (ft_alnum_underscore(str[i]))
+		{
+			tmp = (void *)ft_substr(str, start, i - start);
+			if (!tmp)
+				return (NULL);
+			return (tmp);
+		}
+	}
+	return (NULL);
+}
 
 static char	*check_name(char *name)
 {
@@ -25,42 +51,20 @@ static char	*check_name(char *name)
 	return (tmp);
 }
 
-static void	expand_flag(t_list *token)
+char	*find_value(t_env *envp, char *var_name)
 {
-	char	*s;
+	t_var	*var;
 
-	s = (char *)token->val;
-	// token->exp_flag = 0;
-	if (ft_strchr(s, '$') && *(s + 1))
-	{
-		if (!check_simple_quotes(s))
-			token->exp_flag = 1;
-	}
-	return ;
-}
-
-static char	*remove_quotes(t_list *token)
-{
-	char	*s;
-	char	*val;
-
-	s = (char *)token->val;
-	if (!s)
+	var = envp->var;
+	if (!var_name || (*var_name == '$' && !(*var_name + 1)))
 		return (NULL);
-	if (ft_strlen(s) == 2 && ft_strchr(QUOTE_LIST, s[0]) && s[0] == s[1])
-		return (ft_strdup(""));
-	else
+	while (var)
 	{
-		if (ft_strchr(QUOTE_LIST, s[0]))
-		{
-			val = ft_substr(s, 1, ft_strlen(s) - 2);
-			if (!val)
-				return (NULL);
-			return (val);
-		}
-		return (s);
+		if (!ft_strcmp(var->name, var_name))
+			return (var->value);
+		var = var->next;
 	}
-	return (s);
+	return (ft_strdup(""));
 }
 
 char	*expand(t_env envp, char *s)
@@ -103,17 +107,15 @@ void	ft_expander(t_list **token, t_env envp)
 	exp_val = NULL;
 	while (tmp)
 	{
-		expand_flag(tmp);
+		expand_quote_flag(tmp);
 		first_val = remove_quotes(tmp);
 		if (!first_val)
 			return ;
 		if (tmp->exp_flag)
 		{
-			exp_val = ft_recompose(envp, first_val);
+			exp_val = ft_assemble(envp, tmp, first_val);
 			if (exp_val)
 				tmp->expand = exp_val;
-			else
-				return ;
 		}
 		else
 			tmp->expand = first_val;

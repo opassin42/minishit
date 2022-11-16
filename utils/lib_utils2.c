@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:20:26 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 17:47:04 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/16 02:49:58 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ char	*ft_substr(char *s, int begin, size_t len)
 	size_t	i;
 	char	*sub;
 
-	sub = (char *)push_top(&start, sizeof(char) * (len + 1));
-	if (!s || !sub)
-	{
+	if (!s)
 		return (NULL);
-	}
+	sub = (char *)push_top(&start, sizeof(char) * (len + 1));
+	if (!sub)
+		return (gc_free(), NULL);
 	i = 0;
 	while (s[begin] && i != len)
 		sub[i++] = s[begin++];
@@ -40,12 +40,9 @@ char	*ft_strdup(char *s)
 
 	if (!s)
 		return (malloc(0));
-	dup = (char*)push_top(&start, sizeof(char) * (ft_strlen(s) + 1));
+	dup = (char *)push_top(&start, sizeof(char) * (ft_strlen(s) + 1));
 	if (!dup)
-	{
-		gc_free();
-		return (NULL);
-	}
+		return (gc_free(), NULL);
 	i = -1;
 	while (s[++i])
 		dup[i] = s[i];

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsaada <dsaada@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:47:36 by dsaada            #+#    #+#             */
-/*   Updated: 2022/07/30 13:09:55 by dsaada           ###   ########.fr       */
+/*   Updated: 2022/11/16 03:43:39 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*get_cwd(void)
 	char	*res;
 
 	getcwd(buff, sizeof(buff));
-	res = malloc(sizeof(char) * (ft_strlen(buff) + 1));
+	res = (char *)push_top(&start, (sizeof(char) * (ft_strlen(buff) + 1)));
 	if (!res)
 		return (NULL);
 	i = 0;
@@ -38,10 +38,10 @@ char	*get_cwd(void)
 		i++;
 	}
 	res[i] = '\0';
-	return (res);	
+	return (res);
 }
 
-int		ft_pwd(t_cmd *cmd, t_env *env)
+int	ft_pwd(t_cmd *cmd, t_env *env)
 {
 	(void)cmd;
 	(void)env;
