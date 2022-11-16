@@ -6,7 +6,11 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 00:38:26 by ccouliba          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2022/11/05 00:37:21 by ccouliba         ###   ########.fr       */
+=======
 /*   Updated: 2022/07/12 01:48:56 by ccouliba         ###   ########.fr       */
+>>>>>>> 32e3cefb54bf4eca551639a470025084468b8652
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +40,16 @@ static t_upvarenv	*init_upvarenv(void)
 {
 	t_upvarenv	*tmp;
 
+<<<<<<< HEAD
+	tmp = (t_upvarenv *) malloc (sizeof (t_upvarenv));
+	if (!tmp)
+	{
+=======
 	tmp = push_top(&start, sizeof(t_upvarenv));
 	if (!tmp)
 	{
 		gc_free();
+>>>>>>> 32e3cefb54bf4eca551639a470025084468b8652
 		printf("minishell: cd: allocate error\n");
 		return (NULL);
 	}
@@ -117,7 +127,12 @@ int	ft_cd(t_env *envp, t_cmd *cmd)
 			return (ft_no_home(upvarenv));
 		else
 		{
+<<<<<<< HEAD
+			if (!ft_strcmp(upvarenv->path, "-")
+				|| !ft_strcmp(upvarenv->path, "--"))
+=======
 			if (!ft_strcmp(upvarenv->path, "-"))
+>>>>>>> 32e3cefb54bf4eca551639a470025084468b8652
 				ft_upenv(upvarenv, envp, "OLDPWD", "PWD");
 			else if (upvarenv->path[0] == '/' || upvarenv->path[0] == '.'
 				|| (upvarenv->path[0] == '.' && upvarenv->path[1] == '.'))

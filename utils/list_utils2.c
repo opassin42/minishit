@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 17:44:41 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/20 03:52:54 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:36:53 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void*))
 	t_list	*elem;
 
 	elem = *lst;
-	if (elem && del)
+	if (*lst && del)
 	{
 		while (*lst)
 		{
@@ -45,7 +45,6 @@ void	ft_lst_prevlast(t_list **list)
 
 	last = *list;
 	prev_last = *list;
-
 	while (last->next)
 	{
 		prev_last = last;

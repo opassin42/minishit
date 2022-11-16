@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 17:35:35 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/27 21:06:12 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:44:56 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	ft_quotes(t_list **token)
 	while (tmp)
 	{
 		tmp->val = ft_rm_quotes(tmp);
+		if (!tmp->val)
+			return ;
 		tmp = tmp->next;
 	}
 }

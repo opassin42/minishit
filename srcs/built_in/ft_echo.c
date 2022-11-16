@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 03:48:18 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/28 05:19:17 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:38:22 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_echo(t_env *envp, t_cmd *cmd)
 
 	(void)envp;
 	param = cmd->param;
-	if (!param)
+	if (!param || !*param)
 		return (printf("\n"), EXIT_SUCCESS);
 	nflag = 0;
 	while (*param)

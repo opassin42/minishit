@@ -6,25 +6,27 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:30 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/27 22:24:14 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:33:10 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	ft_init_cmd_struct(t_cmd *cmd, char *key)
+static void	assign_a_type(t_list **token)
 {
-	cmd->id = 0;
-	cmd->err_no = 0;
-	cmd->status = 0;
-	cmd->pid = 0;
-	cmd->fd_in = 0;
-	cmd->fd_out = 0;
-	cmd->rd = NULL;
-	cmd->name = key;
-	cmd->param = (char **) NULL;
-	cmd->arg = (char **) NULL;
-	cmd->bin = NULL;
+	t_list	*tmp;
+
+	tmp = *token;
+	while (tmp)
+	{
+		if (!word_type(tmp->val))
+			tmp->type = WORD;
+		else if (!pipe_type(tmp->val))
+			tmp->type = PIPE;
+		else if (!rd_type(tmp->val))
+			tmp->type = RD;
+		tmp = tmp->next;
+	}
 }
 
 static void	*define_param(t_list *token)
@@ -35,47 +37,41 @@ static void	*define_param(t_list *token)
 	token = token->next;
 	if (!token)
 		return (NULL);
-	if (token->type == WORD)
-		param = ft_lstnew(token->val);
-	else if (token->type == VOID)
-		param = NULL;
-	else
-		return (NULL);
-	tmp = token->next;
-	while (tmp)
+	tmp = NULL;
+	param = NULL;
+	while (token)
 	{
-		if (tmp->type == VOID)
-			tmp = tmp->next;
-		if (tmp->type == WORD)
-			ft_lstadd_back(&param, ft_lstnew(tmp->expand));
+		if (token->type == WORD)
+		{
+			tmp = ft_lstnew(token->val);
+			if (!tmp)
+				return (NULL);
+			ft_lstadd_back(&param, tmp);
+		}
 		else
 			break ;
-		tmp = tmp->next;
+		token = token->next;
 	}
-	return (param);
+	return ((void *)param);
 }
 
-void	ft_param_n_arg(t_list *token, t_cmd *cmd)
+static void	ft_param_n_arg(t_list *token, t_cmd *cmd)
 {
-	t_list	*arg;
 	t_list	*param;
 
-	param = (t_list *)define_param(token);
+	cmd->arg = ft_malloc_double_p(token);
+	if (!cmd->arg)
+		return ;
+	param = define_param(token);
 	if (!param)
 		return ;
-	arg = param;
-	if (cmd->name)
-		ft_lstadd_front(&arg, ft_lstnew((void *)(cmd->name)));
 	cmd->param = ft_malloc_double_p(param);
 	if (!cmd->param)
-		cmd->param = (char **) NULL;
-	cmd->arg = ft_malloc_double_p(arg);
-	if (!cmd->arg)
 		return ;
 	return ;
 }
 
-static void	*create_cmd(t_list *token)
+static void	*make_cmd(t_list *token)
 {
 	t_cmd	*cmd;
 
@@ -84,12 +80,12 @@ static void	*create_cmd(t_list *token)
 		cmd = ft_new_cmd(token);
 		if (!cmd)
 			return (NULL);
-		ft_init_cmd_struct(cmd, token->expand);
+		ft_init_cmd_struct(cmd, token->val);
 		ft_param_n_arg(token, cmd);
 	}
 	else
 		return (NULL);
-	return (cmd);
+	return ((void *)cmd);
 }
 
 void	*ft_cmd(t_list **token)
@@ -97,8 +93,11 @@ void	*ft_cmd(t_list **token)
 	t_list	*tmp;
 	t_cmd	*cmd;
 
-	tmp = *token;
-	cmd = (t_cmd *)create_cmd(tmp);
+	tmp = ft_tokenjoin(token);
+	if (!tmp)
+		return (NULL);
+	assign_a_type(&tmp);
+	cmd = (t_cmd *)make_cmd(tmp);
 	if (!cmd)
 		return (NULL);
 	while (tmp)
@@ -106,9 +105,12 @@ void	*ft_cmd(t_list **token)
 		if (tmp->type == PIPE)
 		{
 			tmp = tmp->next;
-			if (tmp->type == VOID)
+			if (tmp && tmp->type == VOID)
 				tmp = tmp->next;
-			ft_cmd_addback(&cmd, (t_cmd *)create_cmd(tmp));
+			if (tmp)
+				ft_cmd_addback(&cmd, (t_cmd *)make_cmd(tmp));
+			else
+				break ;
 		}
 		tmp = tmp->next;
 	}

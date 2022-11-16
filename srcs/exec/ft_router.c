@@ -6,27 +6,13 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:49:33 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/27 20:06:44 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:44:39 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	**path_value(t_env *envp, char *var_name)
-{
-	char	*value;
-	char	**path;
-
-	value = find_value(envp, var_name);
-	if (!value)
-		return (NULL);
-	path = ft_split(value, ':');
-	if (!path)
-		return (NULL);
-	return (path);
-}
-
-static void	ft_init_builtin(t_builtin *builtin)
+static void	ft_init_t_builtin(t_builtin *builtin)
 {
 	builtin[0].key = "echo";
 	builtin[0].f = ft_echo;
@@ -44,6 +30,16 @@ static void	ft_init_builtin(t_builtin *builtin)
 	// builtin[6].f = ft_exit;
 }
 
+static int	ft_builtin_ret(t_env *envp, t_cmd *cmd, t_builtin *builtin, int i)
+{
+	int	res;
+
+	res = builtin[i].f(envp, cmd);
+	if (res)
+		return (res);
+	return (EXIT_SUCCESS);
+}
+
 static int	which_builtin(t_builtin *builtin, t_cmd *cmd)
 {
 	int	i;
@@ -59,29 +55,39 @@ static int	which_builtin(t_builtin *builtin, t_cmd *cmd)
 	return (-1);
 }
 
-static int	ft_builtin(t_env *envp, t_cmd *cmd, t_builtin *builtin, int ret)
+static char	**path_value(t_env *envp, char *var_name)
 {
-	if (builtin[ret].f(envp, cmd))
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	char	*value;
+	char	**path;
+
+	if (!var_name)
+		return (NULL);
+	value = find_value(envp, var_name);
+	if (!value)
+		return (NULL);
+	path = ft_split(value, ':');
+	if (!path)
+		return (NULL);
+	return (path);
 }
 
-void	ft_router(t_env *envp, t_cmd *cmd)
+int	ft_router(t_env *envp, t_cmd *cmd)
 {
-	int			ret;
+	int			id;
+	int			status;
 	char		**path;
-	t_builtin	builtin[6];
+	t_builtin	builtin[5];
 
-	ft_init_builtin(builtin);
-	ret = which_builtin(builtin, cmd);
-	if (ret != -1)
-		ft_builtin(envp, cmd, builtin, ret);
+	ft_init_t_builtin(builtin);
+	id = which_builtin(builtin, cmd);
+	if (id != -1)
+		status = ft_builtin_ret(envp, cmd, builtin, id);
 	else
 	{
 		path = path_value(envp, "PATH");
 		if (!path)
-			return ;
-		ft_non_builtin(envp, cmd, path);
+			return (-1);
+		status = ft_non_builtin(envp, cmd, path);
 	}
-	return ;
+	return (status);
 }

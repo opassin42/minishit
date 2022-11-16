@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:52 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/25 04:34:30 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:35:42 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@
 # define QUOTE_LIST "'\""
 # define FAIL -1
 # define SUCCESS 0
-
+# define ERRNO_1 "syntax error near unexpected token"
+# define ERRNO_2 "command not found"
+# define ERRNO_3 "no such file or directory"
 /*
 ** ANSI COLORS
 */
