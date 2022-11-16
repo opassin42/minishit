@@ -6,87 +6,102 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 08:11:34 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/18 22:41:24 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:34:10 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/*
-** Does not join like i want
-*/
-
-static int	check_for_joining(t_list *curr, t_list *next)
+static char	*normal_substring(char *s)
 {
-	if (curr->type == WORD)
-		if (curr->type == next->type)
-			return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
+	int	i;
 
-static void	*non_word_token(t_list *token)
-{
-	while (token)
+	if (!s)
+		return (NULL);
+	i = 0;
+	while (s[i])
 	{
-		if (token->type != WORD)
-			return ((void *)token);
-		token = token->next;
+		if (s[i] == '$')
+			break ;
+		++i;
 	}
-	return (NULL);
+	return (ft_substr(s, 0, i));
 }
 
-static char	*join_word_type(t_list **token)
+static char	*dollar_substring(char *s)
 {
-	char	*new_val;
-	t_list	*tmp;
-	t_list	*curr;
+	int	i;
 
-	tmp = *token;
-	curr = (*token)->next;
-	if (curr && check_for_joining(tmp, curr))
-		new_val = ft_strjoin(tmp->expand, curr->expand);
+	if (!s)
+		return (NULL);
+	i = 0;
+	while (s[++i])
+	{
+		if (i == 1 && (s[i] == '?' || ft_is_digit(s[i])))
+			return (ft_substr(s, 0, i + 1));
+		else if (ft_alnum_underscore(s[i]))
+			break ;
+	}
+	return (ft_substr(s, 0, i));
+}
+
+char	*substring(t_env envp, char *s)
+{
+	char	*tmp;
+
+	(void)envp;
+	if (*s == '$')
+		tmp = dollar_substring(s);
 	else
-		return (tmp->expand);
-	while (curr)
-	{
-		tmp = curr->next;
-		if (tmp && check_for_joining(curr, tmp))
-			new_val = ft_strjoin(new_val, tmp->expand);
-		else
-			return (new_val);
-		curr = curr->next;
-	}
-	*token = curr;
-	return (NULL);
+		tmp = normal_substring(s);
+	if (!tmp)
+		return (NULL);
+	return (tmp);
 }
 
-static void	*ft_join_token(t_list **token)
+static char	*compose(t_env envp, char *val)
 {
-	char	*new_val;
-	t_list	*tmp;
-	t_list	*new_token;
+	char	*tmp;
 
-	tmp = *token;
-	new_val = join_word_type(&tmp);
-	new_token = ft_lstnew((void *)new_val);
-	tmp = non_word_token(*token);
-	while (tmp)
+	if (!val)
+		return (NULL);
+	tmp = NULL;
+	if (*val == '$')
 	{
-		new_val = join_word_type(&tmp);
-		ft_lstadd_back(&new_token, ft_lstnew((void *)new_val));
-		tmp = tmp->next;
+		tmp = expand(envp, val);
+		if (!tmp)
+			return (ft_strdup(""));
 	}
-	return ((void *)new_token);
+	else
+		tmp = val;
+	return (tmp);
 }
 
-/*
-** Have to make this function again
-** Bad return (the new token list does not return like it should)
-*/
-void	*ft_recompose(t_list **token)
+char	*ft_recompose(t_env envp, char *s)
 {
-	t_list	*new_token;
+	char	*tmp;
+	char	*val;
+	char	*join;
 
-	new_token = ft_join_token(token);
-	return ((void *)new_token);
+	if (!s)
+		return (NULL);
+	tmp = substring(envp, s);
+	if (!tmp)
+		return (NULL);
+	val = compose(envp, tmp);
+	if (!val)
+		return (NULL);
+	join = val;
+	s = s + ft_strlen(tmp);
+	while (*s)
+	{
+		tmp = substring(envp, s);
+		if (!tmp)
+			return (NULL);
+		join = ft_strjoin(join, compose(envp, tmp));
+		if (!join)
+			return (NULL);
+		s = s + ft_strlen(tmp);
+	}
+	return (join);
 }

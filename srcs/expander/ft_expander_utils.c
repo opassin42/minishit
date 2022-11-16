@@ -6,11 +6,13 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 04:45:05 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/27 22:29:59 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:33:52 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+extern int	g_status;
 
 int	ft_alnum_underscore(int c)
 {
@@ -41,6 +43,32 @@ int	ft_get_dollar_pos(char *s)
 	return (i);
 }
 
+void	*var_name(char *str, int start)
+{
+	int		i;
+	char	*tmp;
+
+	if (!str)
+		return (NULL);
+	i = start + 1;
+	if (!str[i])
+		return (NULL);
+	tmp = NULL;
+	if (!str[i + 1])
+		tmp = ft_strdup(&str[i]);
+	while (str[i++])
+	{
+		if (ft_alnum_underscore(str[i]))
+		{
+			tmp = (void *)ft_substr(str, start, i - start);
+			if (!tmp)
+				return (NULL);
+			return (tmp);
+		}
+	}
+	return (NULL);
+}
+
 char	*find_value(t_env *envp, char *var_name)
 {
 	t_var	*var;
@@ -54,5 +82,5 @@ char	*find_value(t_env *envp, char *var_name)
 			return (var->value);
 		var = var->next;
 	}
-	return (NULL);
+	return (ft_strdup(""));
 }

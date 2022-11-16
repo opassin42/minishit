@@ -6,66 +6,11 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:45:01 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/27 22:32:11 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:34:46 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-static void	expand_flag(t_list *token)
-{
-	char	*s;
-
-	s = (char *)token->val;
-	if (ft_strchr(s, '$') && *(s + 1))
-	{
-		if (check_simple_quotes(s))
-			token->exp_flag = 0;
-		else
-			token->exp_flag = 1;
-	}
-	else
-		token->exp_flag = 0;
-	return ;
-}
-
-// void	*var_value(t_env envp, char *name)
-// {
-// 	char	*tmp;
-
-// 	if (!name)
-// 		return (NULL);
-// 	tmp = find_value(&envp, name);
-// 	if (!tmp)
-// 		return (ft_strdup(""));
-// 	return (tmp);
-// }
-
-static void	*var_name(char *str, int start)
-{
-	int		i;
-	char	*tmp;
-
-	if (!str)
-		return (NULL);
-	i = start + 1;
-	if (!str[i])
-		return (NULL);
-	tmp = NULL;
-	if (!str[i + 1])
-		tmp = ft_strdup(&str[i]);
-	while (str[i++])
-	{
-		if (ft_alnum_underscore(str[i]))
-		{
-			tmp = (void *)ft_substr(str, start, i - start);
-			if (!tmp)
-				return (NULL);
-			return (tmp);
-		}
-	}
-	return (NULL);
-}
 
 static char	*check_name(char *name)
 {
@@ -80,52 +25,98 @@ static char	*check_name(char *name)
 	return (tmp);
 }
 
-static char	*expand(t_env envp, t_list *token)
+static void	expand_flag(t_list *token)
+{
+	char	*s;
+
+	s = (char *)token->val;
+	// token->exp_flag = 0;
+	if (ft_strchr(s, '$') && *(s + 1))
+	{
+		if (!check_simple_quotes(s))
+			token->exp_flag = 1;
+	}
+	return ;
+}
+
+static char	*remove_quotes(t_list *token)
+{
+	char	*s;
+	char	*val;
+
+	s = (char *)token->val;
+	if (!s)
+		return (NULL);
+	if (ft_strlen(s) == 2 && ft_strchr(QUOTE_LIST, s[0]) && s[0] == s[1])
+		return (ft_strdup(""));
+	else
+	{
+		if (ft_strchr(QUOTE_LIST, s[0]))
+		{
+			val = ft_substr(s, 1, ft_strlen(s) - 2);
+			if (!val)
+				return (NULL);
+			return (val);
+		}
+		return (s);
+	}
+	return (s);
+}
+
+char	*expand(t_env envp, char *s)
 {
 	int		pos;
-	char	*tmp;
 	char	*name;
 	char	*var_val;
 
-	tmp = (char *)token->val;
-	pos = ft_get_dollar_pos(tmp);
-	name = var_name(tmp, pos);
+	if (!s)
+		return (NULL);
+	pos = ft_get_dollar_pos(s);
+	name = (char *)var_name(s, pos);
+	if (!name)
+		return (NULL);
 	name = check_name(name);
 	if (!name)
-		return (ft_strdup(""));
-	printf("-> name : [%s]\n", name);
-	var_val = find_value(&envp, name);
+		return (NULL);
+	if (!ft_strcmp(name, "?"))
+		var_val = ft_itoa(g_status);
+	else
+		var_val = find_value(&envp, name);
 	if (!var_val)
 		return (ft_strdup(""));
-	printf("-> val : [%s]\n", var_val);
 	return (var_val);
 }
 
 /*
 ** Correct
 ** I may recompose (ft_recompose) right here, (after)removing quotes
-**
-** Have this error : "Permission denied"
-** By execve() for this input : $aaaaaa
-**
-** Handle this input : $1a
+** Handle this input : $1abc
+** warning : if export a="o hi" -> ech$a = hi
 */
 void	ft_expander(t_list **token, t_env envp)
 {
+	char	*exp_val;
+	char	*first_val;
 	t_list	*tmp;
 
 	tmp = *token;
+	exp_val = NULL;
 	while (tmp)
 	{
 		expand_flag(tmp);
+		first_val = remove_quotes(tmp);
+		if (!first_val)
+			return ;
 		if (tmp->exp_flag)
-			tmp->expand = expand(envp, tmp);
+		{
+			exp_val = ft_recompose(envp, first_val);
+			if (exp_val)
+				tmp->expand = exp_val;
+			else
+				return ;
+		}
 		else
-			tmp->expand = (char *)tmp->val;
-		// if (!tmp->expand || !*(tmp->expand))
-		// 	tmp->expand = ft_strdup("");
+			tmp->expand = first_val;
 		tmp = tmp->next;
 	}
-	ft_quotes(token);
-	// ft_recompose(token);
 }

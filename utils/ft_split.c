@@ -80,10 +80,17 @@ static char	*get_mem(char *s, char c)
 	i = 0;
 	while (s[i] && s[i] != c)
 		++i;
+<<<<<<< HEAD
+	dup = malloc(sizeof(char) * (i + 1));
+	if (!dup)
+	{
+		free(dup);
+=======
 	dup = (char *)push_top(&start, sizeof(char) * (i + 1));
 	if (!dup)
 	{
 		gc_free();
+>>>>>>> 32e3cefb54bf4eca551639a470025084468b8652
 		return (NULL);
 	}
 	else
@@ -102,12 +109,18 @@ char	**ft_split(char *s, char c)
 
 	if (!s)
 		return (NULL);
+<<<<<<< HEAD
+	split = malloc(sizeof(char *) * (word_nb((char *)s, c) + 1));
+	if (!split)
+		return (NULL);
+=======
 	split = (char**)push_top(&start, sizeof(char *) * (word_nb((char *)s, c) + 1));
 	if (!split)
 	{
 		gc_free();
 		return (NULL);
 	}
+>>>>>>> 32e3cefb54bf4eca551639a470025084468b8652
 	i = 0;
 	while (*s)
 	{
@@ -116,11 +129,16 @@ char	**ft_split(char *s, char c)
 		if (*s && *s != c)
 		{
 			split[i] = get_mem(s, c);
+<<<<<<< HEAD
+			if (!split[i])
+				return (free_double_p(split));
+=======
 			if (!split[i]){
 				gc_free();
 				return (NULL);
 				//return (free_double_p(split));
 			}
+>>>>>>> 32e3cefb54bf4eca551639a470025084468b8652
 			++i;
 			while (*s && *s != c)
 				++s;

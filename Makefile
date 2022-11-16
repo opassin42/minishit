@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/10/27 18:45:15 by ccouliba         ###   ########.fr        #
+#    Updated: 2022/11/15 17:35:33 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ SRCS =	srcs/main.c \
 		srcs/parser/ft_syntaxer.c \
 		srcs/parser/ft_parser.c \
 		srcs/parser/ft_function.c \
-		srcs/parser/ft_parser_utils.c \
+		srcs/parser/syntax_utils.c \
 		srcs/parser/ft_parser_utils2.c \
 		srcs/expander/ft_expander.c \
 		srcs/expander/ft_expander_1.c \
@@ -45,11 +45,14 @@ SRCS =	srcs/main.c \
 		srcs/env/ft_find_in_env.c \
 		srcs/env/getenv_utils.c \
 		srcs/exec/ft_cmd.c \
-		srcs/exec/exec_utils.c \
 		srcs/exec/ft_router.c \
+		srcs/exec/ft_signal.c \
+		srcs/exec/cmd_utils.c \
+		srcs/exec/cmd_utils2.c \
 		srcs/exec/ft_exec.c \
 		utils/ft_init.c \
 		utils/ft_split.c \
+		utils/lib_utils_0.c \
 		utils/lib_utils.c \
 		utils/lib_utils2.c \
 		utils/lib_utils3.c \

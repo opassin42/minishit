@@ -6,12 +6,11 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/27 22:33:31 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:28:56 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
 
 char	*ft_shellname(void)
 {
@@ -35,104 +34,55 @@ void	print_token(t_list *token)
 	printf("\n\e[0;31mTOKEN :\e[0m\n");
 	while (token)
 	{
-		// printf("[\e[0;33m%s - %s\e[0m]\n", (char *)token->val, token->expand);
 		printf("[\e[0;33m%s\e[0m]\n", (char *)token->val);
 		token = token->next;
 	}
+	return ;
 }
 
-void	print_new_token(t_list **token)
+int	ft_minishell(t_env envp, char *s, int g_status)
 {
-	t_list	*tmp;
+	t_list	*token;
+	t_cmd	*cmd;
 
-	tmp = *token;
-	printf("\n\e[0;31mNEW_TOKEN :\e[0m\n");
-	while (tmp)
-	{
-		printf("[\e[0;33m%s\e[0m:%d]\n", (char *)tmp->val, tmp->fct);
-		tmp = tmp->next;
-	}
+	ft_add_history((void *)s);
+	token = (t_list *)ft_lexer(s);
+	if (!token)
+		return (g_status);
+	g_status = ft_parser(&token);
+	if (g_status)
+		return (g_status);
+	ft_expander(&token, envp);
+	cmd = ft_cmd(&token);
+	if (cmd)
+		g_status = ft_exec(&envp, cmd);
+	return (g_status);
 }
-
-void	print_cmd(t_cmd *cmd)
-{
-	int		i;
-	char	**param;
-
-	printf("\n\e[0;31mCMD :\e[0m\n");
-	while (cmd)
-	{
-		printf("cmd : [\e[0;33m%s\e[0m]\n", (char *)cmd->name);
-		if (cmd->param)
-		{
-			i = 0;
-			param = cmd->param;
-			while (param[i])
-			{
-				printf("\tparam[%d] : [\e[0;33m%s\e[0m]\n", i, param[i]);
-				++i;
-			}
-		}
-		cmd = cmd->next;
-	}
-}
-
-void	ft_print_and_free(t_list **token)
-{
-	ft_free_token(token, free);
-	printf("Syntax error.\n");
-}
-
-	t_gc *start;
-
 
 int	main(int ac, char **av, char **env)
 {
+	int		g_status;
 	char	*s;
-	t_list	*token;
 	t_env	envp;
-	t_cmd	*cmd;
 
 	(void)ac;
 	(void)av;
 	s = NULL;
+	if (!*env)
+		return (0);
+	envp = ft_getenv(env);
+	g_status = 0;
 	start = NULL;
 	envp = ft_getenv(env);
 	signal(SIGINT, intHandler);
-	
 	while (keepRunning)
 	{
-		s = readline((const char *)ft_shellname());
+		s = readline((const char *)ft_shellname(&envp));
 		if (s && *s && ft_not_only_space((void *)s))
-		{
-			ft_add_history((void *)s);
-			token = (t_list *)ft_lexer(s);
-			if (token)
-			{
-				if (!ft_parser(&token))
-				{
-					ft_expander(&token, envp);
-					cmd = ft_cmd(&token);
-					if (cmd)
-						ft_exec(&envp, cmd);
-						// print_cmd(cmd);
-					//printList(start);
-					print_token(token);
-					//ft_free_token(&token, free);
-					token = NULL;
-				}
-				//else
-				//	ft_print_and_free(&token);
-			}
-		}
+			g_status = ft_minishell(envp, s, g_status);
 		free(s);
 	}
-	/*if (token)
-		ft_free_token(&token, free);
 	if (s)
-		free(s);*/
-	gc_free();
-	system("leaks minishell");
-	//printList(start);
+		free(s);
 	return (0);
 }

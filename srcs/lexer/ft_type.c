@@ -6,13 +6,13 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 12:29:39 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/20 09:08:54 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:45:37 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	word_type(void *p)
+int	word_type(void *p)
 {
 	char	*tmp;
 
@@ -26,7 +26,7 @@ static int	word_type(void *p)
 	return (EXIT_SUCCESS);
 }
 
-static int	pipe_type(void *p)
+int	pipe_type(void *p)
 {
 	char	*tmp;
 
@@ -40,7 +40,7 @@ static int	pipe_type(void *p)
 	return (EXIT_SUCCESS);
 }
 
-static int	rd_type(void *p)
+int	rd_type(void *p)
 {
 	char	*tmp;
 

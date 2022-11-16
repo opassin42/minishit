@@ -6,11 +6,21 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/28 05:20:06 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:43:24 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static void	cmd_error(char *token, char *err_msg, int fd, void (*f)())
+{
+	f("minishell: ", fd);
+	f(token, fd);
+	f(": ", fd);
+	f(err_msg, fd);
+	f("\n", fd);
+	return ;
+}
 
 static char	*bin_path(t_cmd *cmd, char **path)
 {
@@ -20,8 +30,10 @@ static char	*bin_path(t_cmd *cmd, char **path)
 
 	if (!path)
 		return (NULL);
-	i = -1;
 	bin = NULL;
+	if (!cmd->name || !*cmd->name)
+		return (NULL);
+	i = -1;
 	while (path[++i])
 	{
 		tmp = ft_strjoin(path[i], "/");
@@ -30,10 +42,21 @@ static char	*bin_path(t_cmd *cmd, char **path)
 		bin = ft_strjoin(tmp, cmd->name);
 		if (!bin)
 			return (NULL);
-		if (!access(bin, F_OK))// && !access(cmd->bin, R_OK))
+		if (!access(bin, F_OK))
 			return (bin);
 	}
 	return (bin);
+}
+
+static char	*check_cmd_name(t_cmd *cmd, char **path)
+{
+	if (!path)
+		return (NULL);
+	if (!access(cmd->name, F_OK))
+		cmd->bin = cmd->name;
+	else
+		cmd->bin = bin_path(cmd, path);
+	return (cmd->bin);
 }
 
 /*
@@ -47,20 +70,18 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 
 	if (!path)
 		return (EXIT_FAILURE);
-	cmd->bin = bin_path(cmd, path);
-	printf("-> [bin_path : %s]\n", cmd->bin);
+	cmd->bin = check_cmd_name(cmd, path);
 	if (!cmd->bin)
 		return (EXIT_FAILURE);
+	if (access(cmd->bin, F_OK))
+		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), g_status = 127);
 	ret = fork();
 	if (ret == -1)
 		return (EXIT_FAILURE);
 	if (ret == 0)
 	{
-		printf ("\t-> IN CHILD PROCESS <-\n");
-		if (access(cmd->bin, F_OK) != 0)
-			return (printf("minishell : %s: command not found\n", cmd->name), 1);
 		if (execve(cmd->bin, cmd->arg, envp->tab) == -1)
-			perror((const char *)cmd->name);
+			return (perror((const char *)cmd->name), g_status = errno);
 		return (EXIT_SUCCESS);
 	}
 	else
@@ -68,12 +89,23 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 	return (EXIT_SUCCESS);
 }
 
-void	ft_exec(t_env *envp, t_cmd *cmd)
+/*
+** I have to change SHLVL->value
+** Each time i go into another minishell instance
+** 
+** Something like :
+** If (!ft_strcmp(cmd->name, "./minishell"))
+** 		->find_in_env(envp, "SHLVL", change_shlvl);
+*/
+int	ft_exec(t_env *envp, t_cmd *cmd)
 {
+	int	ret;
+
+	ret = 0;
 	while (cmd)
 	{
-		ft_router(envp, cmd);
+		ret = ft_router(envp, cmd);
 		cmd = cmd->next;
 	}
-	return ;
+	return (ret);
 }
