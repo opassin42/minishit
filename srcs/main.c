@@ -73,7 +73,6 @@ int	main(int ac, char **av, char **env)
 	if (!*env)
 		return (0);
 	envp = ft_getenv(env);
-	g_status = 0;
 	start = NULL;
 	envp = ft_getenv(env);
 	if (signal(SIGINT, sig_handler) == SIG_ERR)
@@ -90,8 +89,9 @@ int	main(int ac, char **av, char **env)
 			return (EXIT_FAILURE);
 		}
 		if (s && *s && ft_not_only_space((void *)s))
+		{
 			g_status = ft_minishell(envp, s, g_status);
-		
+
 	}
 	gc_free();
 	return (0);

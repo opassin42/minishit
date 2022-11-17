@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 17:44:41 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 17:36:53 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/17 20:12:32 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
 	t_list	*elem;
 
-	elem = *lst;
+	// elem = *lst;
 	if (*lst && del)
 	{
 		while (*lst)

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:30 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/16 05:58:03 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/17 06:09:39 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	assign_a_type(t_list *token)
 	tmp = token;
 	while (tmp)
 	{
+		tmp->type = -1;
 		if (!word_type(tmp->val))
 			tmp->type = WORD;
 		else if (!pipe_type(tmp->val))
