@@ -70,6 +70,7 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	s = NULL;
+	printf("bb\b\b  \n");
 	if (!*env)
 		return (0);
 	envp = ft_getenv(env);
