@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 17:23:54 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/17 04:59:06 by opassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 # include "structs.h"
 # include "defines.h"
 
-extern int	g_status;
+extern int			g_status;
+extern t_gc			*start;
+static volatile int	keepRunning = 1;
 
 /******************************************************************************/
 /**********************************  INITS  ***********************************/
@@ -61,7 +63,7 @@ int		ft_parser(t_list **token);
 /*********************************  EXPANSION  ********************************/
 /******************************************************************************/
 int		ft_alnum_underscore(int c);
-int		check_simple_quotes(char *s);
+int		check_quotes(char *s, int c);
 int		ft_get_dollar_pos(char *s);
 void	*var_name(char *str, int start);
 char	*find_value(t_env *envp, char *var_name);
@@ -70,9 +72,13 @@ char	*expand(t_env envp, char *s);
 void	*ft_tokenjoin(t_list **token);
 void	ft_expander(t_list **token, t_env envp);
 char	*ft_recompose(t_env envp, char *s);
+char	*ft_assemble(t_env envp, t_list *token, char *first_val);
 /*
 ** QUOTES REMOVING (after expander)
 */
+void	expand_quote_flag(t_list *token);
+char	*remove_quotes(t_list *token);
+
 int		ft_check_quotes(t_list *token);
 int		ft_open_quotes(t_list *token);
 void	*ft_rm_quotes(t_list *token);
@@ -84,10 +90,13 @@ void	ft_quotes(t_list **token);
 t_env	ft_init_env(char **env);
 t_var	*ft_init_var(t_list **env_list);
 
-void	find_in_env(t_env *envp, char *var_name, char *(*f)());
+// void	find_in_env(t_env *envp, char *var_name, char *(*f)());
 char	*get_in_env(t_env *envp, char *name);
 void	up_in_env(t_env *envp, char *var_name, char *s);
+<<<<<<< HEAD
 // char	*change_shlvl(char *s);
+=======
+>>>>>>> refs/remotes/origin/opassin
 t_env	ft_getenv(char **env);
 
 char	*ft_var_name(char *s);
@@ -118,7 +127,6 @@ t_var	*ft_new_var_env(t_cmd *cmd, int i);
 int		ft_export(t_env *envp, t_cmd *cmd);
 void	ft_export_env(t_var *var);
 void	ft_swap(t_var *a, t_var *b);
-
 
 /* Exec */
 t_cmd	*ft_new_cmd(t_list *token);
@@ -186,8 +194,8 @@ void	ft_print_env(t_var *var);
 void	ft_free_token(t_list **token, void (*clr)(void*));
 void	ft_add_history(void *s);
 void	*ft_void_skipper(t_list **token);
-void    *push_top(t_gc **head, int data_size);
-void 	printList(t_gc 	*node);
+void	*push_top(t_gc **head, size_t data_size);
+void	printList(t_gc	*node);
 void	gc_free(void);
 void	ft_pop_in_gc(t_gc **start, void *p);
 
@@ -200,10 +208,6 @@ void	export_error(char *s);
 /******************************************************************************/
 /**********************************  SIGNALS  *********************************/
 /******************************************************************************/
-void intHandler(int dummy) ;
-
-
-extern t_gc *start;
-static volatile int keepRunning = 1;
+void	intHandler(int dummy) ;
 
 #endif

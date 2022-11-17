@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:49:33 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 17:44:39 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/16 04:27:40 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ static int	ft_builtin_ret(t_env *envp, t_cmd *cmd, t_builtin *builtin, int i)
 	int	res;
 
 	res = builtin[i].f(envp, cmd);
-	if (res)
-		return (res);
-	return (EXIT_SUCCESS);
+	return (res);
 }
 
 static int	which_builtin(t_builtin *builtin, t_cmd *cmd)
@@ -55,7 +53,7 @@ static int	which_builtin(t_builtin *builtin, t_cmd *cmd)
 	return (-1);
 }
 
-static char	**path_value(t_env *envp, char *var_name)
+static char	**path_in_env(t_env *envp, char *var_name)
 {
 	char	*value;
 	char	**path;
@@ -80,14 +78,14 @@ int	ft_router(t_env *envp, t_cmd *cmd)
 
 	ft_init_t_builtin(builtin);
 	id = which_builtin(builtin, cmd);
-	if (id != -1)
-		status = ft_builtin_ret(envp, cmd, builtin, id);
-	else
+	if (id == -1)
 	{
-		path = path_value(envp, "PATH");
+		path = path_in_env(envp, "PATH");
 		if (!path)
 			return (-1);
 		status = ft_non_builtin(envp, cmd, path);
 	}
+	else
+		status = ft_builtin_ret(envp, cmd, builtin, id);
 	return (status);
 }

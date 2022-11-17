@@ -6,19 +6,18 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 17:28:56 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/17 05:00:15 by opassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int		g_status;
 t_gc	*start;
-
+int		g_status;
 
 char	*ft_shellname(void)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = get_pwd();
 	tmp = ft_strjoin("\e[0;32m", tmp);

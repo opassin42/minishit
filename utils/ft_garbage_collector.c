@@ -3,19 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_garbage_collector.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: opassin <ccouliba@student.42.fr>           +#+  +:+       +#+        */
+/*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:42:36 by opassin           #+#    #+#             */
-/*   Updated: 2022/10/05 04:42:38 by opassin          ###   ########.fr       */
+/*   Updated: 2022/11/16 02:04:33 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+<<<<<<< HEAD
 void    *push_top(t_gc **head, int data_size)
+=======
+void	*push_top(t_gc **head, size_t data_size)
+>>>>>>> refs/remotes/origin/opassin
 {
-    t_gc *new_node;
+	t_gc	*new_node;
 
+<<<<<<< HEAD
     new_node = (t_gc*) malloc (sizeof(t_gc));
     if (!new_node)
     {
@@ -32,29 +37,46 @@ void    *push_top(t_gc **head, int data_size)
     new_node->next = *head;
     *head = new_node;
     return (new_node->addr);
+=======
+	new_node = (t_gc *)malloc(sizeof(t_gc));
+	if (!new_node)
+	{
+		gc_free();
+		return (NULL);
+	}
+	new_node->addr = malloc(data_size);
+	if (!new_node->addr)
+	{
+		gc_free();
+		free(new_node);
+		return (NULL);
+	}
+	new_node->next = (*head);
+	*head = new_node;
+	return (new_node->addr);
+>>>>>>> refs/remotes/origin/opassin
 }
 
-
-void printList(t_gc *node)
+void	printList(t_gc *node)
 {
-    while (node != NULL)
-    {
-        printf("node : [ %p ]\n", node->addr);
-        node = node->next;
-    }
+	while (node != NULL)
+	{
+		printf("node : [ %p ]\n", node->addr);
+		node = node->next;
+	}
 }
 
 void	gc_free(void)
 {
-	t_gc *current;
+	t_gc	*current;
 
-	current = start; 
+	current = start;
 	while (current != NULL)
-    {
-    	start = start->next;
-   		free(current->addr);
-    	current->next = NULL;
-    	free(current);
-    	current = start;
-    }
+	{
+		start = start->next;
+		free(current->addr);
+		current->next = NULL;
+		free(current);
+		current = start;
+	}
 }

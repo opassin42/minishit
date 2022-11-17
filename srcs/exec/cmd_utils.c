@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:28 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 10:41:30 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/16 03:46:58 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ t_cmd	*ft_new_cmd(t_list *token)
 {
 	t_cmd	*cmd;
 
-	cmd = malloc(sizeof(t_cmd));
+	cmd = (t_cmd *)push_top(&start, sizeof(t_cmd));
 	if (!cmd)
-		return (NULL);
+		return (gc_free(), NULL);
 	cmd->name = (char *)token->val;
 	cmd->next = NULL;
 	return (cmd);
@@ -59,5 +59,3 @@ void	ft_cmd_addback(t_cmd **cmd, t_cmd *new_cmd)
 			*cmd = new_cmd;
 	}
 }
-
-
