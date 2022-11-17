@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:28 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/27 20:44:37 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/16 03:39:18 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,9 @@ t_cmd	*ft_new_cmd(t_list *token)
 {
 	t_cmd	*cmd;
 
-	cmd =  (t_cmd*)push_top(&start, sizeof(t_cmd));
+	cmd = (t_cmd *)push_top(&start, sizeof(t_cmd));
 	if (!cmd)
-	{
-		gc_free();
-		return (NULL);
-	}
+		return (gc_free(), NULL);
 	cmd->name = (char *)token->val;
 	cmd->next = NULL;
 	return (cmd);
@@ -46,30 +43,4 @@ void	ft_cmd_addback(t_cmd **cmd, t_cmd *new_cmd)
 		else
 			*cmd = new_cmd;
 	}
-}
-
-char	**ft_malloc_double_p(t_list *token)
-{
-	int		i;
-	char	**param;
-
-	if (!token)
-		return ((char **) NULL);
-	param = (char**)push_top(&start, sizeof(char *) * (ft_lstsize(token) + 1));
-	if (!param)
-	{
-		gc_free();
-		return (NULL);
-	}
-	i = 0;
-	while (token)
-	{
-		param[i] = ft_strdup((char *)token->val);
-		if (!param[i])
-			return ((char **) NULL);
-		token = token->next;
-		++i;
-	}
-	param[i] = 0;
-	return (param);
 }

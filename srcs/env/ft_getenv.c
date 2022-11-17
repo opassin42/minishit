@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 02:41:11 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 17:41:32 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/16 03:56:10 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** Then make a chained list with the env
 */
 
-static char	*change_shlvl(char *s)
+char	*change_shlvl(char *s)
 {
 	int	shlvl;
 
@@ -65,7 +65,6 @@ t_env	ft_getenv(char **env)
 
 	envp = ft_init_env(env);
 	envp.var = ft_init_var(&envp.list);
-	//ft_free_token(&envp.list, free);
-	find_in_env(&envp, "SHLVL", change_shlvl);
+	// find_in_env(&envp, "SHLVL");
 	return (envp);
 }

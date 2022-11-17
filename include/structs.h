@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:47 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 17:37:24 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/17 02:06:48 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,17 @@ typedef enum s_function
 
 typedef struct s_gc
 {
-    void    *addr;
-    struct s_gc  *next;
-} t_gc;
+	void			*addr;
+	struct s_gc		*next;
+}				t_gc;
 
 typedef struct s_list
 {
 	int				exp_flag;
+	int				quote;
 	void			*val;
 	char			*expand;
+	char			*rest;
 	t_type			type;
 	t_function		fct;
 	struct s_list	*next;

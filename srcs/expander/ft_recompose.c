@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 08:11:34 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 17:34:10 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/17 02:09:21 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*dollar_substring(char *s)
 	return (ft_substr(s, 0, i));
 }
 
-char	*substring(t_env envp, char *s)
+static char	*substring(t_env envp, char *s)
 {
 	char	*tmp;
 
