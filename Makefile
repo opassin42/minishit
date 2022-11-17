@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/11/18 00:03:11 by ccouliba         ###   ########.fr        #
+#    Updated: 2022/11/18 00:08:53 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,7 +95,7 @@ leak: re
 
 debug: fclean
 	@echo "				$(_BG_CYAN)BUGS SCAN$(_END)"
-	@scan-build-12 make -j
+	@scan-build-12 make
 
 git: fclean
 	@git add . ; git commit -m "$(NAME)" ; git push
