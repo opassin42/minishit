@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/11/18 00:08:53 by ccouliba         ###   ########.fr        #
+#    Updated: 2022/11/18 00:13:39 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,6 +98,6 @@ debug: fclean
 	@scan-build-12 make
 
 git: fclean
-	@git add . ; git commit -m "$(NAME)" ; git push
+	@git add . && git commit -m "$(NAME)" && git push
 
 .PHONY : all clean fclean re leak debug git
