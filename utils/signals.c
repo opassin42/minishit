@@ -12,15 +12,15 @@
 
 #include "../include/minishell.h"
 
-void intHandler(int sig) 
+void sig_handler(int sig) 
 {
-    keepRunning = 0;
-
-    if (sig)
+ if (sig == SIGINT)
     {
-        gc_free();
-        printf("\n");
-        exit(0);
+        keepRunning = 0;
+        ft_putstr_fd("\n", 1);
+        g_status = 130;
+        rl_replace_line("", 1);
+        rl_on_new_line();
+        rl_redisplay();
     }
 }
-

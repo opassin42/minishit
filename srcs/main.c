@@ -76,15 +76,23 @@ int	main(int ac, char **av, char **env)
 	g_status = 0;
 	start = NULL;
 	envp = ft_getenv(env);
-	signal(SIGINT, intHandler);
+	if (signal(SIGINT, sig_handler) == SIG_ERR)
+		return(EXIT_FAILURE);
+	if (signal(SIGQUIT, SIG_IGN))
+		keepRunning = 1;
 	while (keepRunning)
 	{
 		s = readline((const char *)ft_shellname());
+		if (s == NULL)
+		{
+			gc_free();
+			printf("exit\n");
+			return (EXIT_FAILURE);
+		}
 		if (s && *s && ft_not_only_space((void *)s))
 			g_status = ft_minishell(envp, s, g_status);
-		free(s);
+		
 	}
-	if (s)
-		free(s);
+	gc_free();
 	return (0);
 }

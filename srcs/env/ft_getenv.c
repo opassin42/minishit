@@ -50,6 +50,8 @@ t_var	*ft_init_var(t_list **env_list)
 
 	tmp = *env_list;
 	var = ft_new_var(tmp);
+	if (!var)
+		return (NULL);
 	tmp = tmp->next;
 	while (tmp)
 	{
