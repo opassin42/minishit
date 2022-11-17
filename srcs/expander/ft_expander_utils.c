@@ -6,13 +6,11 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 04:45:05 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/16 05:27:19 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/17 05:44:37 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-extern int	g_status;
 
 int	ft_alnum_underscore(int c)
 {
