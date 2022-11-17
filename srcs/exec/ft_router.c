@@ -76,7 +76,7 @@ int	ft_router(t_env *envp, t_cmd *cmd)
 	int			id;
 	int			status;
 	char		**path;
-	t_builtin	builtin[5];
+	t_builtin	builtin[6];
 
 	ft_init_t_builtin(builtin);
 	id = which_builtin(builtin, cmd);

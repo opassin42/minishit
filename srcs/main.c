@@ -12,6 +12,10 @@
 
 #include "../include/minishell.h"
 
+int		g_status;
+t_gc	*start;
+
+
 char	*ft_shellname(void)
 {
 	char *tmp;
@@ -61,7 +65,6 @@ int	ft_minishell(t_env envp, char *s, int g_status)
 
 int	main(int ac, char **av, char **env)
 {
-	int		g_status;
 	char	*s;
 	t_env	envp;
 
@@ -77,7 +80,7 @@ int	main(int ac, char **av, char **env)
 	signal(SIGINT, intHandler);
 	while (keepRunning)
 	{
-		s = readline((const char *)ft_shellname(&envp));
+		s = readline((const char *)ft_shellname());
 		if (s && *s && ft_not_only_space((void *)s))
 			g_status = ft_minishell(envp, s, g_status);
 		free(s);

@@ -87,7 +87,7 @@ t_var	*ft_init_var(t_list **env_list);
 void	find_in_env(t_env *envp, char *var_name, char *(*f)());
 char	*get_in_env(t_env *envp, char *name);
 void	up_in_env(t_env *envp, char *var_name, char *s);
-char	*change_shlvl(char *s);
+// char	*change_shlvl(char *s);
 t_env	ft_getenv(char **env);
 
 char	*ft_var_name(char *s);
@@ -130,10 +130,11 @@ char	**ft_malloc_double_p(t_list *token);
 char	*get_pwd(void);
 int		is_alphanum(t_upvarenv *upvarenv);
 int		ft_no_home(t_upvarenv *upvarenv);
+void	ft_init_cmd_struct(t_cmd *cmd, char *key);
 void	*ft_cmd(t_list **token);
 int		ft_non_builtin(t_env *envp, t_cmd *cmd, char **path);
-void	ft_router(t_env *envp, t_cmd *cmd);
-void	ft_exec(t_env *envp, t_cmd *cmd);
+int		ft_router(t_env *envp, t_cmd *cmd);
+int		ft_exec(t_env *envp, t_cmd *cmd);
 
 /******************************************************************************/
 /**********************************  UTILS  ***********************************/
@@ -185,7 +186,7 @@ void	ft_print_env(t_var *var);
 void	ft_free_token(t_list **token, void (*clr)(void*));
 void	ft_add_history(void *s);
 void	*ft_void_skipper(t_list **token);
-void    *push_top(t_gc **head, size_t data_size);
+void    *push_top(t_gc **head, int data_size);
 void 	printList(t_gc 	*node);
 void	gc_free(void);
 void	ft_pop_in_gc(t_gc **start, void *p);
