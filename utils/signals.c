@@ -12,26 +12,15 @@
 
 #include "../include/minishell.h"
 
-void	intHandler(int sig) 
+void sig_handler(int sig) 
 {
-	keepRunning = 0;
-	if (sig == SIGQUIT)
-	{
-		signal(SIGQUIT, SIG_IGN);
-		ft_putstr_fd("\b\b  \b\b", 2);
-		g_status = 131;
-		// exit(0);
-	}
-	if (sig == SIGINT)
-	{
-		ft_putstr_fd("\n", 1);
-		g_status = 130;
-		rl_replace_line("", 1);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-	// else if (sig == EOF)
-	// 	exit(0);
-	return ;
+ if (sig == SIGINT)
+    {
+        keepRunning = 0;
+        ft_putstr_fd("\n", 1);
+        g_status = 130;
+        rl_replace_line("", 1);
+        rl_on_new_line();
+        rl_redisplay();
+    }
 }
-

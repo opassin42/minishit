@@ -45,22 +45,22 @@ void	ft_export_env(t_var *var)
 	var_env = NULL;
 	swapped = 1;
 	while (swapped)
-            {
-                swapped = 0;
-                current = var;
+    {
+        swapped = 0;
+        current = var;
 
-                while (current->next != var_env)
-                {
-                    tmp = strdup(current->name);
-                    tmp2 = strdup(current->next->name);
-                    if (ft_strcmp(tmp, tmp2) > 0)
-                    {
-                        ft_swap(current, current->next);
-                        swapped = 1;
-                    }
-                    current = current->next;
-                }
-                var_env = current;
+        while (current->next != var_env)
+        {
+            tmp = strdup(current->name);
+            tmp2 = strdup(current->next->name);
+            if (ft_strcmp(tmp, tmp2) > 0)
+            {
+                ft_swap(current, current->next);
+                swapped = 1;
+            }
+            current = current->next;
+        }
+        var_env = current;
      }
 	while (var_env)
 	{

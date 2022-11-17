@@ -32,14 +32,16 @@ t_var	*ft_new_var(t_list *token)
 	t_var	*var;
 
 	str = (char *)token->val;
-	var = (t_var *)push_top(&start, sizeof(t_var));
+	var = push_top(&start, sizeof(t_var));
 	if (!var)
 		return (gc_free(), NULL);
 	var->name = ft_var_name(str);
+	if (!var->name)
+		return (gc_free(), NULL);
 	begin = ft_strlen(var->name) + 1;
 	var->value = ft_substr(str, begin, ft_strlen(str));
 	if (!var->value)
-		return (NULL);
+		return (gc_free(), NULL);
 	var->next = NULL;
 	return (var);
 }
