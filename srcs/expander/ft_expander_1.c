@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:45:01 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/16 06:21:05 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/17 02:41:55 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	ft_expander(t_list **token, t_env envp)
 			return ;
 		if (tmp->exp_flag)
 		{
-			exp_val = ft_assemble(envp, tmp, first_val);
+			exp_val = ft_recompose(envp, first_val);
 			if (exp_val)
 				tmp->expand = exp_val;
 		}

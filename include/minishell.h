@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/16 06:17:45 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/17 02:09:04 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ char	*find_value(t_env *envp, char *var_name);
 char	*expand(t_env envp, char *s);
 void	*ft_tokenjoin(t_list **token);
 void	ft_expander(t_list **token, t_env envp);
-char	*compose(t_env envp, char *val);
 char	*ft_recompose(t_env envp, char *s);
 char	*ft_assemble(t_env envp, t_list *token, char *first_val);
 /*

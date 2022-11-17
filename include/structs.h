@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:47 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/16 02:24:21 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/17 02:06:48 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_list
 	int				quote;
 	void			*val;
 	char			*expand;
+	char			*rest;
 	t_type			type;
 	t_function		fct;
 	struct s_list	*next;

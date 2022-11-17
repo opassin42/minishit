@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 04:59:44 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/16 06:30:37 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/17 02:41:13 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,32 +36,34 @@ char	*remove_quotes(t_list *token)
 	return (s);
 }
 
-char	*ft_decompose(t_env envp, char *val)
-{
-	char	*exp;
-	char	**tmp;
+// static char	**ft_decompose(t_env envp, char *val)
+// {
+// 	char	*exp;
+// 	char	**tmp;
 
-	if (!val)
-		return (NULL);
-	exp = expand(envp, val);
-	if (!exp)
-		return (ft_strdup(""));
-	tmp = ft_split(exp, ' ');
-	if (!tmp)
-		return (NULL);
-	return (*tmp);
-}
+// 	if (!val)
+// 		return (NULL);
+// 	exp = expand(envp, val);
+// 	if (!exp)
+// 		return (ft_strdup(""));
+// 	tmp = ft_split(exp, ' ');
+// 	if (!tmp)
+// 		return ((char **) NULL);
+// 	printf("%s\n", tmp[0]);
+// 	return (tmp);
+// }
 
-char	*ft_assemble(t_env envp, t_list *token, char *first_val)
-{
-	char	*tmp;
+// char	*ft_assemble(t_env envp, t_list *token, char *first_val)
+// {
+// 	char	*tmp1;
+// 	char	*tmp2;
 
-	tmp = NULL;
-	if (token->quote)
-		tmp = ft_recompose(envp, first_val);
-	else if (!token->quote)
-		tmp = ft_decompose(envp, first_val);
-	if (tmp)
-		return (tmp);
-	return (NULL);
-}
+// 	tmp1 = NULL;
+// 	if (token->quote)
+// 		tmp1 = ft_recompose(envp, first_val);
+// 	else if (!token->quote)
+// 		tmp1 = ft_decompose(envp, first_val);
+// 	if (tmp1)
+// 		return (tmp1);
+// 	return (NULL);
+// }
