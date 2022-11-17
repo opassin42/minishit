@@ -1,0 +1,34 @@
+OBJECTIVE
+-> create a simple basic shell
+
+
+THEMES
+-> process & file descriptors
+
+TODO
+V	-> Séparation en mots (tokenization || lexer)
+V		- en simple d'abord
+V		- puis en mots du meme type
+V	-> Parsing des tokens
+V	-> Analyse des erreurs de syntax
+x	-> Proteger toutes les fonctions
+V	-> Historique (flèche du haut, flèche du bas)
+V	-> Edition de ligne (flèche de droite, flèche de gauche)
+V	-> $ variable (rework)
+-	-> backslash \
+x	-> pipes
+V	-> $
+x	-> exit
+V	-> cd
+V	-> echo
+V	-> unset
+V	-> pwd
+V	-> env
+x	-> export
+x	-> Signals ctrl-c ctrl-\ ...
+x	-> Redirection
+V	-> Verification des path d'exec comme bash
+V	-> Erreur d'execution de commande comme dans bash
+V	-> check des valeur de retours
+x	-> Mode non TTY
+x	-> Mise a la norme
