@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/11/17 04:58:27 by opassin          ###   ########.fr        #
+#    Updated: 2022/11/17 23:51:57 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,13 +68,13 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-		@echo "[$(_BLUE)!$(_END)] Rules :\t[all] [clean] [fclean] [re] [leak]"
+		@echo "[$(_BLUE)!$(_END)] Rules :\t[$(_BLUE)all$(_END)] [$(_BLUE)clean$(_END)] [$(_BLUE)fclean$(_END)] [$(_BLUE)re$(_END)] [$(_BLUE)leak$(_END)] [$(_BLUE)debug$(_END)]"
 		@echo -n "\n"
 		$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lreadline
 		@echo "[$(_GREEN)!$(_END)] Compilation ... 	  [$(_BK_GREEN)SUCCESS$(_END)]"
 		@echo "[$(_GREEN)!$(_END)] Creating .out ... 	  [$(_BK_GREEN)SUCCESS$(_END)]"
 		@bash .script_bar.sh
-		@echo "[$(_YELLOW)!$(_END)] Exec name :		[$(_YELLOW)$(NAME)$(_END)]"
+		@echo "[$(_BLUE)!$(_END)] Exec name :		[$(_YELLOW)$(NAME)$(_END)]"
 
 %o: %.c
 	$(CC) $(FLAGS) -o $@ -c $<
@@ -93,4 +93,8 @@ leak: re
 	@echo "				$(_BG_CYAN)LEAK TEST$(_END) (valgrind)"
 	@valgrind --suppressions=leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
 
-.PHONY : all clean fclean re leak
+debug : fclean
+	@echo "				$(_BG_CYAN)BUGS SCAN$(_END)"
+	@scan-build-12 make -j
+
+.PHONY : all clean fclean re leak debug
