@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/17 07:27:13 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/17 20:23:11 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,13 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	s = NULL;
+	printf("bb\b\b  \n");
 	if (!*env)
 		return (0);
 	envp = ft_getenv(env);
 	start = NULL;
 	signal(SIGINT, intHandler);
-	signal(SIGQUIT, intHandler);
+	// signal(SIGQUIT, intHandler);
 	signal(EOF, intHandler);
 	g_status = 0;
 	while (keepRunning)
