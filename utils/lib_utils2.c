@@ -22,8 +22,8 @@ char	*ft_substr(char *s, int begin, size_t len)
 	char	*sub;
 
 	if (!s)
-		return (NULL);
-	sub = (char *)push_top(&start, sizeof(char) * (len + 1));
+		return (gc_free(), NULL);
+	sub = push_top(&start, sizeof(char) * (len + 1));
 	if (!sub)
 		return (gc_free(), NULL);
 	i = 0;

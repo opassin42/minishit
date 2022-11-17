@@ -12,6 +12,7 @@
 
 #include "../include/minishell.h"
 
+<<<<<<< HEAD
 void	intHandler(int sig) 
 {
 	keepRunning = 0;
@@ -35,3 +36,17 @@ void	intHandler(int sig)
 	return ;
 }
 
+=======
+void sig_handler(int sig) 
+{
+ if (sig == SIGINT)
+    {
+        keepRunning = 0;
+        ft_putstr_fd("\n", 1);
+        g_status = 130;
+        rl_replace_line("", 1);
+        rl_on_new_line();
+        rl_redisplay();
+    }
+}
+>>>>>>> opassin

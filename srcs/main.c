@@ -6,7 +6,11 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/11/17 20:23:11 by ccouliba         ###   ########.fr       */
+=======
+/*   Updated: 2022/11/17 05:00:15 by opassin          ###   ########.fr       */
+>>>>>>> opassin
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +68,6 @@ int	ft_minishell(t_env envp, char *s, int g_status)
 
 int	main(int ac, char **av, char **env)
 {
-	int		g_status;
 	char	*s;
 	t_env	envp;
 
@@ -76,22 +79,39 @@ int	main(int ac, char **av, char **env)
 		return (0);
 	envp = ft_getenv(env);
 	start = NULL;
+<<<<<<< HEAD
 	signal(SIGINT, intHandler);
 	// signal(SIGQUIT, intHandler);
 	signal(EOF, intHandler);
 	g_status = 0;
+=======
+	envp = ft_getenv(env);
+	if (signal(SIGINT, sig_handler) == SIG_ERR)
+		return(EXIT_FAILURE);
+	if (signal(SIGQUIT, SIG_IGN))
+		keepRunning = 1;
+>>>>>>> opassin
 	while (keepRunning)
 	{
 		s = readline((const char *)ft_shellname());
+		if (s == NULL)
+		{
+			gc_free();
+			printf("exit\n");
+			return (EXIT_FAILURE);
+		}
 		if (s && *s && ft_not_only_space((void *)s))
 		{
 			g_status = ft_minishell(envp, s, g_status);
+<<<<<<< HEAD
 			if (g_status)
 				g_status = 0;
 		}
 		free(s);
+=======
+		
+>>>>>>> opassin
 	}
-	if (s)
-		free(s);
+	gc_free();
 	return (0);
 }
