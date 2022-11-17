@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:45:01 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/17 05:44:40 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/17 19:49:45 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*var_name(char *str, int start)
 		return (NULL);
 	tmp = NULL;
 	if (!str[i + 1])
-		tmp = ft_strdup(&str[i]);
+		return (ft_strdup(&str[i]));
 	while (str[i++])
 	{
 		if (ft_alnum_underscore(str[i]))

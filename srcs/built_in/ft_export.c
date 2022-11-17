@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/16 03:43:57 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/17 20:01:59 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ char	*split_name(t_cmd *cmd, int i)
 	char	*str;
 	int		name_size;
 
+	if (!cmd->param)
+		return (NULL);
 	str = cmd->param[i];
 	name_size = ft_strchr(str, '=') - str;
 	return (ft_substr(str, 0, name_size));

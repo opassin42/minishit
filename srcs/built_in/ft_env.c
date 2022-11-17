@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:41:35 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 17:39:07 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/17 20:04:54 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ void	ft_print_env(t_var *var)
 	}
 }
 
+/*
+** This function is useless in this 
+** a = b; <- this line is never read
+*/
 void	ft_swap(t_var *a, t_var *b)
 {
 	t_var	*tmp;

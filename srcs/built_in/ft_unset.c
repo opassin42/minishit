@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:42:36 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 17:40:06 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/17 20:08:15 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_delete_var(t_env *envp, char *var_name)
 	{
 		tmp = envp->var->next;
 		ft_free_var(var);
-		var = tmp;
+		//var = tmp; // No need to stock tmp. So WHY ????
 		return ;
 	}
 	while (var->next)
@@ -90,13 +90,17 @@ Arg : [envp] -> pointer to the first environment's element
 Role: unset all the named variable passed in command line
 Return value: this builtin always return 0 in case of success
 */
+/*
+** HAVE TO INITIALIZE NB_VAR if !CMD
+*/
 int	ft_unset(t_env *envp, t_cmd *cmd)
 {
 	t_var	*var;
 	int		nb_var;
 
-	if (cmd)
-		nb_var = get_nb_var(cmd);
+	if (!cmd)
+		return (0);
+	nb_var = get_nb_var(cmd);
 	while (nb_var--)
 	{
 		if (envp->var)
