@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/11/18 06:43:31 by ccouliba         ###   ########.fr        #
+#    Updated: 2022/11/18 06:44:04 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,7 +108,7 @@ gitt: fclean
 	@echo "[$(_GREEN)!$(_END)] Committing ... 	  [$(_BK_GREEN)SUCCESS$(_END)]"
 	git push
 	@bash .script_bar.sh
-	@echo "[$(_YELLOW)!$(_END)] Pushing :	   [$(_YELLOW)SUCCESS$(_END)]"
+	@echo "[$(_YELLOW)!$(_END)] Pushing :		    [$(_YELLOW)SUCCESS$(_END)]"
 	@echo "git up to pull or merge\n"
 
 .PHONY : all clean fclean re leak debug git
