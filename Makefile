@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/11/18 06:45:01 by ccouliba         ###   ########.fr        #
+#    Updated: 2022/11/18 06:46:20 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,11 +104,11 @@ gitt: fclean
 	@echo "[$(_GREEN)!$(_END)] Adding files ... 	  [$(_BK_GREEN)SUCCESS$(_END)]"
 	@echo "[$(_RED)!$(_END)] Committing ... 	  [$(_RED)  FAIL $(_END)]"
 	@read -p "--> Need a name to commit &> " var
-	git commit -m var
+	git commit -m "var"
 	@echo "[$(_GREEN)!$(_END)] Committing ... 	  [$(_BK_GREEN)SUCCESS$(_END)]\n"
 	git push
 	@bash .script_bar.sh
-	@echo "[$(_YELLOW)!$(_END)] Pushing :		    [$(_YELLOW)SUCCESS$(_END)]\n"
+	@echo "[$(_GREEN)!$(_END)] Pushing :		    [$(_BK_GREEN)SUCCESS$(_END)]\n"
 	@echo "git up to pull or merge"
 
 .PHONY : all clean fclean re leak debug git
