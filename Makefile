@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/11/18 06:04:46 by ccouliba         ###   ########.fr        #
+#    Updated: 2022/11/18 06:10:16 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,7 +99,13 @@ debug : fclean
 
 gitt: fclean
 	@echo "				$(_BG_CYAN)GIT FEATURES$(_END)"
-	@git add . && git commit -m "./$(NAME)" && git push
+	git add . 
+	@echo "				$(_BG_CYAN)GIT COMMIT$(_END)"
+	read -p "Pick a name for the commit : \n" var
+	git commit -m var
+	@echo "				$(_BG_CYAN)GIT PUSH$(_END)"
+	git push
+	@echo "[$(_GREEN)DONE$(_END)]"
 	
 
 .PHONY : all clean fclean re leak debug
