@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:30 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/17 06:09:39 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/18 05:42:31 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,12 @@ static void	*define_param(t_list *token)
 	param = NULL;
 	while (token)
 	{
-		if (token->type == WORD)
-		{
-			tmp = ft_lstnew(token->val);
-			if (!tmp)
-				return (NULL);
-			ft_lstadd_back(&param, tmp);
-		}
-		else
+		if (token->type != WORD)
 			break ;
+		tmp = ft_lstnew(token->val);
+		if (!tmp)
+			return (NULL);
+		ft_lstadd_back(&param, tmp);
 		token = token->next;
 	}
 	return ((void *)param);
@@ -132,8 +129,8 @@ void	*ft_cmd(t_list **token)
 		if (tmp->type == PIPE)
 		{
 			tmp = tmp->next;
-			if (tmp && tmp->type == VOID)
-				tmp = tmp->next;
+			// if (tmp && tmp->type == VOID)
+			// 	tmp = tmp->next;
 			if (tmp)
 				ft_cmd_addback(&cmd, (t_cmd *)make_cmd(tmp));
 			else

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:28 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/16 03:46:58 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/18 03:21:08 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_cmd	*ft_new_cmd(t_list *token)
 	cmd = (t_cmd *)push_top(&start, sizeof(t_cmd));
 	if (!cmd)
 		return (gc_free(), NULL);
-	cmd->name = (char *)token->val;
+	cmd->name = (char *)token->expand;
 	cmd->next = NULL;
 	return (cmd);
 }

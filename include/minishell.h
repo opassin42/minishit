@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/17 06:48:19 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/18 03:54:56 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define MINISHELL_H
 
 # include "inc.h"
-# include "structs.h"
 # include "defines.h"
+# include "structs.h"
 
 extern int			g_status;
 extern t_gc			*start;
@@ -55,8 +55,8 @@ int		wrong_rd(t_list *token);
 void	syntax_error(char *token, char *err_msg, int fd, void (*f)());
 int		ft_syntaxer(t_list **token, t_syntaxer synt);
 
-void	*definitive_token(char *s, char *m_char);
-void	*make_definitive_token(t_list *token);
+// void	*definitive_token(char *s, char *m_char);
+// void	*make_definitive_token(t_list *token);
 int		ft_parser(t_list **token);
 
 /******************************************************************************/
@@ -72,7 +72,7 @@ char	*expand(t_env envp, char *s);
 void	*ft_tokenjoin(t_list **token);
 void	ft_expander(t_list **token, t_env envp);
 char	*ft_recompose(t_env envp, char *s);
-char	*ft_assemble(t_env envp, t_list *token, char *first_val);
+// char	*ft_assemble(t_env envp, t_list *token, char *first_val);
 /*
 ** QUOTES REMOVING (after expander)
 */
@@ -116,7 +116,7 @@ void	ft_free_var(t_var *var);
 void	ft_delete_var(t_env *envp, char *var_name);
 
 /* Export*/
-int		is_valid_name(char *str);
+// int		is_valid_name(char *str);
 char	*split_name(t_cmd *cmd, int i);
 char	*split_value(t_cmd *cmd, int i);
 t_var	*ft_new_var_env(t_cmd *cmd, int i);

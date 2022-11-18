@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/11/17 23:51:57 by ccouliba         ###   ########.fr        #
+#    Updated: 2022/11/18 06:04:46 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,7 @@ $(NAME): $(OBJS)
 		@echo "[$(_GREEN)!$(_END)] Compilation ... 	  [$(_BK_GREEN)SUCCESS$(_END)]"
 		@echo "[$(_GREEN)!$(_END)] Creating .out ... 	  [$(_BK_GREEN)SUCCESS$(_END)]"
 		@bash .script_bar.sh
-		@echo "[$(_BLUE)!$(_END)] Exec name :		[$(_YELLOW)$(NAME)$(_END)]"
+		@echo "[$(_YELLOW)!$(_END)] Exec name :		[$(_YELLOW)$(NAME)$(_END)]"
 
 %o: %.c
 	$(CC) $(FLAGS) -o $@ -c $<
@@ -96,5 +96,10 @@ leak: re
 debug : fclean
 	@echo "				$(_BG_CYAN)BUGS SCAN$(_END)"
 	@scan-build-12 make -j
+
+gitt: fclean
+	@echo "				$(_BG_CYAN)GIT FEATURES$(_END)"
+	@git add . && git commit -m "./$(NAME)" && git push
+	
 
 .PHONY : all clean fclean re leak debug

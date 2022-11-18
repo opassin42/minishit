@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 12:30:05 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 17:13:32 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/18 02:22:19 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ int	ft_parser(t_list **token)
 	tmp = *token;
 	init_syntaxer(syntax);
 	if (ft_syntaxer(&tmp, syntax))
-		return (g_status = 2);
+		return (2);
 	return (EXIT_SUCCESS);
 }
