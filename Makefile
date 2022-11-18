@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/11/18 06:10:16 by ccouliba         ###   ########.fr        #
+#    Updated: 2022/11/18 06:13:21 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,14 +98,15 @@ debug : fclean
 	@scan-build-12 make -j
 
 gitt: fclean
-	@echo "				$(_BG_CYAN)GIT FEATURES$(_END)"
+	@echo "				$(_BG_CYAN)GIT FEATURES$(_END)\n"
+	@echo "		--->	$(_BG_CYAN)ADDING$(_END)"
 	git add . 
-	@echo "				$(_BG_CYAN)GIT COMMIT$(_END)"
+	@echo "		--->	$(_BG_CYAN)COMMITTING$(_END)"
 	read -p "Pick a name for the commit : \n" var
 	git commit -m var
-	@echo "				$(_BG_CYAN)GIT PUSH$(_END)"
+	@echo "		--->	$(_BG_CYAN)PUSHING$(_END)"
 	git push
 	@echo "[$(_GREEN)DONE$(_END)]"
 	
 
-.PHONY : all clean fclean re leak debug
+.PHONY : all clean fclean re leak debug git
