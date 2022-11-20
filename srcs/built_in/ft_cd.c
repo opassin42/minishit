@@ -5,7 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Updated: 2022/11/15 17:56:53 by ccouliba         ###   ########.fr       */
+/*   Created: 2022/11/15 17:56:53 by ccouliba          #+#    #+#             */
+/*   Updated: 2022/11/18 05:53:32 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +85,16 @@ static void	ft_upenv(t_upvarenv *upvarenv, t_env *envp, char *s1, char *s2)
  */
 static int	ft_chdir(t_env *envp, t_upvarenv *upvarenv)
 {
-	if (!chdir(upvarenv->tmp))
+	if (upvarenv->tmp)
 	{
-		if (upenv(envp, upvarenv) != 0)
-			return (EXIT_FAILURE);
-		free(upvarenv);
-		return (EXIT_SUCCESS);
+		if (!chdir(upvarenv->tmp))
+		{
+			if (upenv(envp, upvarenv) != 0)
+				return (EXIT_FAILURE);
+			return (EXIT_SUCCESS);
+		}
 	}
 	printf("minishell: cd: %s: %s\n", ++upvarenv->path, strerror(errno));
-	free(upvarenv);
 	return (EXIT_FAILURE);
 }
 

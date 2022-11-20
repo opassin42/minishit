@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 02:32:23 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/17 05:48:47 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/18 03:46:24 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	*ft_tokenjoin(t_list **token)
 		curr = tmp;
 		if (curr->type == VOID)
 			curr = curr->next;
-		if (curr->type == WORD)
+		if (curr && curr->type == WORD)
 		{
 			ft_lstadd_back(&new, get_true_value(curr));
 			while (tmp->next)
