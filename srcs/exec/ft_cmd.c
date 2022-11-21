@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:30 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/18 05:42:31 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/20 16:48:39 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ static void	*define_param(t_list *token)
 	while (token)
 	{
 		if (token->type != WORD)
-			break ;
+			return ((void *)param);
+			// break ;
 		tmp = ft_lstnew(token->val);
 		if (!tmp)
 			return (NULL);
@@ -115,6 +116,11 @@ static void	*final_token(t_list **token)
 	return ((void *)new);
 }
 
+/*
+** Takes a ilst of token
+** Then parse each token in order to return a list of cmd
+** Each cmd has its args and its fd etc ...
+*/
 void	*ft_cmd(t_list **token)
 {
 	t_cmd	*cmd;

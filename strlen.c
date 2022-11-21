@@ -1,1 +1,0 @@
-int s(char *a){return(*a?s(*a+1)+1:0);}
