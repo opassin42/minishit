@@ -21,47 +21,13 @@ void	ft_print_env(t_var *var)
 	}
 }
 
-/*
-** This function is useless in this 
-** a = b; <- this line is never read
-*/
-void	ft_swap(t_var *a, t_var *b)
-{
-	t_var	*tmp;
-
-	tmp = a;
-	a = b;
-	b = tmp;
-}
-
 void	ft_export_env(t_var *var)
 {
-	int swapped;
 	t_var	*var_env;
-	t_var	*current;
-	char 	*tmp; 
-	char 	*tmp2;
 
 	var_env = NULL;
-	swapped = 1;
-	while (swapped)
-    {
-        swapped = 0;
-        current = var;
-
-        while (current->next != var_env)
-        {
-            tmp = strdup(current->name);
-            tmp2 = strdup(current->next->name);
-            if (ft_strcmp(tmp, tmp2) > 0)
-            {
-                ft_swap(current, current->next);
-                swapped = 1;
-            }
-            current = current->next;
-        }
-        var_env = current;
-     }
+	if (var)
+		var_env = var;
 	while (var_env)
 	{
 		printf("declare -x %s\e[0;33m=\e[0m%s\n", var_env->name, var_env->value);
@@ -75,8 +41,10 @@ int	ft_env(t_env *envp, t_cmd *cmd)
 	t_var	*var;
 
 	var = envp->var;
-	if (!var)
+	if (!var){
+		gc_free();
 		return (EXIT_FAILURE);
+	}
 	if (cmd->param && *cmd->param)
 	{
 		tmp = cmd->param;

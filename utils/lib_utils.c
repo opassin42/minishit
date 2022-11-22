@@ -24,13 +24,17 @@ int	ft_strlen(char *s)
 
 char	*ft_strchr(char *s, int c)
 {
-	char	*a_s;
+	char	*tmpsrc;
 
-	a_s = (char *)s;
-	while (*a_s && *a_s != c)
-			a_s++;
-	if (*a_s == c)
-		return (a_s);
+	tmpsrc = (char*)s;
+	while (*tmpsrc)
+	{
+		if (*tmpsrc == (char)c)
+			return (tmpsrc);
+		tmpsrc++;
+	}
+	if ((char)c == '\0' && *tmpsrc == '\0')
+		return (tmpsrc);
 	return (NULL);
 }
 
