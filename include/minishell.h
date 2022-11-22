@@ -109,7 +109,7 @@ int		ft_echo(t_env *envp, t_cmd *cmd);
 int		ft_cd(t_env *envp, t_cmd *cmd);
 int		ft_env(t_env *envp, t_cmd *cmd);
 int		ft_unset(t_env *envp, t_cmd *cmd);
-
+int		ft_exit(t_env *envp, t_cmd *cmd);
 /* Unset */
 int		get_nb_var(t_cmd *cmd);
 void	ft_free_var(t_var *var);
