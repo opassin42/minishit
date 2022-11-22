@@ -122,7 +122,6 @@ char	*split_value(t_cmd *cmd, int i);
 t_var	*ft_new_var_env(t_cmd *cmd, int i);
 int		ft_export(t_env *envp, t_cmd *cmd);
 void	ft_export_env(t_var *var);
-void	ft_swap(t_var *a, t_var *b);
 
 /* Exec */
 t_cmd	*ft_new_cmd(t_list *token);
