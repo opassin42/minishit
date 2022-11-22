@@ -24,10 +24,8 @@ int		is_valid_name(char *name)
 	int		n;
 
 	n = ft_strlen(name);
-	printf("size: %d\n", n);
 	if (name[0] == '_' || ft_isalnum(name[0]))
 	{
-		printf("char: %c\n", name[n - 1]);
 		if ((name[n - 1] >= 48 && name[n - 1] <= 57) || ft_isalnum(name[n - 1]))
 			return (1);
 	}
