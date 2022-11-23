@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:45:01 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/18 03:11:35 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/23 20:37:21 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	*check_name(char *name)
 		return (NULL);
 	if (*(name + 1))
 		tmp = name + 1;
-	else if (!*(name + 1))
+	else
 		tmp = ft_strdup("");
 	return (tmp);
 }

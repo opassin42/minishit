@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 06:36:46 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/21 05:59:17 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/23 20:37:21 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,23 @@ void	*ft_meta_quotes(char *s, int c)
 		while (s[i] && s[i] != c)
 			++i;
 	return ((void *)ft_substr(s, 0, i + 1));
+}
+
+void	*between_quotes(char *s, int c)
+{
+	int		i;
+	char	*quote;
+
+	if (!s)
+		return (NULL);
+	i = 0;
+	while (s[++i] && s[i] != c)
+		++i;
+	quote = ft_substr(s, 0, i + 1);
+	if (!quote)
+		return (NULL);
+	// quote = ft_gribouillis
+	return ((void *)quote);
 }
 
 /*
