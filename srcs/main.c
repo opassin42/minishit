@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/18 03:01:04 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/24 06:32:06 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	ft_minishell(t_env envp, char *s, int g_status)
 
 	ft_add_history((void *)s);
 	token = (t_list *)ft_lexer(s);
+	print_token(token);
 	if (!token)
 		return (g_status);
 	g_status = ft_parser(&token);

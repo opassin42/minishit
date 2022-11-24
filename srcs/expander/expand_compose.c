@@ -6,12 +6,15 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 04:59:44 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/17 05:43:17 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/24 06:56:54 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/*
+** hav to hash every char of te returned val if there is quotes
+*/
 char	*remove_quotes(t_list *token)
 {
 	char	*s;
@@ -29,6 +32,7 @@ char	*remove_quotes(t_list *token)
 			val = ft_substr(s, 1, ft_strlen(s) - 2);
 			if (!val)
 				return (NULL);
+			hashing(val, 0);
 			return (val);
 		}
 		return (s);

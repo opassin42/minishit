@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/18 03:54:56 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/24 06:45:07 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int		word_type(void *p);
 int		pipe_type(void *p);
 int		rd_type(void *p);
 
+
+void	hashing(char *s, int c);
 void	*ft_tokeniser(void *arg, char *delim);
 void	ft_type(t_list **token);
 void	*ft_lexer(void *arg);
