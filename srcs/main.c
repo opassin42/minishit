@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/25 05:01:31 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/25 06:18:00 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	print_token(t_list *token)
 	printf("\n\e[0;31mTOKEN :\e[0m\n");
 	while (token)
 	{
-		printf("[\e[0;33m%s\e[0m]-[%d]\n", (char *)token->val, token->type);
+		printf("[\e[0;33m%s\e[0m]\n", (char *)token->val);
 		token = token->next;
 	}
 	return ;

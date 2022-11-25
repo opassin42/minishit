@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/25 03:01:31 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/25 06:30:06 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,9 @@ char	*get_pwd(void);
 int		is_alphanum(t_upvarenv *upvarenv);
 int		ft_no_home(t_upvarenv *upvarenv);
 
+void	hash_token(t_list *token);
 void	*join_token(t_list *token);
-void	*ft_pre_cmd(t_list **token);
+void	*ft_pre_cmd(t_list *token);
 void	*ft_cmd(t_list **token);
 
 int		ft_non_builtin(t_env *envp, t_cmd *cmd, char **path);

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 02:32:23 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/25 04:37:45 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/25 06:26:05 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ char	**ft_malloc_double_p(t_list *token)
 	i = 0;
 	while (token)
 	{
-		hashing(token->val, 0, 1);
 		param[i] = ft_strdup(token->val);
 		if (!param[i])
 			return (gc_free(), (char **) NULL);
@@ -36,8 +35,6 @@ char	**ft_malloc_double_p(t_list *token)
 	param[i] = 0;
 	return (param);
 }
-
-
 
 // static t_list	*get_true_value(t_list *token)
 // {

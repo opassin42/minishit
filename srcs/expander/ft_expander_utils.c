@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 04:45:05 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/25 01:14:19 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/25 06:28:45 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,9 @@ void	hashing(char *s, int c, int factor)
 	int	i;
 
 	i = 0;
-	while (s[i])
-	{
-		if (factor < 0)
-		{
-			if ((int)s[i] > 0 && (int)s[i] != c)
-				s[i] = (int)s[i] * factor;
-		}	
-		else
-			if ((int)s[i] < 0)
-				s[i] = (int)s[i] * -factor;
-		++i;
-	}
+	while (s[i++])
+		if ((int)s[i] > 0 && (int)s[i] != c)
+			s[i] = (int)s[i] * factor;
 }
 
 int	ft_alnum_underscore(int c)
