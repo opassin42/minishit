@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/24 06:32:06 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/25 05:01:31 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,42 @@ void	print_token(t_list *token)
 	printf("\n\e[0;31mTOKEN :\e[0m\n");
 	while (token)
 	{
-		printf("[\e[0;33m%s\e[0m]\n", (char *)token->val);
+		printf("[\e[0;33m%s\e[0m]-[%d]\n", (char *)token->val, token->type);
 		token = token->next;
 	}
 	return ;
+}
+
+void	hash_quote(t_list **token, int flag)
+{
+	t_list	*tmp;
+
+	tmp = *token;
+	while (tmp)
+	{
+		if (tmp->quote && tmp->expand[0])
+			hashing(tmp->expand, 0, flag);
+		tmp = tmp->next;
+	}
 }
 
 int	ft_minishell(t_env envp, char *s, int g_status)
 {
 	t_list	*token;
 	t_cmd	*cmd;
+	// t_list	*new_tok;
 
 	ft_add_history((void *)s);
 	token = (t_list *)ft_lexer(s);
-	print_token(token);
 	if (!token)
 		return (g_status);
 	g_status = ft_parser(&token);
 	if (g_status)
 		return (g_status);
 	ft_expander(&token, envp);
+	hash_quote(&token, -1);
+	// new_tok = ft_pre_cmd(&token);
+	// print_token(new_tok);
 	cmd = ft_cmd(&token);
 	if (cmd)
 		g_status = ft_exec(&envp, cmd);

@@ -6,39 +6,37 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 08:11:34 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/24 06:56:29 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/25 01:20:33 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	hashing(char *s, int c)
+/*
+** hav to hash every char of te returned val if there is quotes
+*/
+char	*remove_quotes(t_list *token)
 {
-	int	i;
+	char	*s;
+	char	*val;
 
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] != c)
-			s[i] = (int)s[i] * -1;
-		++i;
-	}
-}
-
-static char	*normal_substring(char *s)
-{
-	int	i;
-
+	s = (char *)token->val;
 	if (!s)
 		return (NULL);
-	i = 0;
-	while (s[i])
+	if (ft_strlen(s) == 2 && ft_strchr(QUOTE_LIST, s[0]) && s[0] == s[1])
+		return (ft_strdup(""));
+	else
 	{
-		if (s[i] == '$')
-			break ;
-		++i;
+		if (ft_strchr(QUOTE_LIST, s[0]))
+		{
+			val = ft_substr(s, 1, ft_strlen(s) - 2);
+			if (!val)
+				return (NULL);
+			return (val);
+		}
+		return (s);
 	}
-	return (ft_substr(s, 0, i));
+	return (s);
 }
 
 static char	*substring(t_env envp, char *s)
@@ -49,7 +47,7 @@ static char	*substring(t_env envp, char *s)
 	if (*s == '$')
 		tmp = ft_dollar_char(s);
 	else
-		tmp = normal_substring(s);
+		tmp = ft_normal_char(s, "$");
 	if (!tmp)
 		return (NULL);
 	return (tmp);
@@ -58,7 +56,7 @@ static char	*substring(t_env envp, char *s)
 /*
 ** Have to hash the returned value except space
 */
-static char	*compose(t_env envp, char *val)
+static char	*replace(t_env envp, char *val)
 {
 	char	*tmp;
 
@@ -70,7 +68,6 @@ static char	*compose(t_env envp, char *val)
 		tmp = expand(envp, val);
 		if (!tmp)
 			return (ft_strdup(""));
-		hashing(tmp, ' ');
 	}
 	else
 		tmp = val;
@@ -88,7 +85,7 @@ char	*ft_recompose(t_env envp, char *s)
 	tmp = substring(envp, s);
 	if (!tmp)
 		return (NULL);
-	val = compose(envp, tmp);
+	val = replace(envp, tmp);
 	if (!val)
 		return (NULL);
 	join = val;
@@ -98,7 +95,7 @@ char	*ft_recompose(t_env envp, char *s)
 		tmp = substring(envp, s);
 		if (!tmp)
 			return (NULL);
-		join = ft_strjoin(join, compose(envp, tmp));
+		join = ft_strjoin(join, replace(envp, tmp));
 		if (!join)
 			return (NULL);
 		s = s + ft_strlen(tmp);
