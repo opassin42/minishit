@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:45:01 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/18 03:11:35 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/25 01:35:25 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	*check_name(char *name)
 		return (NULL);
 	if (*(name + 1))
 		tmp = name + 1;
-	else if (!*(name + 1))
+	else
 		tmp = ft_strdup("");
 	return (tmp);
 }
@@ -86,6 +86,7 @@ char	*expand(t_env envp, char *s)
 		var_val = find_value(&envp, name);
 	if (!var_val)
 		return (ft_strdup(""));
+	hashing(var_val, ' ', -1);
 	return (var_val);
 }
 
@@ -106,9 +107,13 @@ void	ft_expander(t_list **token, t_env envp)
 	while (tmp)
 	{
 		expand_quote_flag(tmp);
-		first_val = remove_quotes(tmp);
-		if (!first_val)
-			return ;
+		first_val = (char *)tmp->val;
+		if (tmp->quote)
+		{
+			first_val = remove_quotes(tmp);
+			if (!first_val)
+				return ;
+		}
 		if (tmp->exp_flag)
 		{
 			exp_val = ft_recompose(envp, first_val);

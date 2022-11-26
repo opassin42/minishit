@@ -6,43 +6,37 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 08:11:34 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/18 03:13:34 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/25 01:20:33 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	*normal_substring(char *s)
+/*
+** hav to hash every char of te returned val if there is quotes
+*/
+char	*remove_quotes(t_list *token)
 {
-	int	i;
+	char	*s;
+	char	*val;
 
+	s = (char *)token->val;
 	if (!s)
 		return (NULL);
-	i = 0;
-	while (s[i])
+	if (ft_strlen(s) == 2 && ft_strchr(QUOTE_LIST, s[0]) && s[0] == s[1])
+		return (ft_strdup(""));
+	else
 	{
-		if (s[i] == '$')
-			break ;
-		++i;
+		if (ft_strchr(QUOTE_LIST, s[0]))
+		{
+			val = ft_substr(s, 1, ft_strlen(s) - 2);
+			if (!val)
+				return (NULL);
+			return (val);
+		}
+		return (s);
 	}
-	return (ft_substr(s, 0, i));
-}
-
-static char	*dollar_substring(char *s)
-{
-	int	i;
-
-	if (!s)
-		return (NULL);
-	i = 0;
-	while (s[++i])
-	{
-		if (i == 1 && (s[i] == '?' || ft_is_digit(s[i])))
-			return (ft_substr(s, 0, i + 1));
-		else if (ft_alnum_underscore(s[i]))
-			break ;
-	}
-	return (ft_substr(s, 0, i));
+	return (s);
 }
 
 static char	*substring(t_env envp, char *s)
@@ -51,15 +45,18 @@ static char	*substring(t_env envp, char *s)
 
 	(void)envp;
 	if (*s == '$')
-		tmp = dollar_substring(s);
+		tmp = ft_dollar_char(s);
 	else
-		tmp = normal_substring(s);
+		tmp = ft_normal_char(s, "$");
 	if (!tmp)
 		return (NULL);
 	return (tmp);
 }
 
-static char	*compose(t_env envp, char *val)
+/*
+** Have to hash the returned value except space
+*/
+static char	*replace(t_env envp, char *val)
 {
 	char	*tmp;
 
@@ -88,7 +85,7 @@ char	*ft_recompose(t_env envp, char *s)
 	tmp = substring(envp, s);
 	if (!tmp)
 		return (NULL);
-	val = compose(envp, tmp);
+	val = replace(envp, tmp);
 	if (!val)
 		return (NULL);
 	join = val;
@@ -98,10 +95,14 @@ char	*ft_recompose(t_env envp, char *s)
 		tmp = substring(envp, s);
 		if (!tmp)
 			return (NULL);
-		join = ft_strjoin(join, compose(envp, tmp));
+		join = ft_strjoin(join, replace(envp, tmp));
 		if (!join)
 			return (NULL);
 		s = s + ft_strlen(tmp);
 	}
 	return (join);
 }
+
+/*
+** NEW VERSION
+*/

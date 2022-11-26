@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 06:36:46 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/18 03:14:37 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/25 00:59:53 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	*ft_normal_char(char *s, char *m_char)
 	i = 0;
 	while (s[i])
 	{
-		if (ft_flag_char(s[i], m_char) || s[i] == '$')
+		if (ft_flag_char(s[i], m_char))
 			break ;
 		++i;
 	}

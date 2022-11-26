@@ -6,26 +6,11 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:28 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/18 03:21:08 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/25 06:32:49 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-void	ft_init_cmd_struct(t_cmd *cmd, char *key)
-{
-	cmd->id = 0;
-	cmd->err_no = 0;
-	cmd->status = 0;
-	cmd->pid = 0;
-	cmd->fd_in = 0;
-	cmd->fd_out = 0;
-	cmd->rd = NULL;
-	cmd->name = key;
-	cmd->param = (char **) NULL;
-	cmd->arg = (char **) NULL;
-	cmd->bin = NULL;
-}
 
 t_cmd	*ft_new_cmd(t_list *token)
 {
@@ -34,7 +19,7 @@ t_cmd	*ft_new_cmd(t_list *token)
 	cmd = (t_cmd *)push_top(&start, sizeof(t_cmd));
 	if (!cmd)
 		return (gc_free(), NULL);
-	cmd->name = (char *)token->expand;
+	cmd->name = (char *)token->val;
 	cmd->next = NULL;
 	return (cmd);
 }
@@ -58,4 +43,22 @@ void	ft_cmd_addback(t_cmd **cmd, t_cmd *new_cmd)
 		else
 			*cmd = new_cmd;
 	}
+}
+
+void	*join_token(t_list *token)
+{
+	char	*s;
+	t_list	*tmp;
+
+	tmp = token;
+	s = tmp->expand;
+	tmp = tmp->next;
+	while (tmp)
+	{
+		s = ft_strjoin(s, tmp->expand);
+		if (!s)
+			return (NULL);
+		tmp = tmp->next;
+	}
+	return ((void *)s);
 }

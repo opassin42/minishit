@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/18 03:54:56 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/25 06:30:06 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int		word_type(void *p);
 int		pipe_type(void *p);
 int		rd_type(void *p);
 
+void	hashing(char *s, int c, int factor);
 void	*ft_tokeniser(void *arg, char *delim);
 void	ft_type(t_list **token);
 void	*ft_lexer(void *arg);
@@ -133,7 +134,12 @@ char	**ft_malloc_double_p(t_list *token);
 char	*get_pwd(void);
 int		is_alphanum(t_upvarenv *upvarenv);
 int		ft_no_home(t_upvarenv *upvarenv);
+
+void	hash_token(t_list *token);
+void	*join_token(t_list *token);
+void	*ft_pre_cmd(t_list *token);
 void	*ft_cmd(t_list **token);
+
 int		ft_non_builtin(t_env *envp, t_cmd *cmd, char **path);
 int		ft_router(t_env *envp, t_cmd *cmd);
 int		ft_exec(t_env *envp, t_cmd *cmd);

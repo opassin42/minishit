@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 16:19:11 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 17:14:23 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/25 01:09:44 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ static void	*ft_token(char *s, char *m_char)
 
 	if (!s || !m_char)
 		return (NULL);
-	if (*s == '$')
-		tmp = ft_dollar_char(s);
-	else if (ft_flag_char(*s, m_char))
+	if (ft_flag_char(*s, m_char))
 		tmp = ft_meta_char(s, *s);
 	else
 		tmp = ft_normal_char(s, m_char);

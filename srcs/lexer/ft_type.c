@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 12:29:39 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 17:45:37 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/24 06:47:19 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	ft_type(t_list **token)
 	tmp = *token;
 	while (tmp)
 	{
+		tmp->type = -1;
 		if (!ft_not_only_space(tmp->val))
 			tmp->type = VOID;
 		else if (!word_type(tmp->val))

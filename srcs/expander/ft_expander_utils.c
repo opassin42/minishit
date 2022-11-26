@@ -6,11 +6,21 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 04:45:05 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/17 05:44:37 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/25 06:28:45 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	hashing(char *s, int c, int factor)
+{
+	int	i;
+
+	i = 0;
+	while (s[i++])
+		if ((int)s[i] > 0 && (int)s[i] != c)
+			s[i] = (int)s[i] * factor;
+}
 
 int	ft_alnum_underscore(int c)
 {
@@ -52,8 +62,8 @@ void	expand_quote_flag(t_list *token)
 	{
 		if (!check_quotes(s, '\''))
 			token->exp_flag = 1;
-		if (check_quotes(s, '"'))
-			token->quote = 1;
 	}
+	if (check_quotes(s, '"') || check_quotes(s, '\''))
+		token->quote = 1;
 	return ;
 }
