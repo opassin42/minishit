@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 02:32:23 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/25 06:26:05 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/26 01:44:57 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,58 +35,3 @@ char	**ft_malloc_double_p(t_list *token)
 	param[i] = 0;
 	return (param);
 }
-
-// static t_list	*get_true_value(t_list *token)
-// {
-// 	char	*s;
-// 	t_list	*new;
-
-// 	s = token->expand;
-// 	if (!s)
-// 		return (NULL);
-// 	token = token->next;
-// 	while (token)
-// 	{
-// 		if (token->type != WORD)
-// 			break ;
-// 		s = ft_strjoin(s, token->expand);
-// 		if (!s)
-// 			return (NULL);
-// 		token = token->next;
-// 	}
-// 	new = ft_lstnew((void *)s);
-// 	if (!new)
-// 		return (NULL);
-// 	return (new);
-// }
-
-// void	*ft_tokenjoin(t_list **token)
-// {
-// 	t_list	*tmp;
-// 	t_list	*new;
-// 	t_list	*curr;
-
-// 	tmp = *token;
-// 	print_token(tmp);
-// 	new = NULL;
-// 	while (tmp)
-// 	{
-// 		curr = tmp;
-// 		if (curr->type == VOID)
-// 			curr = curr->next;
-// 		if (curr && curr->type == WORD)
-// 		{
-// 			ft_lstadd_back(&new, get_true_value(curr));
-// 			while (tmp->next)
-// 			{
-// 				if (tmp->type != WORD)
-// 					break ;
-// 				tmp = tmp->next;
-// 			}
-// 		}
-// 		else
-// 			ft_lstadd_back(&new, ft_lstnew((void *)curr->expand));
-// 		tmp = tmp->next;
-// 	}
-// 	return ((void *)new);
-// }

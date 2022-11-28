@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 08:11:34 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/25 01:20:33 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/26 01:51:31 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ char	*ft_recompose(t_env envp, char *s)
 	val = replace(envp, tmp);
 	if (!val)
 		return (NULL);
-	join = val;
+	if (!*val)
+		join = val;
 	s = s + ft_strlen(tmp);
 	while (*s)
 	{

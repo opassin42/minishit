@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 02:41:11 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/17 23:39:37 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/26 00:18:05 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_env	ft_init_env(char **env)
 	void	*tmp;
 	t_env	envp;
 
-	envp.shlvl = 0;
 	envp.tab = env;
 	envp.list = ft_lstnew((void *)env[0]);
 	i = 0;

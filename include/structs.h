@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:47 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/25 02:10:40 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/26 00:10:34 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct s_var
 
 typedef struct s_env
 {
-	int				shlvl;
+	// int				shlvl;
 	char			**tab;
 	t_list			*list;
 	t_var			*var;
