@@ -6,21 +6,11 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 04:45:05 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/25 06:28:45 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/28 23:28:20 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-void	hashing(char *s, int c, int factor)
-{
-	int	i;
-
-	i = 0;
-	while (s[i++])
-		if ((int)s[i] > 0 && (int)s[i] != c)
-			s[i] = (int)s[i] * factor;
-}
 
 int	ft_alnum_underscore(int c)
 {
@@ -66,4 +56,28 @@ void	expand_quote_flag(t_list *token)
 	if (check_quotes(s, '"') || check_quotes(s, '\''))
 		token->quote = 1;
 	return ;
+}
+
+char	*remove_quotes(t_list *token)
+{
+	char	*s;
+	char	*val;
+
+	s = (char *)token->val;
+	if (!s)
+		return (NULL);
+	if (ft_strlen(s) == 2 && ft_strchr(QUOTE_LIST, s[0]) && s[0] == s[1])
+		return (ft_strdup(""));
+	else
+	{
+		if (ft_strchr(QUOTE_LIST, s[0]))
+		{
+			val = ft_substr(s, 1, ft_strlen(s) - 2);
+			if (!val)
+				return (NULL);
+			return (val);
+		}
+		return (s);
+	}
+	return (s);
 }

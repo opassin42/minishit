@@ -6,35 +6,18 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:47 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/26 00:10:34 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/29 03:54:20 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-typedef struct s_file
+typedef struct s_gc
 {
-	int				status;
-	char			*ext;
-	char			*name;
-}				t_file;
-
-typedef struct s_pipe
-{
-	int				id;
-	int				status;
-}					t_pipe;
-
-typedef struct s_rd
-{
-	int				status;
-	int				rd_in;
-	int				rd_out;
-	int				heredoc;
-	char			*redir;
-	t_file			file;
-}				t_rd;
+	void			*addr;
+	struct s_gc		*next;
+}				t_gc;
 
 typedef enum s_type
 {
@@ -44,24 +27,6 @@ typedef enum s_type
 	WORD
 }				t_type;
 
-typedef enum s_function
-{
-	H_DOC,
-	RD_IN,
-	RD_OUT,
-	APPEND,
-	PIPES,
-	CMD,
-	ARG,
-	ZERO
-}				t_function;
-
-typedef struct s_gc
-{
-	void			*addr;
-	struct s_gc		*next;
-}				t_gc;
-
 typedef struct s_list
 {
 	int				exp_flag;
@@ -70,7 +35,6 @@ typedef struct s_list
 	char			*expand;
 	char			*rest;
 	t_type			type;
-	t_function		fct;
 	struct s_list	*next;
 }				t_list;
 
@@ -83,7 +47,6 @@ typedef struct s_var
 
 typedef struct s_env
 {
-	// int				shlvl;
 	char			**tab;
 	t_list			*list;
 	t_var			*var;
@@ -98,11 +61,11 @@ typedef struct s_cmd
 	char			*outfile;
 	char			*append;
 	char			*delim;
-	char			*heredoc;
 	char			*name;
 	char			**param;
 	char			**arg;
 	char			*bin;
+	char			**heredoc;
 	struct s_cmd	*next;
 }				t_cmd;
 

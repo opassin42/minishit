@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/11/26 01:50:15 by ccouliba         ###   ########.fr        #
+#    Updated: 2022/11/29 03:29:38 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = @gcc
 
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
 
 include .color_code.txt
 
@@ -33,23 +33,21 @@ SRCS =	srcs/main.c \
 		srcs/lexer/ft_lexer_utils.c \
 		srcs/parser/ft_syntaxer.c \
 		srcs/parser/ft_parser.c \
-		srcs/parser/ft_function.c \
+		srcs/parser/check_quotes.c \
 		srcs/parser/syntax_utils.c \
 		srcs/expander/ft_expander.c \
-		srcs/expander/ft_expander_1.c \
 		srcs/expander/ft_expander_utils.c \
-		srcs/expander/expand_compose.c \
 		srcs/expander/ft_recompose.c \
-		srcs/expander/ft_quotes.c \
 		srcs/env/ft_getenv.c \
 		srcs/env/ft_find_in_env.c \
 		srcs/env/getenv_utils.c \
-		srcs/exec/ft_cmd.c \
+		srcs/exec/cmd/ft_make_cmd.c \
+		srcs/exec/cmd/ft_cmd.c \
+		srcs/exec/cmd/cmd_utils.c \
 		srcs/exec/ft_router.c \
 		srcs/exec/ft_signal.c \
-		srcs/exec/cmd_utils.c \
-		srcs/exec/cmd_utils2.c \
 		srcs/exec/ft_exec.c \
+		srcs/exec/hashing.c \
 		utils/ft_init.c \
 		utils/ft_split.c \
 		utils/lib_utils_0.c \
@@ -91,7 +89,7 @@ re: fclean all
 
 leak: re
 	@echo "				$(_BG_CYAN)LEAK TEST$(_END) (valgrind)"
-	# @valgrind ./$(NAME)
+	@valgrind ./$(NAME)
 # @valgrind --suppressions=leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
 
 

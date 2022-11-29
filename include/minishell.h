@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/25 06:30:06 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/29 03:31:07 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,16 @@ static volatile int	keepRunning = 1;
 /**********************************  LEXING  **********************************/
 /******************************************************************************/
 int		ft_flag_char(int c, char *delim);
+int		ft_not_only_space(void *p);
 void	*ft_meta_quotes(char *s, int c);
 void	*ft_meta_char(char *s, int c);
 void	*ft_dollar_char(char *s);
 void	*ft_normal_char(char *s, char *m_char);
-int		ft_not_only_space(void *p);
 
 int		word_type(void *p);
 int		pipe_type(void *p);
 int		rd_type(void *p);
 
-void	hashing(char *s, int c, int factor);
 void	*ft_tokeniser(void *arg, char *delim);
 void	ft_type(t_list **token);
 void	*ft_lexer(void *arg);
@@ -48,42 +47,34 @@ void	*ft_lexer(void *arg);
 /******************************************************************************/
 /**********************************  PARSING  *********************************/
 /******************************************************************************/
+int		ft_parser(t_list **token);
+
+int		ft_syntaxer(t_list **token, t_syntaxer synt);
+void	syntax_error(char *token, char *err_msg, int fd, void (*f)());
+
+int		ft_open_quotes(t_list *token);
+int		ft_check_quotes(t_list *token);
 int		check_quotes_word(t_list *token);
+
 int		wrong_next(t_list *token);
 int		wrong_pipe(t_list *token);
 int		wrong_rd(t_list *token);
 
-void	syntax_error(char *token, char *err_msg, int fd, void (*f)());
-int		ft_syntaxer(t_list **token, t_syntaxer synt);
-
-// void	*definitive_token(char *s, char *m_char);
-// void	*make_definitive_token(t_list *token);
-int		ft_parser(t_list **token);
-
 /******************************************************************************/
 /*********************************  EXPANSION  ********************************/
 /******************************************************************************/
+void	ft_expander(t_list **token, t_env envp);
+
+char	*find_value(t_env *envp, char *var_name);
+char	*expand(t_env envp, char *s);
+char	*ft_recompose(t_env envp, char *s);
+void	hashing(char *s, int c, int factor);
+
 int		ft_alnum_underscore(int c);
 int		check_quotes(char *s, int c);
 int		ft_get_dollar_pos(char *s);
-void	*var_name(char *str, int start);
-char	*find_value(t_env *envp, char *var_name);
-
-char	*expand(t_env envp, char *s);
-void	*ft_tokenjoin(t_list **token);
-void	ft_expander(t_list **token, t_env envp);
-char	*ft_recompose(t_env envp, char *s);
-// char	*ft_assemble(t_env envp, t_list *token, char *first_val);
-/*
-** QUOTES REMOVING (after expander)
-*/
 void	expand_quote_flag(t_list *token);
 char	*remove_quotes(t_list *token);
-
-int		ft_check_quotes(t_list *token);
-int		ft_open_quotes(t_list *token);
-void	*ft_rm_quotes(t_list *token);
-void	ft_quotes(t_list **token);
 
 /******************************************************************************/
 /***********************************  ENV  ************************************/
@@ -111,6 +102,11 @@ int		ft_cd(t_env *envp, t_cmd *cmd);
 int		ft_env(t_env *envp, t_cmd *cmd);
 int		ft_unset(t_env *envp, t_cmd *cmd);
 int		ft_exit(t_env *envp, t_cmd *cmd);
+
+char	*get_pwd(void);
+int		is_alphanum(t_upvarenv *upvarenv);
+int		ft_no_home(t_upvarenv *upvarenv);
+
 /* Unset */
 int		get_nb_var(t_cmd *cmd);
 void	ft_free_var(t_var *var);
@@ -125,20 +121,17 @@ int		ft_export(t_env *envp, t_cmd *cmd);
 void	ft_export_env(t_var *var);
 
 /* Exec */
+void	hash_token(t_list *token);
+void	hash_quote(t_list **token, int flag);
+
+void	*make_cmd(t_list *token);
+void	*ft_cmd(t_list **token);
+
 t_cmd	*ft_new_cmd(t_list *token);
 t_cmd	*ft_last_cmd(t_cmd *cmd);
 void	ft_cmd_addback(t_cmd **cmd, t_cmd *new_cmd);
-char	**join_param(char **param);
-char	**ft_malloc_double_p(t_list *token);
-
-char	*get_pwd(void);
-int		is_alphanum(t_upvarenv *upvarenv);
-int		ft_no_home(t_upvarenv *upvarenv);
-
-void	hash_token(t_list *token);
 void	*join_token(t_list *token);
-void	*ft_pre_cmd(t_list *token);
-void	*ft_cmd(t_list **token);
+char	**ft_malloc_double_p(t_list *token);
 
 int		ft_non_builtin(t_env *envp, t_cmd *cmd, char **path);
 int		ft_router(t_env *envp, t_cmd *cmd);
