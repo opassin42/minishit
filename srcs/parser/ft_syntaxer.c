@@ -6,11 +6,23 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 00:51:18 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 17:15:52 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/01 04:08:54 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	syntax_error(char *token, char *err_syntax, int fd, void (*f)())
+{
+	f("minishell: ", fd);
+	f(err_syntax, fd);
+	f(" ", fd);
+	f("`", fd);
+	f(token, fd);
+	f("'", fd);
+	f("\n", fd);
+	return ;
+}
 
 static int	ft_check_last_token(t_list *token)
 {

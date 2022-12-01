@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/29 03:31:07 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/01 04:12:20 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,6 @@ void	syntax_error(char *token, char *err_msg, int fd, void (*f)());
 int		ft_open_quotes(t_list *token);
 int		ft_check_quotes(t_list *token);
 int		check_quotes_word(t_list *token);
-
-int		wrong_next(t_list *token);
-int		wrong_pipe(t_list *token);
-int		wrong_rd(t_list *token);
 
 /******************************************************************************/
 /*********************************  EXPANSION  ********************************/

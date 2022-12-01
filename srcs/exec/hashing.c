@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 23:14:35 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/29 03:28:46 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/01 05:50:29 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ void	hashing(char *s, int c, int factor)
 	int	i;
 
 	i = 0;
-	while (s[i++])
+	while (s[i])
+	{
 		if ((int)s[i] > 0 && (int)s[i] != c)
 			s[i] = (int)s[i] * factor;
+		++i;
+	}
 }
 
 static void	positive_hashing(char *s)

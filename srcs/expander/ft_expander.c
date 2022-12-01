@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:45:01 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/29 03:26:02 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/01 07:54:53 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,22 @@ static char	*check_name(char *name)
 	return (tmp);
 }
 
+/*
+** SEGV AT the RED DOT !!!!!!!
+*/
 char	*find_value(t_env *envp, char *var_name)
 {
 	t_var	*var;
 
-	var = envp->var;
 	if (!var_name || (*var_name == '$' && !(*var_name + 1)))
 		return (NULL);
+	var = envp->var;
 	while (var)
 	{
-		if (!ft_strcmp(var->name, var_name))
+		if (var->name && !ft_strcmp(var->name, var_name))
 			return (var->value);
+		if (!var->name)
+			break ;
 		var = var->next;
 	}
 	return (ft_strdup(""));

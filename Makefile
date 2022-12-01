@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/11/29 03:29:38 by ccouliba         ###   ########.fr        #
+#    Updated: 2022/12/01 06:12:47 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,10 +31,9 @@ SRCS =	srcs/main.c \
 		srcs/lexer/ft_type.c \
 		srcs/lexer/ft_lexer.c \
 		srcs/lexer/ft_lexer_utils.c \
-		srcs/parser/ft_syntaxer.c \
 		srcs/parser/ft_parser.c \
-		srcs/parser/check_quotes.c \
-		srcs/parser/syntax_utils.c \
+		srcs/parser/ft_syntaxer.c \
+		srcs/parser/ft_parser_utils.c \
 		srcs/expander/ft_expander.c \
 		srcs/expander/ft_expander_utils.c \
 		srcs/expander/ft_recompose.c \
