@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:47 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/01 08:00:37 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/02 06:44:36 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,11 @@ typedef struct s_cmd
 	int				id;
 	int				pid;
 	int				status;
-	char			*infile;
+	int				fd_in;
+	int				fd_out;
+	int				append;
 	char			*outfile;
-	char			*append;
+	char			*infile;
 	char			*delim;
 	char			*name;
 	char			**param;

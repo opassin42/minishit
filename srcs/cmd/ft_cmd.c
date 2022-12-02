@@ -6,11 +6,11 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:30 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/01 05:52:14 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/02 05:04:49 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/minishell.h"
+#include "../../include/minishell.h"
 
 static void	*ft_pre_cmd(t_list *token)
 {
@@ -80,6 +80,8 @@ static void	*final_token(t_list **token)
 	tmp = *token;
 	if (tmp->type == VOID)
 		tmp = tmp->next;
+	if (!tmp)
+		return (NULL);
 	pre_cmd = (t_list *)ft_pre_cmd(tmp);
 	if (!pre_cmd)
 		return (NULL);

@@ -6,11 +6,11 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:28 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/01 06:53:42 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/02 05:04:40 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/minishell.h"
+#include "../../include/minishell.h"
 
 t_cmd	*ft_new_cmd(t_list *token)
 {
