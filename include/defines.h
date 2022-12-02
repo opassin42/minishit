@@ -6,12 +6,15 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:52 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/15 17:35:42 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/02 06:33:15 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINES_H
 # define DEFINES_H
+
+# define STDIN 0
+# define STDOUT 1
 
 # define PROMPT "$> "
 # define EXIT "exit"
@@ -21,6 +24,7 @@
 # define QUOTE_LIST "'\""
 # define FAIL -1
 # define SUCCESS 0
+
 # define ERRNO_1 "syntax error near unexpected token"
 # define ERRNO_2 "command not found"
 # define ERRNO_3 "no such file or directory"

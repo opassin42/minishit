@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/12/01 06:12:47 by ccouliba         ###   ########.fr        #
+#    Updated: 2022/12/02 05:11:25 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,9 +40,10 @@ SRCS =	srcs/main.c \
 		srcs/env/ft_getenv.c \
 		srcs/env/ft_find_in_env.c \
 		srcs/env/getenv_utils.c \
-		srcs/exec/cmd/ft_make_cmd.c \
-		srcs/exec/cmd/ft_cmd.c \
-		srcs/exec/cmd/cmd_utils.c \
+		srcs/cmd/ft_make_cmd.c \
+		srcs/cmd/ft_cmd.c \
+		srcs/cmd/redirec.c \
+		srcs/cmd/cmd_utils.c \
 		srcs/exec/ft_router.c \
 		srcs/exec/ft_signal.c \
 		srcs/exec/ft_exec.c \
@@ -88,8 +89,8 @@ re: fclean all
 
 leak: re
 	@echo "				$(_BG_CYAN)LEAK TEST$(_END) (valgrind)"
-	@valgrind ./$(NAME)
-# @valgrind --suppressions=leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
+	@valgrind --suppressions=leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
+# @valgrind ./$(NAME)
 
 
 debug : fclean

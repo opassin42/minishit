@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/01 04:12:20 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/02 06:58:08 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,9 @@ char	**ft_malloc_double_p(t_list *token);
 int		ft_non_builtin(t_env *envp, t_cmd *cmd, char **path);
 int		ft_router(t_env *envp, t_cmd *cmd);
 int		ft_exec(t_env *envp, t_cmd *cmd);
+
+int		rd_out(t_cmd *cmd, int mod);
+int		rd_in(t_cmd *cmd);
 
 /******************************************************************************/
 /**********************************  UTILS  ***********************************/
