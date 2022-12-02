@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/18 02:06:06 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/01 07:54:23 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,6 @@ static char	*binary_file(t_cmd *cmd, char **path)
 	return (cmd->bin);
 }
 
-/*
-** "A NULL argv[0] was passed through an exec system call."
-** Have to find where this error above comes from
-** check if cmd has param. If not, join cmd->name to a right path
-*/
 int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 {
 	int	ret;
@@ -81,11 +76,14 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 	if (ret == 0)
 	{
 		if (execve(cmd->bin, cmd->arg, envp->tab) == -1)
-			return (perror((const char *)cmd->name), errno);
+			return (perror((const char *)cmd->name), EXIT_FAILURE);
 		return (EXIT_SUCCESS);
 	}
 	else
+	{
 		wait(NULL);
+		return (errno);
+	}
 	return (EXIT_SUCCESS);
 }
 

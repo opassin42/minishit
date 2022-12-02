@@ -6,41 +6,52 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:28 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/16 03:39:18 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/01 07:54:03 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_cmd	*ft_new_cmd(t_list *token)
+int	execute(t_env *envp, t_cmd *cmd, int fd, int (*f)())
 {
-	t_cmd	*cmd;
+	int	ret;
 
-	cmd = (t_cmd *)push_top(&start, sizeof(t_cmd));
-	if (!cmd)
-		return (gc_free(), NULL);
-	cmd->name = (char *)token->val;
-	cmd->next = NULL;
-	return (cmd);
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+	ret = f(envp, cmd);
+	return (ret);
 }
 
-t_cmd	*ft_last_cmd(t_cmd *cmd)
+int	ft_pipe(t_env *envp, t_cmd *cmd)
 {
-	if (cmd)
-	{
-		while (cmd->next)
-			cmd = cmd->next;
-	}
-	return (cmd);
-}
+	int	tmp;
+	int	ret;
+	int	fd[2];
 
-void	ft_cmd_addback(t_cmd **cmd, t_cmd *new_cmd)
-{
-	if (new_cmd)
+	ret = 0;
+	if (cmd->next)
 	{
-		if (*cmd)
-			ft_last_cmd(*cmd)->next = new_cmd;
-		else
-			*cmd = new_cmd;
+		tmp = dup(STDIN_FILENO);
+		pipe(fd);
+		{
+			if (fork() == -1)
+				return (EXIT_FAILURE);
+			if (fork() == 0)
+			{
+				dup2(fd[1], STDOUT_FILENO);
+				close(fd[1]);
+				close(fd[0]);
+				ret = execute(envp, cmd, tmp, ft_router);
+			}
+			else
+			{
+				close(tmp);
+				close(fd[1]);
+				wait(NULL);
+				tmp = fd[0];
+				return (ret);
+			}
+		}
 	}
+	return (EXIT_SUCCESS);
 }

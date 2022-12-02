@@ -11,7 +11,7 @@ V		- en simple d'abord
 V		- puis en mots du meme type
 V	-> Parsing des tokens
 V	-> Analyse des erreurs de syntax
-x	-> Proteger toutes les fonctions
+?	-> Proteger toutes les fonctions
 V	-> Historique (flèche du haut, flèche du bas)
 V	-> Edition de ligne (flèche de droite, flèche de gauche)
 V	-> $ variable (rework)

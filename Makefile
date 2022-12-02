@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/11/24 07:07:28 by ccouliba         ###   ########.fr        #
+#    Updated: 2022/12/01 06:12:47 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,25 +31,22 @@ SRCS =	srcs/main.c \
 		srcs/lexer/ft_type.c \
 		srcs/lexer/ft_lexer.c \
 		srcs/lexer/ft_lexer_utils.c \
-		srcs/parser/ft_syntaxer.c \
 		srcs/parser/ft_parser.c \
-		srcs/parser/ft_function.c \
-		srcs/parser/syntax_utils.c \
+		srcs/parser/ft_syntaxer.c \
+		srcs/parser/ft_parser_utils.c \
 		srcs/expander/ft_expander.c \
-		srcs/expander/ft_expander_1.c \
 		srcs/expander/ft_expander_utils.c \
-		srcs/expander/expand_compose.c \
 		srcs/expander/ft_recompose.c \
-		srcs/expander/ft_quotes.c \
 		srcs/env/ft_getenv.c \
 		srcs/env/ft_find_in_env.c \
 		srcs/env/getenv_utils.c \
-		srcs/exec/ft_cmd.c \
+		srcs/exec/cmd/ft_make_cmd.c \
+		srcs/exec/cmd/ft_cmd.c \
+		srcs/exec/cmd/cmd_utils.c \
 		srcs/exec/ft_router.c \
 		srcs/exec/ft_signal.c \
-		srcs/exec/cmd_utils.c \
-		srcs/exec/cmd_utils2.c \
 		srcs/exec/ft_exec.c \
+		srcs/exec/hashing.c \
 		utils/ft_init.c \
 		utils/ft_split.c \
 		utils/lib_utils_0.c \
@@ -91,7 +88,9 @@ re: fclean all
 
 leak: re
 	@echo "				$(_BG_CYAN)LEAK TEST$(_END) (valgrind)"
-	@valgrind --suppressions=leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
+	@valgrind ./$(NAME)
+# @valgrind --suppressions=leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
+
 
 debug : fclean
 	@echo "				$(_BG_CYAN)BUGS SCAN$(_END)"

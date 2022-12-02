@@ -6,11 +6,11 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:28 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/25 06:32:49 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/01 06:53:42 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../../include/minishell.h"
 
 t_cmd	*ft_new_cmd(t_list *token)
 {
@@ -61,4 +61,28 @@ void	*join_token(t_list *token)
 		tmp = tmp->next;
 	}
 	return ((void *)s);
+}
+
+char	**ft_malloc_double_p(t_list *token)
+{
+	int		i;
+	char	**param;
+
+	if (!token)
+		return ((char **) NULL);
+	i = ft_lstsize(token);
+	param = (char **)push_top(&start, (sizeof(char *) * (i + 1)));
+	if (!param)
+		return (gc_free(), NULL);
+	i = 0;
+	while (token)
+	{
+		param[i] = ft_strdup(token->val);
+		if (!param[i])
+			return (gc_free(), (char **) NULL);
+		token = token->next;
+		++i;
+	}
+	param[i] = 0;
+	return (param);
 }
