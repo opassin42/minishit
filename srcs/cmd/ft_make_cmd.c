@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 02:32:23 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/02 09:35:18 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/05 01:55:02 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	*init_arg(t_list *token, t_cmd *cmd)
 			if (!token)
 				break ;
 		}
-		printf("cmd->file : \n\tin - [%s]\n\tout - [%s]\n\tappend : [%d]\n", cmd->infile, cmd->outfile, cmd->append);
+		// printf("cmd->file : \n\tin - [%s]\n\tout - [%s]\n\tappend : [%d]\n", cmd->infile, cmd->outfile, cmd->append);
 		if (token->type == PIPE)
 			break ;
 		token = token->next;
