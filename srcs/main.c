@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/05 02:30:44 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/07 06:17:27 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,11 @@ int	main(int ac, char **av, char **env)
 	start = NULL;
 	// if (!env || !env[0])
 	// 	env[0] = ft_strdup(0);
-	envp = ft_getenv(env);
 	if (signal(SIGINT, sig_handler) == SIG_ERR)
 		return (EXIT_FAILURE);
 	if (signal(SIGQUIT, SIG_IGN))
 		keepRunning = 1;
+	envp = ft_getenv(env);
 	while (keepRunning)
 	{
 		s = readline((const char *)ft_shellname());

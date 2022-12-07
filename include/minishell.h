@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/02 09:27:01 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/07 05:09:06 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,9 +133,9 @@ int		ft_non_builtin(t_env *envp, t_cmd *cmd, char **path);
 int		ft_router(t_env *envp, t_cmd *cmd);
 int		ft_exec(t_env *envp, t_cmd *cmd);
 
-int		rd_out(t_cmd *cmd, int mod);
-int		rd_in(t_cmd *cmd);
-int		ft_rd(t_cmd *cmd);
+// int		rd_out(t_cmd *cmd, int mod);
+// int		rd_in(t_cmd *cmd);
+// int		ft_rd(t_cmd *cmd);
 
 /******************************************************************************/
 /**********************************  UTILS  ***********************************/
@@ -197,6 +197,7 @@ void	ft_pop_in_gc(t_gc **start, void *p);
 /******************************************************************************/
 /* Builtin errors*/
 void	export_error(char *s);
+void	cmd_error(char *token, char *err_msg, int fd, void (*f)());
 
 /******************************************************************************/
 /**********************************  SIGNALS  *********************************/
