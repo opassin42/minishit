@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 02:41:11 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/26 00:18:05 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/05 02:32:06 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ t_env	ft_getenv(char **env)
 {
 	t_env	envp;
 
-	envp = ft_init_env(env);
-	envp.var = ft_init_var(&envp.list);
+	if (*env)
+	{
+		envp = ft_init_env(env);
+		envp.var = ft_init_var(&envp.list);
+	}
 	return (envp);
 }

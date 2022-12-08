@@ -6,39 +6,19 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 02:32:23 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/02 07:26:32 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/07 06:15:41 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-static void	init_rd(t_cmd *cmd, t_list *token)
-{
-	if (!ft_strcmp((char *)token->val, "<"))
-	{
-		cmd->infile = (char *)token->next->val;
-		cmd->fd_in = rd_in(cmd);
-	}
-	else if (!ft_strcmp((char *)token->val, ">")
-		|| !ft_strcmp((char *)token->val, ">>"))
-	{
-		cmd->outfile = (char *)token->next->val;
-		if (!ft_strcmp((char *)token->val, ">>"))
-			cmd->fd_out = open(cmd->outfile, O_APPEND | O_RDWR | O_);
-			// cmd->append = 1;
-		cmd->fd_out = open(cmd->outfile, O_CREAT | O_RDWR);
-	}
-	// else if (!ft_strcmp((char *)token->val, "<<"))
-	// 	*cmd->heredoc = (char *)token->next->val;
-}
 
 static void	ft_init_cmd_struct(t_cmd *cmd, char *key)
 {
 	cmd->id = 0;
 	cmd->pid = 0;
 	cmd->status = 0;
-	cmd->fd_in = STDIN;
-	cmd->fd_out = STDOUT;
+	cmd->fd_in = STDIN_FILENO;
+	cmd->fd_out = STDOUT_FILENO;
 	cmd->append = 0;
 	cmd->infile = NULL;
 	cmd->outfile = NULL;
@@ -48,6 +28,33 @@ static void	ft_init_cmd_struct(t_cmd *cmd, char *key)
 	cmd->arg = (char **) NULL;
 	cmd->bin = NULL;
 	cmd->heredoc = (char **) NULL;
+}
+
+int	rd_out(t_cmd *cmd)
+{
+	int	ret;
+
+	ret = open(cmd->outfile, O_CREAT, 0666);
+	if (ret == -1)
+		return (errno);
+	cmd->fd_out = ret;
+	return (EXIT_SUCCESS);
+}
+
+static void	init_rd(t_cmd *cmd, t_list *token)
+{
+	if (!ft_strcmp((char *)token->val, "<"))
+		cmd->infile = (char *)token->next->val;
+	else if (!ft_strcmp((char *)token->val, ">")
+		|| !ft_strcmp((char *)token->val, ">>"))
+	{
+		cmd->outfile = (char *)token->next->val;
+		if (!ft_strcmp((char *)token->val, ">>"))
+			cmd->append = 1;
+		cmd->fd_out = rd_out(cmd);
+	}
+	// else if (!ft_strcmp((char *)token->val, "<<"))
+	// 	*cmd->heredoc = (char *)token->next->val;
 }
 
 static void	*init_arg(t_list *token, t_cmd *cmd)
@@ -66,11 +73,11 @@ static void	*init_arg(t_list *token, t_cmd *cmd)
 			if (!token)
 				break ;
 		}
-		printf("cmd->file : \n\tin - [%s]\n\tout - [%s]\n\tappend : [%d]\n", cmd->infile, cmd->outfile, cmd->append);
 		if (token->type == PIPE)
 			break ;
 		token = token->next;
 	}
+	printf("cmd->file : \n\tin - [%s]\n\tout - [%s]\n\tappend : [%d]\n", cmd->infile, cmd->outfile, cmd->append);
 	return ((void *)arg);
 }
 
@@ -89,13 +96,6 @@ static void	param_n_arg(t_list *token, t_cmd *cmd)
 	cmd->param = ft_malloc_double_p(param);
 	if (!cmd->param)
 		return ;
-	// if (cmd->outfile)
-	// {
-	// 	if (cmd->append)
-	// 		cmd->fd_out = open(cmd->outfile, O_APPEND);
-	// 	// else
-	// 	// 	cmd->fd_out = open(cmd->outfile, O_RDONLY);
-	// }
 	return ;
 }
 
