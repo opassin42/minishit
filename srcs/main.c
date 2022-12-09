@@ -20,6 +20,8 @@ char	*ft_shellname(void)
 	char	*tmp;
 
 	tmp = get_pwd();
+	dup2(STDIN_FILENO, 0);
+	dup2(STDIN_FILENO, 1);
 	tmp = ft_strjoin("\e[0;32m", tmp);
 	tmp = ft_strjoin(tmp, ":$>\e[0m");
 	return (tmp);
@@ -59,7 +61,13 @@ int	ft_minishell(t_env envp, char *s, int g_status)
 	hash_quote(&token, -1);
 	cmd = ft_cmd(&token);
 	if (cmd)
+	{
 		g_status = ft_exec(&envp, cmd);
+		if (STDOUT_FILENO != 1)
+			dup2(cmd->finalfdout, STDOUT_FILENO);
+		if (STDIN_FILENO != 0)
+			dup2(cmd->finalfdin, STDIN_FILENO);
+	}
 	return (g_status);
 }
 

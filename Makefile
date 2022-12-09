@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = @gcc
 
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
 
 include .color_code.txt
 
@@ -89,9 +89,8 @@ re: fclean all
 
 leak: re
 	@echo "				$(_BG_CYAN)LEAK TEST$(_END) (valgrind)"
-# @valgrind --suppressions=leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
-# @valgrind ./$(NAME)
-
+	@valgrind --suppressions=.leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
+	#@valgrind ./$(NAME)
 
 debug : fclean
 	@echo "				$(_BG_CYAN)BUGS SCAN$(_END)"

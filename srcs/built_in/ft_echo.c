@@ -49,9 +49,10 @@ int	ft_echo(t_env *envp, t_cmd *cmd)
 	char	**param;
 
 	(void)envp;
+
 	param = cmd->param;
 	if (!param || !*param)
-		return (printf("\n"), EXIT_SUCCESS);
+		return (ft_putstr_fd("\n", cmd->fd_out), EXIT_SUCCESS);
 	nflag = 0;
 	while (*param)
 	{
@@ -62,12 +63,19 @@ int	ft_echo(t_env *envp, t_cmd *cmd)
 		}
 		while (*param != NULL)
 		{	
-			printf("%s", *(param++));
+			ft_putstr_fd(*(param++), cmd->fd_out);
 			if (*param != NULL)
-				printf(" ");
+				ft_putstr_fd(" ", cmd->fd_out);
 		}
 	}
 	if (!nflag)
 		printf("\n");
+	/*if (cmd->fd_out != 1)
+			dup2(cmd->fd_out, STDOUT);
+	if (cmd->fd_out != 1)
+	{
+		close(cmd->fd_in);
+		close(cmd->fd_out);
+	}*/
 	return (EXIT_SUCCESS);
 }

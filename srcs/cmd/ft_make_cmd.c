@@ -17,9 +17,12 @@ static void	ft_init_cmd_struct(t_cmd *cmd, char *key)
 	cmd->id = 0;
 	cmd->pid = 0;
 	cmd->status = 0;
+	cmd->ret = STDOUT_FILENO;
 	cmd->fd_in = STDIN_FILENO;
 	cmd->fd_out = STDOUT_FILENO;
 	cmd->append = 0;
+	cmd->finalfdin = 0;
+	cmd->finalfdout = 1;
 	cmd->infile = NULL;
 	cmd->outfile = NULL;
 	cmd->delim = NULL;
@@ -30,31 +33,55 @@ static void	ft_init_cmd_struct(t_cmd *cmd, char *key)
 	cmd->heredoc = (char **) NULL;
 }
 
+int	rd_in(t_cmd *cmd)
+{
+	if (cmd->hdoc)
+		printf("heredoc detected\n");
+	else
+		cmd->ret = open(cmd->infile, O_RDONLY, 0666);
+	cmd->finalfdin = dup(STDIN_FILENO);
+	if (cmd->ret == -1)
+		return (errno);
+	dup2(cmd->ret, cmd->fd_in);
+	return (EXIT_SUCCESS);
+}
+
 int	rd_out(t_cmd *cmd)
 {
-	int	ret;
-
-	ret = open(cmd->outfile, O_CREAT, 0666);
-	if (ret == -1)
+	if (!cmd->append)
+		cmd->ret = open(cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	else
+		cmd->ret = open(cmd->outfile, O_WRONLY | O_CREAT | O_APPEND, 0666);
+	cmd->finalfdout = dup(STDOUT_FILENO);
+	if (cmd->ret == -1)
 		return (errno);
-	cmd->fd_out = ret;
+	dup2(cmd->ret, cmd->fd_out);
 	return (EXIT_SUCCESS);
 }
 
 static void	init_rd(t_cmd *cmd, t_list *token)
 {
-	if (!ft_strcmp((char *)token->val, "<"))
+	if (!ft_strcmp((char *)token->val, "<")
+		|| !ft_strcmp((char *)token->val, "<<")){
 		cmd->infile = (char *)token->next->val;
+		if (!ft_strcmp((char *)token->val, "<<"))
+			cmd->hdoc = 1;
+		else
+			cmd->hdoc = 0;
+		if (rd_in(cmd) != EXIT_SUCCESS)
+			printf("erreur redir in\n");
+	}
 	else if (!ft_strcmp((char *)token->val, ">")
 		|| !ft_strcmp((char *)token->val, ">>"))
 	{
 		cmd->outfile = (char *)token->next->val;
 		if (!ft_strcmp((char *)token->val, ">>"))
 			cmd->append = 1;
-		cmd->fd_out = rd_out(cmd);
+		else
+			cmd->append = 0;
+		if (rd_out(cmd) != EXIT_SUCCESS)
+			printf("erreur redir out\n");
 	}
-	// else if (!ft_strcmp((char *)token->val, "<<"))
-	// 	*cmd->heredoc = (char *)token->next->val;
 }
 
 static void	*init_arg(t_list *token, t_cmd *cmd)
@@ -77,7 +104,7 @@ static void	*init_arg(t_list *token, t_cmd *cmd)
 			break ;
 		token = token->next;
 	}
-	printf("cmd->file : \n\tin - [%s]\n\tout - [%s]\n\tappend : [%d]\n", cmd->infile, cmd->outfile, cmd->append);
+	// printf("cmd->file : \n\tin - [%d]\n\tout - [%d]\n\tinfile - [%s]\n\toutfile - [%s]\n\tappend : [%d]\n", cmd->fd_in, cmd->fd_out, cmd->infile, cmd->outfile, cmd->append);
 	return ((void *)arg);
 }
 
