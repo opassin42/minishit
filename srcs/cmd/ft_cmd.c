@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:30 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/02 05:04:49 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/09 02:54:43 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static void	*ft_pre_cmd(t_list *token)
 
 	s = (char *)join_token(token);
 	if (!s)
-		return (NULL);
+		return (gc_free(), NULL);
 	tmp = (t_list *)ft_tokeniser((void *)s, "|>< ");
 	if (!tmp)
-		return (NULL);
+		return (gc_free(), NULL);
 	ft_type(&tmp);
 	return ((void *)tmp);
 }
@@ -38,7 +38,7 @@ static void	*rm_space_token(t_list *token)
 		return (NULL);
 	new = ft_lstnew(token->val);
 	if (!new)
-		return (NULL);
+		return (gc_free(), NULL);
 	token = token->next;
 	while (token)
 	{
@@ -84,10 +84,10 @@ static void	*final_token(t_list **token)
 		return (NULL);
 	pre_cmd = (t_list *)ft_pre_cmd(tmp);
 	if (!pre_cmd)
-		return (NULL);
+		return (gc_free(), NULL);
 	new = (t_list *)rm_space_token(pre_cmd);
 	if (!new)
-		return (NULL);
+		return (gc_free(), NULL);
 	assign_a_type(&new);
 	return (new);
 }
@@ -99,11 +99,11 @@ void	*ft_cmd(t_list **token)
 
 	tmp = final_token(token);
 	if (!tmp)
-		return (NULL);
+		return (gc_free(), NULL);
 	hash_token(tmp);
 	cmd = (t_cmd *)make_cmd(tmp);
 	if (!cmd)
-		return (NULL);
+		return (gc_free(), NULL);
 	while (tmp)
 	{
 		if (tmp->type == PIPE)

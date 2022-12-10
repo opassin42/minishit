@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 02:32:23 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/07 06:15:41 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/10 23:57:05 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ static void	*init_arg(t_list *token, t_cmd *cmd)
 			break ;
 		token = token->next;
 	}
-	// printf("cmd->file : \n\tin - [%d]\n\tout - [%d]\n\tinfile - [%s]\n\toutfile - [%s]\n\tappend : [%d]\n", cmd->fd_in, cmd->fd_out, cmd->infile, cmd->outfile, cmd->append);
 	return ((void *)arg);
 }
 
@@ -134,7 +133,7 @@ void	*make_cmd(t_list *token)
 	{
 		cmd = ft_new_cmd(token);
 		if (!cmd)
-			return (NULL);
+			return (gc_free(), NULL);
 		ft_init_cmd_struct(cmd, token->val);
 		param_n_arg(token, cmd);
 	}
