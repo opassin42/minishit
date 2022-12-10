@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 04:45:05 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/28 23:28:20 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/09 02:56:19 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*remove_quotes(t_list *token)
 		{
 			val = ft_substr(s, 1, ft_strlen(s) - 2);
 			if (!val)
-				return (NULL);
+				return (gc_free(), NULL);
 			return (val);
 		}
 		return (s);
