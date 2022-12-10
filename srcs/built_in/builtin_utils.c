@@ -18,7 +18,7 @@
 int	ft_no_home(t_upvarenv *upvarenv)
 {
 	free(upvarenv);
-	printf("minishell: cd: HOME not set\n");
+	ft_putstr_fd("minishell: cd: HOME not set\n", 1);
 	return (1);
 }
 

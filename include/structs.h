@@ -57,7 +57,11 @@ typedef struct s_cmd
 	int				id;
 	int				pid;
 	int				status;
+	int				finalfdin;
+	int				finalfdout;
+	int				ret;
 	int				fd_in;
+	int				hdoc;
 	int				fd_out;
 	int				append;
 	char			*outfile;
