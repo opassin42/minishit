@@ -12,38 +12,30 @@
 
 #include "../../include/minishell.h"
 
-int	is_nb(char *s)
-{
-	while (*s)
-	{
-		if (!ft_is_digit(*s))
-			return (EXIT_FAILURE);
-		++s;
-	}
-	return (EXIT_SUCCESS);
-}
-
 int	ft_exit(t_env *envp, t_cmd *cmd)
 {
-	long	ret;
+	int		ret;
 
 	(void)envp;
-	ret = g_status;
-	if (*(cmd->param))
+	ret = 0;
+	if (cmd->param && *(cmd->param))
 	{
 		ret = ft_atoi(cmd->param[0]);
-		if (cmd->param[1])
-			cmd_error(cmd->name, ERRNO_4, 2, ft_putstr_fd);
-		else if (is_nb(cmd->param[0]))
-			cmd_error(cmd->name, ERRNO_5, 2, ft_putstr_fd);
+		if (cmd->param[1] || !is_nb(cmd->param[0]))
+		{
+			if (!is_nb(cmd->param[0]))
+				cmd_error(cmd->name, ERRNO_4, 2, ft_putstr_fd);
+			else
+				cmd_error(cmd->name, ERRNO_5, 2, ft_putstr_fd);
+			ret = 2;
+		}
 	}
 	gc_free();
 	if (ret < 0)
 	{
 		ret *= (-1);
-		ret %= 256;
-		ret = 256 - ret;
-		exit (ret);
+		exit (256 - (ret % 256));
 	}
-	return (EXIT_SUCCESS);
+	exit (ret % 256);
+	return (0);
 }
