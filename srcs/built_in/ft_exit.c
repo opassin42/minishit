@@ -6,25 +6,36 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:42:05 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/11 03:07:54 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/11 23:01:45 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void		ft_exit(t_env *envp, t_cmd *cmd)
+int	is_nb(char *s)
 {
-	(void)envp;
-	long		ret;
+	while (*s)
+	{
+		if (!ft_is_digit(*s))
+			return (EXIT_FAILURE);
+		++s;
+	}
+	return (EXIT_SUCCESS);
+}
 
+int	ft_exit(t_env *envp, t_cmd *cmd)
+{
+	long	ret;
+
+	(void)envp;
 	ret = g_status;
 	if (*(cmd->param))
 	{
 		ret = ft_atoi(cmd->param[0]);
 		if (cmd->param[1])
-			return(ft_putstr_fd("minishell: exit: too many arguments\n", 1), g_status);
+			cmd_error(cmd->name, ERRNO_4, 2, ft_putstr_fd);
 		else if (is_nb(cmd->param[0]))
-			return(ft_putstr_fd("minishell: exit: numeric argument required\n", 1), g_status);
+			cmd_error(cmd->name, ERRNO_5, 2, ft_putstr_fd);
 	}
 	gc_free();
 	if (ret < 0)
@@ -32,7 +43,7 @@ void		ft_exit(t_env *envp, t_cmd *cmd)
 		ret *= (-1);
 		ret %= 256;
 		ret = 256 - ret;
-
-		exit ();
+		exit (ret);
 	}
+	return (EXIT_SUCCESS);
 }
