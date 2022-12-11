@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 02:32:23 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/10 23:57:05 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/11 00:32:03 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,36 +33,11 @@ static void	ft_init_cmd_struct(t_cmd *cmd, char *key)
 	cmd->heredoc = (char **) NULL;
 }
 
-int	rd_in(t_cmd *cmd)
-{
-	if (cmd->hdoc)
-		printf("heredoc detected\n");
-	else
-		cmd->ret = open(cmd->infile, O_RDONLY, 0666);
-	cmd->finalfdin = dup(STDIN_FILENO);
-	if (cmd->ret == -1)
-		return (errno);
-	dup2(cmd->ret, cmd->fd_in);
-	return (EXIT_SUCCESS);
-}
-
-int	rd_out(t_cmd *cmd)
-{
-	if (!cmd->append)
-		cmd->ret = open(cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	else
-		cmd->ret = open(cmd->outfile, O_WRONLY | O_CREAT | O_APPEND, 0666);
-	cmd->finalfdout = dup(STDOUT_FILENO);
-	if (cmd->ret == -1)
-		return (errno);
-	dup2(cmd->ret, cmd->fd_out);
-	return (EXIT_SUCCESS);
-}
-
 static void	init_rd(t_cmd *cmd, t_list *token)
 {
 	if (!ft_strcmp((char *)token->val, "<")
-		|| !ft_strcmp((char *)token->val, "<<")){
+		|| !ft_strcmp((char *)token->val, "<<"))
+	{
 		cmd->infile = (char *)token->next->val;
 		if (!ft_strcmp((char *)token->val, "<<"))
 			cmd->hdoc = 1;
