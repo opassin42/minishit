@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/10/27 18:45:15 by ccouliba         ###   ########.fr        #
+#    Updated: 2022/12/11 00:26:27 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,25 +31,26 @@ SRCS =	srcs/main.c \
 		srcs/lexer/ft_type.c \
 		srcs/lexer/ft_lexer.c \
 		srcs/lexer/ft_lexer_utils.c \
-		srcs/parser/ft_syntaxer.c \
 		srcs/parser/ft_parser.c \
-		srcs/parser/ft_function.c \
+		srcs/parser/ft_syntaxer.c \
 		srcs/parser/ft_parser_utils.c \
-		srcs/parser/ft_parser_utils2.c \
 		srcs/expander/ft_expander.c \
-		srcs/expander/ft_expander_1.c \
 		srcs/expander/ft_expander_utils.c \
 		srcs/expander/ft_recompose.c \
-		srcs/expander/ft_quotes.c \
 		srcs/env/ft_getenv.c \
 		srcs/env/ft_find_in_env.c \
 		srcs/env/getenv_utils.c \
-		srcs/exec/ft_cmd.c \
-		srcs/exec/exec_utils.c \
+		srcs/cmd/ft_make_cmd.c \
+		srcs/cmd/ft_cmd.c \
+		srcs/cmd/redirec.c \
+		srcs/cmd/cmd_utils.c \
 		srcs/exec/ft_router.c \
+		srcs/exec/ft_signal.c \
 		srcs/exec/ft_exec.c \
+		srcs/exec/hashing.c \
 		utils/ft_init.c \
 		utils/ft_split.c \
+		utils/lib_utils_0.c \
 		utils/lib_utils.c \
 		utils/lib_utils2.c \
 		utils/lib_utils3.c \
@@ -65,7 +66,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-		@echo "[$(_BLUE)!$(_END)] Rules :\t[all] [clean] [fclean] [re] [leak]"
+		@echo "[$(_BLUE)!$(_END)] Rules :\t[$(_BLUE)all$(_END)] [$(_BLUE)clean$(_END)] [$(_BLUE)fclean$(_END)] [$(_BLUE)re$(_END)] [$(_BLUE)leak$(_END)] [$(_BLUE)debug$(_END)]"
 		@echo -n "\n"
 		$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lreadline
 		@echo "[$(_GREEN)!$(_END)] Compilation ... 	  [$(_BK_GREEN)SUCCESS$(_END)]"
@@ -88,6 +89,25 @@ re: fclean all
 
 leak: re
 	@echo "				$(_BG_CYAN)LEAK TEST$(_END) (valgrind)"
-	@valgrind --suppressions=leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all ./$(NAME)
+	@valgrind --suppressions=.leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
+# @valgrind ./$(NAME)
 
-.PHONY : all clean fclean re leak
+debug : fclean
+	@echo "				$(_BG_CYAN)BUGS SCAN$(_END)"
+	@scan-build-12 make -j
+
+gitt: fclean
+	@echo "\n"
+	@echo "				$(_BG_CYAN)GIT FEATURES$(_END)\n"
+	git add . 
+	@echo "[$(_GREEN)!$(_END)] Adding files ... 	  [$(_BK_GREEN)SUCCESS$(_END)]"
+	@echo "[$(_RED)!$(_END)] Committing ... 	  [$(_RED)  FAIL $(_END)]"
+	@read -p "--> Need a name to commit (one word)&> " var
+	git commit -m var
+	@echo "[$(_GREEN)!$(_END)] Committing ... 	  [$(_BK_GREEN)SUCCESS$(_END)]\n"
+	git push
+	@echo "[$(_GREEN)!$(_END)] Pushing :		    [$(_BK_GREEN)SUCCESS$(_END)]\n"
+	@bash .script_bar.sh
+	@echo "--> Repo up to pull or merge"
+
+.PHONY : all clean fclean re leak debug git

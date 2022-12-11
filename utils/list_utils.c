@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:20:33 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/20 03:52:43 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/17 05:42:50 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,9 @@ t_list	*ft_lstnew(void *content)
 {
 	t_list	*new;
 
-	new = (t_list*)push_top(&start, sizeof(t_list));
+	new = (t_list *)push_top(&start, sizeof(t_list));
 	if (!new)
-	{
-		gc_free();
-		return (NULL);
-	}
+		return (gc_free(), NULL);
 	new->val = content;
 	new->next = NULL;
 	return (new);

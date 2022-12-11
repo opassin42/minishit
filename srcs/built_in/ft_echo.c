@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 03:48:18 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/28 05:19:17 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/15 17:38:22 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,10 @@ int	ft_echo(t_env *envp, t_cmd *cmd)
 	char	**param;
 
 	(void)envp;
+
 	param = cmd->param;
-	if (!param)
-		return (printf("\n"), EXIT_SUCCESS);
+	if (!param || !*param)
+		return (ft_putstr_fd("\n", cmd->fd_out), EXIT_SUCCESS);
 	nflag = 0;
 	while (*param)
 	{
@@ -62,12 +63,19 @@ int	ft_echo(t_env *envp, t_cmd *cmd)
 		}
 		while (*param != NULL)
 		{	
-			printf("%s", *(param++));
+			ft_putstr_fd(*(param++), cmd->fd_out);
 			if (*param != NULL)
-				printf(" ");
+				ft_putstr_fd(" ", cmd->fd_out);
 		}
 	}
 	if (!nflag)
 		printf("\n");
+	/*if (cmd->fd_out != 1)
+			dup2(cmd->fd_out, STDOUT);
+	if (cmd->fd_out != 1)
+	{
+		close(cmd->fd_in);
+		close(cmd->fd_out);
+	}*/
 	return (EXIT_SUCCESS);
 }

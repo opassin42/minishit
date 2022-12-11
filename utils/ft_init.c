@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 03:35:24 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/19 23:27:43 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/16 02:57:02 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,9 @@ void	*ft_realloc(char *s, size_t new_len)
 	if (len < new_len || len > new_len)
 	{
 		p = (char *)push_top(&start, sizeof(char) * ((int)new_len + 1));
-		p = (char *)ft_memcpy(p, s, ft_strlen(s));
 		if (!p)
-		{
-			gc_free();
-			return (NULL);
-		}
+			return (gc_free(), NULL);
+		p = (char *)ft_memcpy(p, s, ft_strlen(s));
 		return ((void *)p);
 	}
 	return ((void *)s);

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/12 00:38:26 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/07/12 01:48:56 by ccouliba         ###   ########.fr       */
+/*   Created: 2022/11/15 17:56:53 by ccouliba          #+#    #+#             */
+/*   Updated: 2022/11/18 05:53:32 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,16 @@ static void	ft_upenv(t_upvarenv *upvarenv, t_env *envp, char *s1, char *s2)
  */
 static int	ft_chdir(t_env *envp, t_upvarenv *upvarenv)
 {
-	if (!chdir(upvarenv->tmp))
+	if (upvarenv->tmp)
 	{
-		if (upenv(envp, upvarenv) != 0)
-			return (EXIT_FAILURE);
-		free(upvarenv);
-		return (EXIT_SUCCESS);
+		if (!chdir(upvarenv->tmp))
+		{
+			if (upenv(envp, upvarenv) != 0)
+				return (EXIT_FAILURE);
+			return (EXIT_SUCCESS);
+		}
 	}
 	printf("minishell: cd: %s: %s\n", ++upvarenv->path, strerror(errno));
-	free(upvarenv);
 	return (EXIT_FAILURE);
 }
 
@@ -117,7 +118,8 @@ int	ft_cd(t_env *envp, t_cmd *cmd)
 			return (ft_no_home(upvarenv));
 		else
 		{
-			if (!ft_strcmp(upvarenv->path, "-"))
+			if (!ft_strcmp(upvarenv->path, "-")
+				|| !ft_strcmp(upvarenv->path, "--"))
 				ft_upenv(upvarenv, envp, "OLDPWD", "PWD");
 			else if (upvarenv->path[0] == '/' || upvarenv->path[0] == '.'
 				|| (upvarenv->path[0] == '.' && upvarenv->path[1] == '.'))

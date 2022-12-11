@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 03:38:28 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/09/28 18:59:16 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/17 04:56:10 by opassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,7 @@ static char	*get_mem(char *s, char c)
 		++i;
 	dup = (char *)push_top(&start, sizeof(char) * (i + 1));
 	if (!dup)
-	{
-		gc_free();
-		return (NULL);
-	}
+		return (gc_free(), NULL);
 	else
 		ft_memcpy(dup, (char *)s, (i + 1));
 	dup[i] = '\0';
@@ -102,12 +99,10 @@ char	**ft_split(char *s, char c)
 
 	if (!s)
 		return (NULL);
-	split = (char**)push_top(&start, sizeof(char *) * (word_nb((char *)s, c) + 1));
+	i = word_nb((char *)s, c);
+	split = (char **)push_top(&start, sizeof(char *) * (i + 1));
 	if (!split)
-	{
-		gc_free();
-		return (NULL);
-	}
+		return (gc_free(), NULL);
 	i = 0;
 	while (*s)
 	{
@@ -116,11 +111,8 @@ char	**ft_split(char *s, char c)
 		if (*s && *s != c)
 		{
 			split[i] = get_mem(s, c);
-			if (!split[i]){
-				gc_free();
-				return (NULL);
-				//return (free_double_p(split));
-			}
+			if (!split[i])
+				return (gc_free(), NULL);
 			++i;
 			while (*s && *s != c)
 				++s;

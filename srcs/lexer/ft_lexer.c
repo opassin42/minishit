@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 22:25:14 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/25 03:30:25 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/10 23:53:12 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	prev_last_is_last(t_list **token, t_type type)
 	last = ft_lstlast(tmp);
 	if (last->type == type)
 		ft_lst_prevlast(&tmp);
-	return;
+	return ;
 }
 
 void	*ft_lexer(void *arg)

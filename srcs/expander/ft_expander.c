@@ -5,94 +5,131 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/15 00:00:49 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/27 18:51:14 by ccouliba         ###   ########.fr       */
+/*   Created: 2022/10/27 18:45:01 by ccouliba          #+#    #+#             */
+/*   Updated: 2022/12/11 02:39:44 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// void	expand_flag(t_list *token)
-// {
-// 	char	*s;
+static void	*var_name(char *str, int start)
+{
+	int		i;
+	char	*tmp;
 
-// 	s = (char *)token->val;
-// 	if (!check_simple_quotes(s) && ft_strchr(s, '$'))
-// 		token->exp_flag = 1;
-// 	else
-// 		token->exp_flag = 0;
-// 	return ;
-// }
+	if (!str)
+		return (NULL);
+	i = start + 1;
+	if (!str[i])
+		return (NULL);
+	tmp = NULL;
+	while (str[i++])
+	{
+		if (ft_alnum_underscore(str[i]))
+		{
+			tmp = (void *)ft_substr(str, start, i - start);
+			if (!tmp)
+				return (gc_free(), NULL);
+			return (tmp);
+		}
+	}
+	return (NULL);
+}
 
-// void	*var_value(t_env envp, char *name)
-// {
-// 	char	*tmp;
+static char	*check_name(char *name)
+{
+	char	*tmp;
 
-// 	if (!name)
-// 		return (NULL);
-// 	tmp = find_value(&envp, name);
-// 	if (!tmp)
-// 		return (ft_strdup(""));
-// 	return (tmp);
-// }
+	if (!name)
+		return (NULL);
+	if (*(name + 1))
+		tmp = name + 1;
+	else
+		tmp = ft_strdup("");
+	return (tmp);
+}
 
-// static char	*check_name(char *name)
-// {
-// 	char	*tmp;
+/*
+** SEGV AT the RED DOT !!!!!!!
+*/
+char	*find_value(t_env *envp, char *var_name)
+{
+	t_var	*var;
 
-// 	if (!name)
-// 		return (NULL);
-// 	tmp = NULL;
-// 	if (*(name + 1))
-// 		tmp = name + 1;
-// 	else
-// 		tmp = ft_strdup("");
-// 	return (tmp);
-// }
+	if (!var_name || (*var_name == '$' && !(*var_name + 1)))
+		return (NULL);
+	var = envp->var;
+	while (var)
+	{
+		if (var->name && !ft_strcmp(var->name, var_name))
+		{
+			if (var->value)
+				return (var->value);
+			else
+				break ;
+		}
+		var = var->next;
+	}
+	return (ft_strdup(""));
+}
 
-// /*
-// **
-// */
-// static char	*expand(t_env envp, char *s)
-// {
-// 	int		i;
-// 	char	*name;
-// 	char	*value;
+char	*expand(t_env *envp, char *s)
+{
+	int		pos;
+	char	*name;
+	char	*var_val;
 
-// 	i = ft_get_dollar_pos(s);
-// 	if (!i)
-// 		return (ft_strdup(""));
-// 	name = (char *)var_name(s, i + 1);
-// 	if (!name)
-// 		return (NULL);
-// 	// printf("name : [%s]\n", name);
-// 	if (ft_is_digit(*name))
-// 		return (check_name(name));
-// 	value = (char *)var_value(envp, name);
-// 	if (!value)
-// 		return (free(name), free(value), ft_strdup(""));
-// 	return (free(name), value);
-// }
+	if (!s)
+		return (NULL);
+	pos = ft_get_dollar_pos(s);
+	name = (char *)var_name(s, pos);
+	if (!name)
+		return (gc_free(), NULL);
+	name = check_name(name);
+	if (!name)
+		return (gc_free(), NULL);
+	if (!ft_strcmp(name, "?"))
+		var_val = ft_itoa(g_status);
+	else
+		var_val = find_value(envp, name);
+	if (!var_val)
+		return (ft_strdup(""));
+	hashing(var_val, ' ', -1);
+	return (var_val);
+}
 
-// /*
-// ** Correct
-// ** I may recompose (ft_recompose) right here, (before/after) removing quotes
-// */
-// void	ft_expander(t_list **token, t_env envp)
-// {
-// 	t_list	*tmp;
+/*
+** Correct
+** I may recompose (ft_recompose) right here, (after)removing quotes
+** Handle this input : $1abc
+** warning : if export a="o hi" -> ech$a = hi
+*/
+void	ft_expander(t_list **token, t_env *envp)
+{
+	char	*exp_val;
+	char	*first_val;
+	t_list	*tmp;
 
-// 	tmp = *token;
-// 	while (tmp)
-// 	{
-// 		expand_flag(tmp);
-// 		if (tmp->exp_flag)
-// 			tmp->expand = expand(envp, (char *)tmp->val);
-// 		else
-// 			tmp->expand = (char *)tmp->val;
-// 			// tmp->expand = (char *)ft_rm_quotes(tmp);
-// 		tmp = tmp->next;
-// 	}
-// 	// ft_recompose(token);
-// 	ft_quotes(token);
-// }
+	tmp = *token;
+	exp_val = NULL;
+	while (tmp)
+	{
+		expand_quote_flag(tmp);
+		first_val = (char *)tmp->val;
+		if (tmp->quote)
+		{
+			first_val = remove_quotes(tmp);
+			if (!first_val)
+				return ;
+		}
+		if (tmp->exp_flag)
+		{
+			exp_val = ft_recompose(envp, first_val);
+			if (exp_val)
+				tmp->expand = exp_val;
+		}
+		else
+			tmp->expand = first_val;
+		tmp = tmp->next;
+	}
+}

@@ -6,35 +6,18 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:47 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/27 17:01:35 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/02 06:44:36 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-typedef struct s_file
+typedef struct s_gc
 {
-	int				status;
-	char			*ext;
-	char			*name;
-}				t_file;
-
-typedef struct s_pipe
-{
-	int				id;
-	int				status;
-}					t_pipe;
-
-typedef struct s_rd
-{
-	int				status;
-	int				rd_in;
-	int				rd_out;
-	int				heredoc;
-	char			*redir;
-	t_file			file;
-}				t_rd;
+	void			*addr;
+	struct s_gc		*next;
+}				t_gc;
 
 typedef enum s_type
 {
@@ -44,31 +27,14 @@ typedef enum s_type
 	WORD
 }				t_type;
 
-typedef enum s_function
-{
-	H_DOC,
-	RD_IN,
-	RD_OUT,
-	APPEND,
-	PIPES,
-	CMD,
-	ARG,
-	ZERO
-}				t_function;
-
-typedef struct s_gc
-{
-    void    *addr;
-    struct s_gc  *next;
-} t_gc;
-
 typedef struct s_list
 {
 	int				exp_flag;
+	int				quote;
 	void			*val;
 	char			*expand;
+	char			*rest;
 	t_type			type;
-	t_function		fct;
 	struct s_list	*next;
 }				t_list;
 
@@ -81,7 +47,6 @@ typedef struct s_var
 
 typedef struct s_env
 {
-	int				shlvl;
 	char			**tab;
 	t_list			*list;
 	t_var			*var;
@@ -91,38 +56,30 @@ typedef struct s_cmd
 {
 	int				id;
 	int				pid;
-	int				err_no;
 	int				status;
+	int				finalfdin;
+	int				finalfdout;
+	int				ret;
 	int				fd_in;
+	int				hdoc;
 	int				fd_out;
-	char			*rd;
+	int				append;
+	char			*outfile;
+	char			*infile;
+	char			*delim;
 	char			*name;
 	char			**param;
 	char			**arg;
 	char			*bin;
+	char			**heredoc;
 	struct s_cmd	*next;
 }				t_cmd;
 
 typedef struct s_builtin
 {
 	char			*key;
-	// int				status;
 	int				(*f)();
 }				t_builtin;
-
-/*
-** Have to create a sighandler that i will mute in the parent process
-** ctrl + d -> quitte le shell, l'instance en cours (0)
-** ctrl + d -> Comme si exit(0)
-** ctrl + c -> affiche un nouveau prompt sur une nouvelle ligne (130).
-** ctrl + \ -> ne fait rien (131)
-*/
-typedef struct g_status
-{
-	int				ret;
-	int				sigint;
-	int				sigquit;
-}				t_status;
 
 typedef struct s_upvarenv
 {
@@ -130,9 +87,10 @@ typedef struct s_upvarenv
 	char	*pwd;
 	char	*tmp;
 	char	*path;
-}	t_upvarenv;
+}				t_upvarenv;
 
 typedef int(*t_func[5])(t_list *);
 typedef int(*t_syntaxer[4])(t_list *);
 typedef int(*t_exec[7])(t_env *, t_cmd *);
+
 #endif

@@ -11,24 +11,24 @@ V		- en simple d'abord
 V		- puis en mots du meme type
 V	-> Parsing des tokens
 V	-> Analyse des erreurs de syntax
-x	-> Proteger toutes les fonctions
+?	-> Proteger toutes les fonctions
 V	-> Historique (flèche du haut, flèche du bas)
-x	-> Edition de ligne (flèche de droite, flèche de gauche)
+V	-> Edition de ligne (flèche de droite, flèche de gauche)
 V	-> $ variable (rework)
-?	-> backslash \
+-	-> backslash \
 x	-> pipes
-?	-> $
+V	-> $
 x	-> exit
-?	-> cd
+V	-> cd
 V	-> echo
-x	-> unset
+V	-> unset
 V	-> pwd
+V	-> env
 x	-> export
-x	-> env
 x	-> Signals ctrl-c ctrl-\ ...
 x	-> Redirection
-x	-> Verification des path d'exec comme bash
-x	-> Erreur d'execution de commande comme dans bash
-x	-> check des valeur de retours
+V	-> Verification des path d'exec comme bash
+V	-> Erreur d'execution de commande comme dans bash
+V	-> check des valeur de retours
 x	-> Mode non TTY
 x	-> Mise a la norme

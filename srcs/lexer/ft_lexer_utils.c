@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 06:36:46 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/27 22:36:54 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/25 00:59:53 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,11 @@ void	*ft_dollar_char(char *s)
 	if (!s)
 		return (NULL);
 	i = 0;
-		// return ((void *)ft_substr(s, 0, i + 1));
-	while (s[i++])
+	while (s[++i])
 	{
-		if (s[i] == '$' && s[i + 1] && ft_is_digit(s[i + 1]))
-			break ;
-		if (i == 2 && ft_is_digit(s[i]))
-			break ;
-		if (ft_alnum_underscore(s[i]))
+		if (i == 1 && (s[i] == '?' || ft_is_digit(s[i])))
+			return ((void *)ft_substr(s, 0, i + 1));
+		else if (ft_alnum_underscore(s[i]))
 			break ;
 	}
 	return ((void *)ft_substr(s, 0, i));
@@ -87,7 +84,7 @@ void	*ft_normal_char(char *s, char *m_char)
 	i = 0;
 	while (s[i])
 	{
-		if (ft_flag_char(s[i], m_char) || s[i] == '$')
+		if (ft_flag_char(s[i], m_char))
 			break ;
 		++i;
 	}

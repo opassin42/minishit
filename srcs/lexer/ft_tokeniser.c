@@ -6,21 +6,19 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 16:19:11 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/25 03:32:04 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/10 23:53:01 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	*ft_fill_token(char *s, char *m_char)
+static void	*ft_token(char *s, char *m_char)
 {
 	char	*tmp;
 
-	if (!s)
+	if (!s || !m_char)
 		return (NULL);
-	if (*s == '$')
-		tmp = ft_dollar_char(s);
-	else if (ft_flag_char(*s, m_char))
+	if (ft_flag_char(*s, m_char))
 		tmp = ft_meta_char(s, *s);
 	else
 		tmp = ft_normal_char(s, m_char);
@@ -38,21 +36,20 @@ void	*ft_tokeniser(void *arg, char *m_char)
 	if (!arg || !m_char)
 		return (NULL);
 	s = (char *)arg;
-	// better protection
-	tmp = ft_fill_token(s, m_char);
-	if (tmp)
-	{
-		token = ft_lstnew(tmp);
-		if (!token)
-			return (NULL);
-	}
+	tmp = ft_token(s, m_char);
+	if (!tmp)
+		return (NULL);
+	token = ft_lstnew(tmp);
+	if (!token)
+		return (NULL);
 	s = s + ft_strlen((char *)tmp);
 	while (*s)
 	{
 		tmp = NULL;
-		tmp = ft_fill_token(s, m_char);
-		if (tmp)
-			ft_lstadd_back(&token, ft_lstnew(tmp));
+		tmp = ft_token(s, m_char);
+		if (!tmp)
+			return (NULL);
+		ft_lstadd_back(&token, ft_lstnew(tmp));
 		s = s + ft_strlen((char *)tmp);
 	}
 	return ((void *)token);

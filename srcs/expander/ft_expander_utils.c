@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 04:45:05 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/27 22:29:59 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/11 02:41:32 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	ft_alnum_underscore(int c)
 	return (EXIT_FAILURE);
 }
 
-int	check_simple_quotes(char *s)
+int	check_quotes(char *s, int c)
 {
-	if (*s == '\'')
+	if (*s == c)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
@@ -41,18 +41,45 @@ int	ft_get_dollar_pos(char *s)
 	return (i);
 }
 
-char	*find_value(t_env *envp, char *var_name)
+void	expand_quote_flag(t_list *token)
 {
-	t_var	*var;
+	char	*s;
 
-	var = envp->var;
-	if (!var_name || (*var_name == '$' && !(*var_name + 1)))
-		return (NULL);
-	while (var)
+	s = (char *)token->val;
+	if (!s)
+		return ;
+	token->quote = 0;
+	token->exp_flag = 0;
+	if (ft_strchr(s, '$') && *(s + 1))
 	{
-		if (!ft_strcmp(var->name, var_name))
-			return (var->value);
-		var = var->next;
+		if (!check_quotes(s, '\''))
+			token->exp_flag = 1;
 	}
-	return (NULL);
+	if (check_quotes(s, '"') || check_quotes(s, '\''))
+		token->quote = 1;
+	return ;
+}
+
+char	*remove_quotes(t_list *token)
+{
+	char	*s;
+	char	*val;
+
+	s = (char *)token->val;
+	if (!s)
+		return (NULL);
+	if (ft_strlen(s) == 2 && ft_strchr(QUOTE_LIST, s[0]) && s[0] == s[1])
+		return (ft_strdup(""));
+	else
+	{
+		if (ft_strchr(QUOTE_LIST, s[0]))
+		{
+			val = ft_substr(s, 1, ft_strlen(s) - 2);
+			if (!val)
+				return (gc_free(), NULL);
+			return (val);
+		}
+		return (s);
+	}
+	return (s);
 }

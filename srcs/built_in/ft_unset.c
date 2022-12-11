@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:42:36 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/05 04:42:38 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/11 04:05:36 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,8 @@ void	ft_delete_var(t_env *envp, char *var_name)
 	var = envp->var;
 	if (!ft_strcmp(var->name, var_name))
 	{
-		tmp = envp->var->next;
+		// tmp = envp->var->next;
 		ft_free_var(var);
-		var = tmp;
 		return ;
 	}
 	while (var->next)
@@ -90,13 +89,17 @@ Arg : [envp] -> pointer to the first environment's element
 Role: unset all the named variable passed in command line
 Return value: this builtin always return 0 in case of success
 */
+/*
+** HAVE TO INITIALIZE NB_VAR if !CMD
+*/
 int	ft_unset(t_env *envp, t_cmd *cmd)
 {
 	t_var	*var;
 	int		nb_var;
 
-	if (cmd)
-		nb_var = get_nb_var(cmd);
+	if (!cmd)
+		return (0);
+	nb_var = get_nb_var(cmd);
 	while (nb_var--)
 	{
 		if (envp->var)

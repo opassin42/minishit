@@ -6,38 +6,74 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 12:30:05 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/23 16:22:02 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/01 04:08:16 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/*
-** New token list without void node (node with only space(s))
-** Find a better way not to suppress spaces between 2 quotes
-*/
-void	*ft_void_skipper(t_list **token)
+static int	wrong_next(t_list *token)
 {
-	void	*a_s;
-	t_list	*tmp;
-	t_list	*d_token;
-
-	tmp = *token;
-	a_s = tmp->val;
-	d_token = ft_lstnew(a_s);
-	if (!d_token)
-		return (NULL);
-	tmp = tmp->next;
-	while (tmp)
+	if (token->type == PIPE || token->type == RD)
 	{
-		a_s = tmp->val;
-		if (ft_not_only_space(a_s))
-			ft_lstadd_back(&d_token, ft_lstnew(a_s));
-		tmp = tmp->next;
+		if (token->next->type == PIPE || token->next->type == RD)
+		{
+			syntax_error((char *)token->val, ERRNO_1, 2, ft_putstr_fd);
+			return (EXIT_FAILURE);
+		}
+		if (token->next->type == VOID)
+		{
+			if (token->next->next->type == RD
+				|| token->next->next->type == PIPE)
+			{
+				syntax_error((char *)token->val, ERRNO_1, 2, ft_putstr_fd);
+				return (EXIT_FAILURE);
+			}
+		}
 	}
-	return (ft_free_token(token, free), (void *)d_token);
+	return (EXIT_SUCCESS);
 }
 
+static int	wrong_pipe(t_list *token)
+{
+	if (token->type == PIPE)
+	{
+		if (ft_strlen((char *)token->val) != 1)
+		{
+			syntax_error("pipeline", ERRNO_1, 2, ft_putstr_fd);
+			return (EXIT_FAILURE);
+		}
+	}
+	return (EXIT_SUCCESS);
+}
+
+static int	wrong_rd(t_list *token)
+{
+	if (token->type == RD)
+	{
+		if (ft_strlen((char *)token->val) > 2)
+		{
+			syntax_error(token->val, ERRNO_1, 2, ft_putstr_fd);
+			return (EXIT_FAILURE);
+		}
+	}
+	return (EXIT_SUCCESS);
+}
+
+int	init_syntaxer(t_syntaxer synt)
+{
+	synt[0] = wrong_next;
+	synt[1] = wrong_pipe;
+	synt[2] = wrong_rd;
+	synt[3] = check_quotes_word;
+	return (EXIT_SUCCESS);
+}
+
+/*
+** Take address of token
+** Run a syntaxer
+** Return 0 or 2
+*/
 int	ft_parser(t_list **token)
 {
 	t_list		*tmp;
@@ -46,6 +82,6 @@ int	ft_parser(t_list **token)
 	tmp = *token;
 	init_syntaxer(syntax);
 	if (ft_syntaxer(&tmp, syntax))
-		return (EXIT_FAILURE);
+		return (2);
 	return (EXIT_SUCCESS);
 }

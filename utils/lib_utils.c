@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 05:37:44 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/09/17 04:43:49 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/11/16 03:23:40 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,17 @@ int	ft_strlen(char *s)
 
 char	*ft_strchr(char *s, int c)
 {
-	char	*a_s;
+	char	*tmpsrc;
 
-	a_s = (char *)s;
-	while (*a_s && *a_s != c)
-			a_s++;
-	if (*a_s == c)
-		return (a_s);
+	tmpsrc = (char*)s;
+	while (*tmpsrc)
+	{
+		if (*tmpsrc == (char)c)
+			return (tmpsrc);
+		tmpsrc++;
+	}
+	if ((char)c == '\0' && *tmpsrc == '\0')
+		return (tmpsrc);
 	return (NULL);
 }
 
@@ -44,10 +48,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	len = ft_strlen(s1) + ft_strlen(s2);
 	join = (char *)push_top(&start, sizeof(char) * (len + 1));
 	if (!join)
-	{
-		gc_free();
-		return (0);
-	}
+		return (gc_free(), NULL);
 	else
 	{
 		ft_memcpy(join, s1, ft_strlen(s1));
@@ -63,13 +64,12 @@ void	*ft_strjoin_char(char *s1, char c)
 	char	*tab;
 
 	i = 0;
+	if (!s1)
+		return (NULL);
 	len = ft_strlen(s1);
 	tab = (char *)push_top(&start, sizeof(char) * (len + 2));
-	if (!tab || s1)
-	{
-		gc_free();
-		return (NULL);
-	}
+	if (!tab)
+		return (gc_free(), NULL);
 	while (s1 && s1[i] != '\0')
 	{
 		tab[i] = s1[i];
