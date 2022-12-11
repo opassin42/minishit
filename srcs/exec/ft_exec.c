@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/11 05:21:55 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/11 06:16:18 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 	if (ret == 0)
 	{
 		if (execve(cmd->bin, cmd->arg, envp->tab) == -1)
-			return (perror((const char *)cmd->name), EXIT_FAILURE);
-		return (EXIT_SUCCESS);
+			return (perror((const char *)cmd->name), errno);
+		return (errno);
 	}
 	else
 	{

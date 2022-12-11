@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 17:56:53 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/18 05:53:32 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/11 22:47:25 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int	ft_chdir(t_env *envp, t_upvarenv *upvarenv)
 			return (EXIT_SUCCESS);
 		}
 	}
-	printf("minishell: cd: %s: %s\n", ++upvarenv->path, strerror(errno));
+	cmd_error(++upvarenv->path, strerror(errno), 2, ft_putstr_fd);
 	return (EXIT_FAILURE);
 }
 

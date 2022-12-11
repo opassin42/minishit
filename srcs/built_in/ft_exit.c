@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:42:05 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/11 03:07:54 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/11 23:01:45 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	ft_exit(t_env *envp, t_cmd *cmd)
 		if (cmd->param[1] || !is_nb(cmd->param[0]))
 		{
 			if (!is_nb(cmd->param[0]))
-				ft_putstr_fd("exit\n minishell: exit: numeric argument required\n", 1);
+				cmd_error(cmd->name, ERRNO_4, 2, ft_putstr_fd);
 			else
-				ft_putstr_fd("exit\n minishell: exit: too many arguments\n", 1);
+				cmd_error(cmd->name, ERRNO_5, 2, ft_putstr_fd);
 			ret = 2;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 03:29:08 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/11 04:16:47 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/11 22:56:43 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	ft_is_digit(int c)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
-
 
 int	ft_isalpha(int c)
 {

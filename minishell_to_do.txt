@@ -29,5 +29,5 @@ V	-> export
 V	-> Verification des path d'exec comme bash
 V	-> Erreur d'execution de commande comme dans bash
 V	-> check des valeur de retours
-x	-> Mode non TTY
+V	-> Mode non TTY
 x	-> Mise a la norme
