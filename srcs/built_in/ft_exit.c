@@ -12,6 +12,11 @@
 
 #include "../../include/minishell.h"
 
+long			ft_rest(long nb, long modulo)
+{
+	return (rest);
+}
+
 void		ft_exit(t_env *envp, t_cmd *cmd)
 {
 	(void)envp;
@@ -30,9 +35,7 @@ void		ft_exit(t_env *envp, t_cmd *cmd)
 	if (ret < 0)
 	{
 		ret *= (-1);
-		ret %= 256;
-		ret = 256 - ret;
-
+		ret = ft_rest(ret, 256) - ret;
 		exit ();
 	}
 }
