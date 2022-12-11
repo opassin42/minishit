@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/07 06:32:15 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/09 02:53:23 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ static char	*bin_path(t_cmd *cmd, char **path)
 	{
 		tmp = ft_strjoin(path[i], "/");
 		if (!tmp)
-			return (NULL);
+			return (gc_free(), NULL);
 		bin = ft_strjoin(tmp, cmd->name);
 		if (!bin)
-			return (NULL);
+			return (gc_free(), NULL);
 		if (!access(bin, F_OK))
 			return (bin);
 	}
