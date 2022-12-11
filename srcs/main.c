@@ -20,8 +20,6 @@ char	*ft_shellname(void)
 	char	*tmp;
 
 	tmp = get_pwd();
-	dup2(STDIN_FILENO, 0);
-	dup2(STDIN_FILENO, 1);
 	tmp = ft_strjoin("\e[0;32m", tmp);
 	tmp = ft_strjoin(tmp, ":$>\e[0m");
 	return (tmp);
