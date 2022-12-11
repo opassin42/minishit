@@ -12,11 +12,18 @@
 
 #include "../include/minishell.h"
 
-int	is_numeric(char c)
+int	is_nb(char *s)
 {
-	if (c >= 60 && c <= 71)
-		return (1);
-	return (0);
+	while (*s)
+	{
+		if (s[0] == '-')
+			s++;
+		if (*s >= 48 && *s <= 57)
+			s++;
+		else
+			return (0);
+	}
+	return (1);
 }
 
 int	ft_atoi(const char *str)

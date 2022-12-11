@@ -12,30 +12,30 @@
 
 #include "../../include/minishell.h"
 
-long			ft_rest(long nb, long modulo)
+int	ft_exit(t_env *envp, t_cmd *cmd)
 {
-	return (rest);
-}
+	int		ret;
 
-void		ft_exit(t_env *envp, t_cmd *cmd)
-{
 	(void)envp;
-	long		ret;
-
-	ret = g_status;
-	if (*(cmd->param))
+	ret = 0;
+	if (cmd->param && *(cmd->param))
 	{
 		ret = ft_atoi(cmd->param[0]);
-		if (cmd->param[1])
-			return(ft_putstr_fd("minishell: exit: too many arguments\n", 1), g_status);
-		else if (is_nb(cmd->param[0]))
-			return(ft_putstr_fd("minishell: exit: numeric argument required\n", 1), g_status);
+		if (cmd->param[1] || !is_nb(cmd->param[0]))
+		{
+			if (!is_nb(cmd->param[0]))
+				ft_putstr_fd("exit\n minishell: exit: numeric argument required\n", 1);
+			else
+				ft_putstr_fd("exit\n minishell: exit: too many arguments\n", 1);
+			ret = 2;
+		}
 	}
 	gc_free();
 	if (ret < 0)
 	{
 		ret *= (-1);
-		ret = ft_rest(ret, 256) - ret;
-		exit ();
+		exit (256 - (ret % 256));
 	}
+	exit (ret % 256);
+	return (0);
 }
