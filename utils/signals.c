@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/11 05:57:07 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/11 06:01:31 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	sig_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		keepRunning = 1;
+		keepRunning = 0;
 		ft_putstr_fd("\n", 1);
 		g_status = 130;
 		rl_replace_line("", 0);

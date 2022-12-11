@@ -15,7 +15,6 @@ V	-> Analyse des erreurs de syntax
 V	-> Historique (flèche du haut, flèche du bas)
 V	-> Edition de ligne (flèche de droite, flèche de gauche)
 V	-> $ variable (rework)
--	-> backslash \
 x	-> pipes
 V	-> $
 x	-> exit
@@ -24,9 +23,9 @@ V	-> echo
 V	-> unset
 V	-> pwd
 V	-> env
-x	-> export
-x	-> Signals ctrl-c ctrl-\ ...
-x	-> Redirection
+V	-> export
+?	-> Signals ctrl-c ctrl-\ ...    (unfinished)
+?	-> Redirection                  (unfinished)
 V	-> Verification des path d'exec comme bash
 V	-> Erreur d'execution de commande comme dans bash
 V	-> check des valeur de retours
