@@ -20,8 +20,6 @@ char	*ft_shellname(void)
 	char	*tmp;
 
 	tmp = get_pwd();
-	dup2(STDIN_FILENO, 0);
-	dup2(STDIN_FILENO, 1);
 	tmp = ft_strjoin("\e[0;32m", tmp);
 	tmp = ft_strjoin(tmp, ":$>\e[0m");
 	return (tmp);
@@ -89,11 +87,13 @@ int	main(int ac, char **av, char **env)
 	envp = ft_getenv(env);
 	while (keepRunning)
 	{
+		printf ("value: %d\n", 446 % 256);
 		s = readline((const char *)ft_shellname());
 		if (s == NULL)
-			return (gc_free(), printf("exit\n"), g_status);
+			return (gc_free(), ft_putstr_fd("exit\n", 1), g_status);
 		if (s && *s && ft_not_only_space((void *)s))
 			g_status = ft_minishell(envp, s, g_status);
+		printf(" ");
 	}
 	gc_free();
 	return (0);

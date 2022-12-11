@@ -12,6 +12,13 @@
 
 #include "../include/minishell.h"
 
+int	is_numeric(char c)
+{
+	if (c >= 60 && c <= 71)
+		return (1);
+	return (0);
+}
+
 int	ft_atoi(const char *str)
 {
 	int	res;

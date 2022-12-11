@@ -94,7 +94,7 @@ static int	ft_chdir(t_env *envp, t_upvarenv *upvarenv)
 			return (EXIT_SUCCESS);
 		}
 	}
-	printf("minishell: cd: %s: %s\n", ++upvarenv->path, strerror(errno));
+	ft_putstr_fd("minishell: cd: %s: %s\n", ++upvarenv->path, strerror(errno), 1);
 	return (EXIT_FAILURE);
 }
 

@@ -171,6 +171,7 @@ char	*ft_substr(char *s, int start, size_t len);
 char	*ft_strtrim(char *s1, char *set);
 
 /* List utils */
+int		is_numeric(char c);
 t_list	*ft_lstnew(void *content);
 t_list	*ft_lstlast(t_list *lst);
 int		ft_lstsize(t_list *lst);
