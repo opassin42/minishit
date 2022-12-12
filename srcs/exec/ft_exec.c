@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/11 06:16:18 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/12 02:15:40 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static char	*binary_file(t_cmd *cmd, char **path)
 
 int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 {
-	int	ret;
+	int	pid;
 
 	if (!path)
 		return (EXIT_FAILURE);
@@ -70,18 +70,19 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), EXIT_FAILURE);
 	if (access(cmd->bin, F_OK))
 		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), 127);
-	ret = fork();
-	if (ret == -1)
+	pid = fork();
+	if (pid == -1)
 		return (EXIT_FAILURE);
-	if (ret == 0)
+	if (pid == 0)
 	{
 		if (execve(cmd->bin, cmd->arg, envp->tab) == -1)
-			return (perror((const char *)cmd->name), errno);
-		return (errno);
+			return (perror((const char *)cmd->name), EXIT_FAILURE);
+		return (EXIT_SUCCESS);
 	}
 	else
 	{
-		wait(&ret);
+		wait(NULL);
+		printf("%d\n", errno);
 		return (errno);
 	}
 	return (EXIT_SUCCESS);
@@ -97,13 +98,13 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 */
 int	ft_exec(t_env *envp, t_cmd *cmd)
 {
-	int	ret;
+	int	status;
 
-	ret = 0;
+	status = 0;
 	while (cmd)
 	{
-		ret = ft_router(envp, cmd);
+		status = ft_router(envp, cmd);
 		cmd = cmd->next;
 	}
-	return (ret);
+	return (status);
 }

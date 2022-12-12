@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:28 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/09 02:55:31 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/12 01:18:40 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_cmd	*ft_new_cmd(t_list *token)
 {
 	t_cmd	*cmd;
 
-	cmd = (t_cmd *)push_top(&start, sizeof(t_cmd));
+	cmd = (t_cmd *)push_top(&g_data.gc, sizeof(t_cmd));
 	if (!cmd)
 		return (gc_free(), NULL);
 	cmd->name = (char *)token->val;
@@ -71,7 +71,7 @@ char	**ft_malloc_double_p(t_list *token)
 	if (!token)
 		return ((char **) NULL);
 	i = ft_lstsize(token);
-	param = (char **)push_top(&start, (sizeof(char *) * (i + 1)));
+	param = (char **)push_top(&g_data.gc, (sizeof(char *) * (i + 1)));
 	if (!param)
 		return (gc_free(), NULL);
 	i = 0;
