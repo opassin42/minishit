@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:41:35 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/05 02:21:30 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/12 04:15:23 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_env(t_env *envp, t_cmd *cmd)
 	{
 		tmp = cmd->param;
 		syntax_error(*tmp, ERRNO_3, 2, ft_putstr_fd);
-		return (127);
+		return (g_data.status = 127);
 	}
 	return (ft_print_env(var), EXIT_SUCCESS);
 }
