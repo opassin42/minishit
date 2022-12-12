@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 03:28:46 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/12 01:18:40 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/12 07:21:47 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ t_var	*ft_new_var(t_list *token)
 		return (gc_free(), NULL);
 	var->name = ft_var_name(str);
 	if (!var->name)
-		return (gc_free(), NULL);
+		return (NULL);
 	begin = ft_strlen(var->name) + 1;
 	var->value = ft_substr(str, begin, ft_strlen(str));
 	if (!var->value)
-		return (gc_free(), NULL);
+		return (NULL);
 	var->next = NULL;
 	return (var);
 }

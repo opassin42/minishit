@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:45:01 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/12 02:44:13 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/12 07:16:12 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	*var_name(char *str, int start)
 		{
 			tmp = (void *)ft_substr(str, start, i - start);
 			if (!tmp)
-				return (gc_free(), NULL);
+				return (NULL);
 			return (tmp);
 		}
 	}
@@ -81,10 +81,10 @@ char	*expand(t_env *envp, char *s)
 	pos = ft_get_dollar_pos(s);
 	name = (char *)var_name(s, pos);
 	if (!name)
-		return (gc_free(), NULL);
+		return (NULL);
 	name = check_name(name);
 	if (!name)
-		return (gc_free(), NULL);
+		return (NULL);
 	if (!ft_strcmp(name, "?"))
 		var_val = ft_itoa(g_data.status);
 	else

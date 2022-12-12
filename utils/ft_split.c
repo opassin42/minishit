@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 03:38:28 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/12 01:18:40 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/12 07:23:01 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	**ft_split(char *s, char c)
 		{
 			split[i] = get_mem(s, c);
 			if (!split[i])
-				return (gc_free(), NULL);
+				return (NULL);
 			++i;
 			while (*s && *s != c)
 				++s;

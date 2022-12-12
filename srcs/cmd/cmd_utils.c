@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:28 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/12 01:18:40 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/12 07:20:44 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	*join_token(t_list *token)
 	{
 		s = ft_strjoin(s, tmp->expand);
 		if (!s)
-			return (gc_free(), NULL);
+			return (NULL);
 		tmp = tmp->next;
 	}
 	return ((void *)s);
@@ -79,7 +79,7 @@ char	**ft_malloc_double_p(t_list *token)
 	{
 		param[i] = ft_strdup(token->val);
 		if (!param[i])
-			return (gc_free(), (char **) NULL);
+			return ((char **) NULL);
 		token = token->next;
 		++i;
 	}

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 02:41:11 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/12 02:51:32 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/12 07:21:21 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_var	*ft_init_var(t_list **env_list)
 	tmp = *env_list;
 	var = ft_new_var(tmp);
 	if (!var)
-		return (gc_free(), NULL);
+		return (NULL);
 	tmp = tmp->next;
 	while (tmp)
 	{
