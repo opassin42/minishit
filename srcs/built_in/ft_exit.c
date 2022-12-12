@@ -18,7 +18,7 @@ int	ft_exit(t_env *envp, t_cmd *cmd)
 
 	(void)envp;
 	ret = g_data.status;
-	if (*(cmd->param))
+	if (cmd && cmd->param && cmd->param[0])
 	{
 		ret = ft_atoi(cmd->param[0]);
 		if (cmd->param[1] || !is_nb(cmd->param[0]))
@@ -37,6 +37,5 @@ int	ft_exit(t_env *envp, t_cmd *cmd)
 		ret %= 256;
 		ret = 256 - ret;
 	}
-	exit(ret);
-	return (EXIT_SUCCESS);
+	return (exit(ret), ret);
 }
