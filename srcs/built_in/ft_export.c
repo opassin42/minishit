@@ -73,20 +73,20 @@ t_var	*ft_new_var_env(t_cmd *cmd, int i)
 int	ft_export(t_env *envp, t_cmd *cmd)
 {
 	t_var	*var;
-	int		nb_var;
 	int		i;
 
 	i = 0;
 	if (cmd)
-		nb_var = get_nb_var(cmd);
-	if (!cmd->param)
 	{
-		ft_export_env(envp->var);
-		return (0);
+		if (cmd && cmd->param == NULL)
+		{
+			ft_export_env(envp->var);
+			return (0);
+		}
+		if (envp->var)
+			var = envp->var;
+		while (i < get_nb_var(cmd))
+			ft_var_addback(&var, ft_new_var_env(cmd, i++));
 	}
-	if (envp->var)
-		var = envp->var;
-	while (i < nb_var)
-		ft_var_addback(&var, ft_new_var_env(cmd, i++));
 	return (0);
 }
