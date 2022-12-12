@@ -6,16 +6,19 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/12 05:21:00 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/12 07:06:08 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-/*
-** Can't have the right return when interrupt a process by SIGINT
-*/
-void	sig_handler(int sig)
+void	init_signal(void)
+{
+	g_data.sigint = 0;
+	g_data.sigquit = 0;
+}
+
+static void	parent_signal(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -24,45 +27,31 @@ void	sig_handler(int sig)
 		rl_replace_line("", 1);
 		rl_on_new_line();
 		rl_redisplay();
-		g_data.status = 130;
 	}
-	return ;
+	else if (sig == SIGQUIT)
+		ft_putstr_fd("\b\b  \b\b", 2);
 }
 
-// void	parent_signal(int sig)
-// {
-// 	if (sig == SIGQUIT)
-// 		ft_putstr_fd("\b\b  \b\b", 2);
-// 	if (sig == SIGINT)
-// 	{
-// 		ft_putstr_fd("\n", 1);
-// 		rl_replace_line("", 1);
-// 		rl_on_new_line();
-// 		rl_redisplay();
-// 		g_data.status = 130;
-// 	}
-// }
+static void	child_signal(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ft_putstr_fd("\n", 2);
+		g_data.status = 130;
+		g_data.sigint = 1;
+	}
+	if (sig == SIGQUIT)
+	{
+		ft_putstr_fd("Quit: (core dumped)\n", 2);
+		g_data.status = 131;
+		g_data.sigquit = 1;
+	}
+}
 
-// void	child_signal(int sig)
-// {
-// 	if (sig == SIGQUIT)
-// 	{
-// 		ft_putstr_fd("Quit: (core dumped)\n", 2);
-// 		g_data.status = 131;
-// 		// g_ms.sigquit = 1;
-// 	}
-// 	else if (sig == SIGINT)
-// 	{
-// 		ft_putstr_fd("\n", 2);
-// 		g_data.status = 130;
-// 		// g_ms.sigint = 1;
-// 	}
-// }
-
-// void	get_signal(int sig)
-// {
-// 	// if (g_ms.pid)
-// 		child_signal(sig);
-// 	// else
-// 		parent_signal(sig);
-// }
+void	sig_handler(int sig)
+{
+	if (g_data.pid)
+		child_signal(sig);
+	else
+		parent_signal(sig);
+}

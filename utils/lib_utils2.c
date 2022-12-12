@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:20:26 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/12 01:18:40 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/12 07:23:20 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_substr(char *s, int begin, size_t len)
 	char	*sub;
 
 	if (!s)
-		return (gc_free(), NULL);
+		return (NULL);
 	sub = push_top(&g_data.gc, sizeof(char) * (len + 1));
 	if (!sub)
 		return (gc_free(), NULL);

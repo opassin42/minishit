@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/12 05:39:33 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/12 07:22:31 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ static char	*bin_path(t_cmd *cmd, char **path)
 	{
 		tmp = ft_strjoin(path[i], "/");
 		if (!tmp)
-			return (gc_free(), NULL);
+			return (NULL);
 		bin = ft_strjoin(tmp, cmd->name);
 		if (!bin)
-			return (gc_free(), NULL);
+			return (NULL);
 		if (!access(bin, F_OK))
 			return (bin);
 	}
@@ -77,10 +77,12 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 		g_data.status = execve(cmd->bin, cmd->arg, envp->tab);
 		if (g_data.status == -1)
 			perror((const char *)cmd->name);
-		exit(g_data.status);
+		return (g_data.status);
 	}
 	else
 		waitpid(g_data.pid, &g_data.status, 0);
+	if (g_data.sigint || g_data.sigquit)
+		return (g_data.status);
 	if (g_data.status == 512 || g_data.status == 256)
 		g_data.status = g_data.status / 256;
 	return (g_data.status);

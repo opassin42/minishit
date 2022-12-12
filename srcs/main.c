@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/12 05:43:56 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/12 07:19:06 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	ft_readline(t_env *envp, char *s)
 {
 	s = readline((const char *)ft_shellname());
 	if (!s)
-		return (gc_free(), printf("exit\n"), g_data.status = -42);
+		return (printf("exit\n"), g_data.status = -42);
 	if (s && *s && *s != '\n')
 		g_data.status = ft_minishell(envp, s, g_data);
 	if (s)
@@ -93,13 +93,16 @@ int	main(int ac, char **av, char **env)
 		return (EXIT_FAILURE);
 	if (signal(SIGQUIT, SIG_IGN))
 		g_data.keeprunning = 1;
-	if (*env)
-		envp = ft_getenv(env);
+	init_signal();
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler);
+	envp = ft_getenv(env);
 	while (g_data.keeprunning)
 	{
+		init_signal();
 		g_data.status = ft_readline(envp, s);
 		if (g_data.status == -42)
-			return (0);
+			return (gc_free(), 0);
 	}
 	return (gc_free(), 0);
 }
