@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 02:41:11 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/12 02:19:08 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/12 02:51:32 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_env	*ft_init_env(char **env, t_env *envp)
 	envp->tab = env;
 	envp->list = ft_lstnew((void *)env[0]);
 	if (!envp->list)
-		return (NULL);
+		return (gc_free(), NULL);
 	i = 0;
 	while (env[++i])
 	{
@@ -43,7 +43,7 @@ t_var	*ft_init_var(t_list **env_list)
 	tmp = *env_list;
 	var = ft_new_var(tmp);
 	if (!var)
-		return (NULL);
+		return (gc_free(), NULL);
 	tmp = tmp->next;
 	while (tmp)
 	{

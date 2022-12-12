@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:45:01 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/12 02:30:20 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/12 02:44:13 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,6 @@ static char	*check_name(char *name)
 	return (tmp);
 }
 
-/*
-** SEGV AT the RED DOT !!!!!!!
-*/
 char	*find_value(t_env *envp, char *var_name)
 {
 	t_var	*var;

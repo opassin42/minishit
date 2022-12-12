@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 17:56:53 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/12 01:18:40 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/12 03:30:09 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int	ft_chdir(t_env *envp, t_upvarenv *upvarenv)
 			return (EXIT_SUCCESS);
 		}
 	}
-	cmd_error(++upvarenv->path, strerror(errno), 2, ft_putstr_fd);
+	cmd_error(++upvarenv->path, ERRNO_3, 2, ft_putstr_fd);
 	return (EXIT_FAILURE);
 }
 
