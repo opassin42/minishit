@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:42:05 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/11 23:01:45 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/12 01:18:40 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_exit(t_env *envp, t_cmd *cmd)
 	long	ret;
 
 	(void)envp;
-	ret = g_status;
+	ret = g_data.status;
 	if (*(cmd->param))
 	{
 		ret = ft_atoi(cmd->param[0]);
@@ -43,7 +43,7 @@ int	ft_exit(t_env *envp, t_cmd *cmd)
 		ret *= (-1);
 		ret %= 256;
 		ret = 256 - ret;
-		exit (ret);
 	}
+	exit(ret);
 	return (EXIT_SUCCESS);
 }

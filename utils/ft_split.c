@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 03:38:28 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/17 04:56:10 by opassin          ###   ########.fr       */
+/*   Updated: 2022/12/12 01:18:40 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static char	*get_mem(char *s, char c)
 	i = 0;
 	while (s[i] && s[i] != c)
 		++i;
-	dup = (char *)push_top(&start, sizeof(char) * (i + 1));
+	dup = (char *)push_top(&g_data.gc, sizeof(char) * (i + 1));
 	if (!dup)
 		return (gc_free(), NULL);
 	else
@@ -100,7 +100,7 @@ char	**ft_split(char *s, char c)
 	if (!s)
 		return (NULL);
 	i = word_nb((char *)s, c);
-	split = (char **)push_top(&start, sizeof(char *) * (i + 1));
+	split = (char **)push_top(&g_data.gc, sizeof(char *) * (i + 1));
 	if (!split)
 		return (gc_free(), NULL);
 	i = 0;

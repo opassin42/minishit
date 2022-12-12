@@ -6,18 +6,31 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:47 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/02 06:44:36 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/12 00:57:06 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+# include <unistd.h>
+# include <sys/types.h>
+
 typedef struct s_gc
 {
 	void			*addr;
 	struct s_gc		*next;
 }				t_gc;
+
+typedef struct s_data
+{
+	int				status;
+	int				sigint;
+	int				sigquit;
+	pid_t			pid;
+	volatile int	keeprunning;
+	t_gc			*gc;
+}				t_data;
 
 typedef enum s_type
 {

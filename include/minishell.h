@@ -6,25 +6,24 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/11 04:17:08 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/12 01:19:08 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "structs.h"
 # include "inc.h"
 # include "defines.h"
-# include "structs.h"
 
-extern int			g_status;
-extern t_gc			*start;
-static volatile int	keepRunning = 1;
+extern t_data	g_data;
 
 /******************************************************************************/
 /**********************************  INITS  ***********************************/
 /******************************************************************************/
 // t_flag	ft_init_flag(void);
+t_data	init_global(void);
 
 /******************************************************************************/
 /**********************************  LEXING  **********************************/
@@ -189,9 +188,9 @@ void	ft_free_token(t_list **token, void (*clr)(void*));
 void	ft_add_history(void *s);
 void	*ft_void_skipper(t_list **token);
 void	*push_top(t_gc **head, size_t data_size);
-void	printList(t_gc	*node);
 void	gc_free(void);
 void	ft_pop_in_gc(t_gc **start, void *p);
+void	printList(t_gc	*node);
 
 /******************************************************************************/
 /**********************************  ERRORS  **********************************/
