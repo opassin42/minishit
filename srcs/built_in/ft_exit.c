@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:42:05 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/11 23:01:45 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/12 02:34:17 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	ft_exit(t_env *envp, t_cmd *cmd)
 	int		ret;
 
 	(void)envp;
-	ret = 0;
-	if (cmd->param && *(cmd->param))
+	ret = g_data.status;
+	if (*(cmd->param))
 	{
 		ret = ft_atoi(cmd->param[0]);
 		if (cmd->param[1] || !is_nb(cmd->param[0]))
@@ -34,8 +34,9 @@ int	ft_exit(t_env *envp, t_cmd *cmd)
 	if (ret < 0)
 	{
 		ret *= (-1);
-		exit (256 - (ret % 256));
+		ret %= 256;
+		ret = 256 - ret;
 	}
-	exit (ret % 256);
-	return (0);
+	exit(ret);
+	return (EXIT_SUCCESS);
 }

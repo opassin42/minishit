@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:49:33 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/10 23:52:37 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/12 02:07:24 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	ft_init_t_builtin(t_builtin *builtin)
 	builtin[6].f = ft_exit;
 }
 
-static int	ft_builtin_ret(t_env *envp, t_cmd *cmd, t_builtin *builtin, int i)
+static int	ft_builtin(t_env *envp, t_cmd *cmd, t_builtin *builtin, int i)
 {
 	int	res;
 
@@ -86,6 +86,6 @@ int	ft_router(t_env *envp, t_cmd *cmd)
 		status = ft_non_builtin(envp, cmd, path);
 	}
 	else
-		status = ft_builtin_ret(envp, cmd, builtin, id);
+		status = ft_builtin(envp, cmd, builtin, id);
 	return (status);
 }
