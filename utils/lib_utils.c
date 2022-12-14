@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 05:37:44 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/16 03:23:40 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/14 06:43:20 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_strchr(char *s, int c)
 {
 	char	*tmpsrc;
 
-	tmpsrc = (char*)s;
+	tmpsrc = (char *)s;
 	while (*tmpsrc)
 	{
 		if (*tmpsrc == (char)c)
@@ -46,7 +46,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s1 || !s2)
 		return (NULL);
 	len = ft_strlen(s1) + ft_strlen(s2);
-	join = (char *)push_top(&start, sizeof(char) * (len + 1));
+	join = (char *)push_top(&g_data.gc, sizeof(char) * (len + 1));
 	if (!join)
 		return (gc_free(), NULL);
 	else
@@ -67,7 +67,7 @@ void	*ft_strjoin_char(char *s1, char c)
 	if (!s1)
 		return (NULL);
 	len = ft_strlen(s1);
-	tab = (char *)push_top(&start, sizeof(char) * (len + 2));
+	tab = (char *)push_top(&g_data.gc, sizeof(char) * (len + 2));
 	if (!tab)
 		return (gc_free(), NULL);
 	while (s1 && s1[i] != '\0')

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:20:26 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/16 02:49:58 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/14 06:43:41 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ char	*ft_substr(char *s, int begin, size_t len)
 	char	*sub;
 
 	if (!s)
-		return (gc_free(), NULL);
-	sub = push_top(&start, sizeof(char) * (len + 1));
+		return (NULL);
+	sub = push_top(&g_data.gc, sizeof(char) * (len + 1));
 	if (!sub)
 		return (gc_free(), NULL);
 	i = 0;
@@ -40,7 +40,7 @@ char	*ft_strdup(char *s)
 
 	if (!s)
 		return (malloc(0));
-	dup = (char *)push_top(&start, sizeof(char) * (ft_strlen(s) + 1));
+	dup = (char *)push_top(&g_data.gc, sizeof(char) * (ft_strlen(s) + 1));
 	if (!dup)
 		return (gc_free(), NULL);
 	i = -1;

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:28 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/09 02:55:31 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/14 06:40:26 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_cmd	*ft_new_cmd(t_list *token)
 {
 	t_cmd	*cmd;
 
-	cmd = (t_cmd *)push_top(&start, sizeof(t_cmd));
+	cmd = (t_cmd *)push_top(&g_data.gc, sizeof(t_cmd));
 	if (!cmd)
 		return (gc_free(), NULL);
 	cmd->name = (char *)token->val;
@@ -57,7 +57,7 @@ void	*join_token(t_list *token)
 	{
 		s = ft_strjoin(s, tmp->expand);
 		if (!s)
-			return (gc_free(), NULL);
+			return (NULL);
 		tmp = tmp->next;
 	}
 	return ((void *)s);
@@ -71,7 +71,7 @@ char	**ft_malloc_double_p(t_list *token)
 	if (!token)
 		return ((char **) NULL);
 	i = ft_lstsize(token);
-	param = (char **)push_top(&start, (sizeof(char *) * (i + 1)));
+	param = (char **)push_top(&g_data.gc, (sizeof(char *) * (i + 1)));
 	if (!param)
 		return (gc_free(), NULL);
 	i = 0;
@@ -79,7 +79,7 @@ char	**ft_malloc_double_p(t_list *token)
 	{
 		param[i] = ft_strdup(token->val);
 		if (!param[i])
-			return (gc_free(), (char **) NULL);
+			return ((char **) NULL);
 		token = token->next;
 		++i;
 	}

@@ -6,22 +6,15 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/17 20:01:59 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/14 06:40:02 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int		ft_isalnum(int a)
-{
-	if ((a >= 65 && a <= 90)|| (a>= 97 && a<=122))
-		return (1);
-	return (0);
-}
-
 int		is_valid_name(char *name)
 {
-	int		n;
+	int	n;
 
 	n = ft_strlen(name);
 	if (name[0] == '_' || ft_isalnum(name[0]))
@@ -35,8 +28,8 @@ int		is_valid_name(char *name)
 char	*split_name(t_cmd *cmd, int i)
 {
 	char	*str;
-	char 	*str2;
-	size_t		name_size;
+	char	*str2;
+	size_t	name_size;
 
 	if (!cmd->param)
 		return (NULL);
@@ -51,12 +44,11 @@ char	*split_name(t_cmd *cmd, int i)
 char	*split_value(t_cmd *cmd, int i)
 {
 	char	*str;
-	size_t		value_size;
+	size_t	value_size;
 
 	str = ft_strchr(cmd->param[i], '=');
-	if (str == NULL){
+	if (str == NULL)
 		return (cmd->param[i]);
-	}
 	value_size = (str + ft_strlen(cmd->param[i])) - str;
 	return (ft_substr(str + 1, 0, value_size));
 }
@@ -65,12 +57,12 @@ t_var	*ft_new_var_env(t_cmd *cmd, int i)
 {
 	t_var	*var;
 
-	var = (t_var *)push_top(&start, sizeof(t_var));
+	var = (t_var *)push_top(&g_data.gc, sizeof(t_var));
 	if (!var)
 		return (gc_free(), NULL);
 	var->name = split_name(cmd, i);
 	if (is_valid_name(var->name) == 0)
-		return (gc_free(), NULL);
+		return (NULL);
 	if (!ft_strcmp(var->name, cmd->param[i]))
 		++i;
 	var->value = split_value(cmd, i);

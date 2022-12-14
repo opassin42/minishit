@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 03:29:08 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/23 17:43:43 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/14 06:36:42 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@ static int	ft_is_space(int c)
 		|| c == 32)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
+}
+
+int	ft_isalnum(int a)
+{
+	if ((a >= 65 && a <= 90) || (a >= 97 && a <= 122))
+		return (1);
+	return (0);
 }
 
 int	ft_is_digit(int c)

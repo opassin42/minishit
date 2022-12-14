@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 02:41:11 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/05 02:32:06 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/14 06:28:23 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,25 @@
 ** Then make a chained list with the env
 */
 
-t_env	ft_init_env(char **env)
+static t_env	*ft_init_env(char **env, t_env *envp)
 {
 	int		i;
 	void	*tmp;
-	t_env	envp;
 
-	envp.tab = env;
-	envp.list = ft_lstnew((void *)env[0]);
+	if (!env)
+		return (NULL);
+	envp->tab = env;
+	envp->list = ft_lstnew((void *)env[0]);
 	i = 0;
 	while (env[++i])
 	{
 		tmp = (void *)env[i];
-		ft_lstadd_back(&envp.list, ft_lstnew(tmp));
+		ft_lstadd_back(&envp->list, ft_lstnew(tmp));
 	}
 	return (envp);
 }
 
-t_var	*ft_init_var(t_list **env_list)
+static t_var	*ft_init_var(t_list **env_list)
 {
 	t_list	*tmp;
 	t_var	*var;
@@ -52,14 +53,21 @@ t_var	*ft_init_var(t_list **env_list)
 	return ((t_var *)var);
 }
 
-t_env	ft_getenv(char **env)
-{
-	t_env	envp;
 
-	if (*env)
-	{
-		envp = ft_init_env(env);
-		envp.var = ft_init_var(&envp.list);
-	}
+t_env	*ft_getenv(char **env)
+{
+	t_env	*envp;
+
+	if (!env)
+		return (NULL);
+	envp = (t_env *)push_top(&g_data.gc, sizeof(t_env));
+	if (!envp)
+		return (NULL);
+	envp = ft_init_env(env, envp);
+	if (!envp)
+		return (NULL);
+	envp->var = ft_init_var(&envp->list);
+	if (!envp->var)
+		return (NULL);
 	return (envp);
 }

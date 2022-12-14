@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/14 04:53:43 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/14 06:41:46 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ static char	*bin_path(t_cmd *cmd, char **path)
 	{
 		tmp = ft_strjoin(path[i], "/");
 		if (!tmp)
-			return (gc_free(), NULL);
+			return (NULL);
 		bin = ft_strjoin(tmp, cmd->name);
 		if (!bin)
-			return (gc_free(), NULL);
+			return (NULL);
 		if (!access(bin, F_OK))
 			return (bin);
 	}
@@ -87,6 +87,7 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 		g_data.status = g_data.status / 256;
 	return (g_data.status);
 }
+
 /*
 ** I have to change SHLVL->value
 ** Each time i go into another minishell instance
@@ -107,30 +108,3 @@ int	ft_exec(t_env *envp, t_cmd *cmd)
 	}
 	return (status);
 }
-
-
-// int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
-// {
-// 	if (!path)
-// 		return (EXIT_FAILURE);
-// 	cmd->bin = binary_file(cmd, path);
-// 	if (!cmd->bin)
-// 		return (EXIT_FAILURE);
-// 	if (access(cmd->bin, F_OK))
-// 		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), cmd->status = 127);
-// 	cmd->pid = fork();
-// 	if (cmd->pid == -1)
-// 		return (EXIT_FAILURE);
-// 	if (cmd->pid == 0)
-// 	{
-// 		if (execve(cmd->bin, cmd->arg, envp->tab) == -1)
-// 			return (perror((const char *)cmd->name), EXIT_FAILURE);
-// 		return (EXIT_SUCCESS);
-// 	}
-// 	else
-// 	{
-// 		waitpid(NULL);
-// 		return (cmd->status = errno);
-// 	}
-// 	return (EXIT_SUCCESS);
-// }

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/14 05:02:55 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/14 06:46:19 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ extern t_data	g_data;
 /******************************************************************************/
 // t_flag	ft_init_flag(void);
 t_data	init_global(void);
+void	init_signal(void);
 
 /******************************************************************************/
 /**********************************  LEXING  **********************************/
@@ -167,7 +168,6 @@ char	**free_double_p(char **s);
 char	*ft_strjoin(char *s1, char *s2);
 
 /* List utils */
-int		is_nb(char *s);
 t_list	*ft_lstnew(void *content);
 t_list	*ft_lstlast(t_list *lst);
 int		ft_lstsize(t_list *lst);

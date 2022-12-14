@@ -4,7 +4,5 @@ include
 Makefile
 minishell
 minishell_to_do.txt
-rr
 srcs
-tt
 utils

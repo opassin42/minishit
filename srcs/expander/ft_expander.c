@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:45:01 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/09 02:57:06 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/14 06:42:02 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	*var_name(char *str, int start)
 		{
 			tmp = (void *)ft_substr(str, start, i - start);
 			if (!tmp)
-				return (gc_free(), NULL);
+				return (NULL);
 			return (tmp);
 		}
 	}
@@ -68,7 +68,7 @@ char	*find_value(t_env *envp, char *var_name)
 	return (ft_strdup(""));
 }
 
-char	*expand(t_env envp, char *s)
+char	*expand(t_env *envp, char *s)
 {
 	int		pos;
 	char	*name;
@@ -79,14 +79,14 @@ char	*expand(t_env envp, char *s)
 	pos = ft_get_dollar_pos(s);
 	name = (char *)var_name(s, pos);
 	if (!name)
-		return (gc_free(), NULL);
+		return (NULL);
 	name = check_name(name);
 	if (!name)
-		return (gc_free(), NULL);
+		return (NULL);
 	if (!ft_strcmp(name, "?"))
-		var_val = ft_itoa(g_status);
+		var_val = ft_itoa(g_data.status);
 	else
-		var_val = find_value(&envp, name);
+		var_val = find_value(envp, name);
 	if (!var_val)
 		return (ft_strdup(""));
 	hashing(var_val, ' ', -1);
@@ -99,7 +99,7 @@ char	*expand(t_env envp, char *s)
 ** Handle this input : $1abc
 ** warning : if export a="o hi" -> ech$a = hi
 */
-void	ft_expander(t_list **token, t_env envp)
+void	ft_expander(t_list **token, t_env *envp)
 {
 	char	*exp_val;
 	char	*first_val;
