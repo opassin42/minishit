@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/14 06:31:45 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/14 08:28:07 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,30 +26,14 @@ char	*ft_shellname(void)
 	return (tmp);
 }
 
-void	ft_add_history(void *s)
-{
-	if (s && ft_white_spaces(s))
-		add_history(s);
-	return ;
-}
-
-void	print_token(t_list *token)
-{
-	printf("\n\e[0;31mTOKEN :\e[0m\n");
-	while (token)
-	{
-		printf("[\e[0;33m%s\e[0m]\n", (char *)token->val);
-		token = token->next;
-	}
-	return ;
-}
-
 int	ft_minishell(t_env *envp, char *s, int g_status)
 {
 	t_list	*token;
 	t_cmd	*cmd;
 
-	ft_add_history((void *)s);
+	if (!s)
+		return (EXIT_SUCCESS);
+	add_history(s);
 	token = (t_list *)ft_lexer(s);
 	if (!token)
 		return (g_status);
@@ -81,18 +65,19 @@ int	main(int ac, char **av, char **env)
 	if (isatty(STDIN_FILENO) == 0)
 		return (0);
 	g_data = init_global();
-	if (signal(SIGINT, sig_handler) == SIG_ERR)
-		return (0);
+	init_signal();
 	if (signal(SIGQUIT, SIG_IGN))
 		g_data.keeprunning = 1;
-	init_signal();
-	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, sig_handler);
+	if (signal(SIGINT, sig_handler) == SIG_ERR)
+		return (0);
+	// signal(SIGINT, sig_handler);
+	// signal(SIGQUIT, sig_handler);
 	envp = ft_getenv(env);
 	while (g_data.keeprunning)
 	{
-		init_signal();
 		s = readline((const char *)ft_shellname());
+		if (s == NULL && signal(SIGQUIT, SIG_IGN))
+			g_data.keeprunning = 1;
 		if (s == NULL)
 			return (gc_free(), printf("exit\n"), g_data.status);
 		if (s && *s && ft_not_only_space((void *)s))

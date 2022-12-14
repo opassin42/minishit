@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 05:04:34 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/14 02:47:00 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/14 07:06:13 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	rd_in(t_cmd *cmd)
 	cmd->finalfdin = dup(STDIN_FILENO);
 	if (cmd->ret == -1)
 		return (errno);
-		// return (errno);
 	dup2(cmd->ret, cmd->fd_in);
 	return (EXIT_SUCCESS);
 }

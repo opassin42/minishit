@@ -16,7 +16,7 @@ def ft_progress(lst):
 		else:
 			color = "\033[1;32m"
 		datas = (eta, color, ratio, color, bar.ljust(bar_size, ' '), color ,i + 1, len(lst),elapsed_time)
-		print("\rETA: %.2fs [%s%3d%%\033[m] [%s%s\033[m] %sFiles:%d/%d\033[m | elapsed time %.2fs" % datas, end ="")
+		print("\rETA: %.2fs [%s%3d%%\033[m] [%s%s\033[m] %s%d/%d\033[m | elapsed time %.2fs" % datas, end="")
 		yield i
 
 
