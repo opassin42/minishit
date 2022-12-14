@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/15 00:06:38 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/15 00:36:07 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ int	main(int ac, char **av, char **env)
 	g_data = init_global();
 	if (isatty(STDIN_FILENO) == 0)
 		return (gc_free(), 0);
-	if (signal(SIGINT, sig_handler) == SIG_ERR)
-		return (gc_free(), 0);
 	if (signal(SIGQUIT, SIG_IGN))
 		g_data.keeprunning = 1;
+	if (signal(SIGINT, sig_handler) == SIG_ERR)
+		return (gc_free(), 0);
 	envp = ft_getenv(env);
 	while (g_data.keeprunning)
 	{
