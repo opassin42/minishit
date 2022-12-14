@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/14 13:37:30 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/15 00:06:38 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ char	*ft_shellname(void)
 	char	*tmp;
 
 	tmp = get_pwd();
-	// dup2(STDIN_FILENO, 0);
-	// dup2(STDIN_FILENO, 1);
 	tmp = ft_strjoin("\e[0;32m", tmp);
 	tmp = ft_strjoin(tmp, ":$>\e[0m");
 	return (tmp);

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/14 06:46:19 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/14 13:41:14 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,5 +201,6 @@ void	cmd_error(char *token, char *err_msg, int fd, void (*f)());
 /******************************************************************************/
 void	init_signal(void);
 void	sig_handler(int sig);
+void	global_signal(int sig);
 
 #endif
