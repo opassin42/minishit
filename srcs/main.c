@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/14 02:58:08 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/14 05:25:29 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,12 @@ int	main(int ac, char **av, char **env)
 	if (signal(SIGINT, sig_handler) == SIG_ERR)
 		return (EXIT_FAILURE);
 	if (signal(SIGQUIT, SIG_IGN))
-		keepRunning = 1;
+		g_data.keeprunning = 1;
+	init_signal();
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler);
 	envp = ft_getenv(env);
-	while (keepRunning)
+	while (g_data.keeprunning)
 	{
 		s = readline((const char *)ft_shellname());
 		if (s == NULL)
@@ -95,6 +98,25 @@ int	main(int ac, char **av, char **env)
 		if (s && *s && ft_not_only_space((void *)s))
 			g_status = ft_minishell(envp, s, g_status);
 	}
-	gc_free();
-	return (0);
+	return (gc_free(), 0);
+}
+
+		return (EXIT_FAILURE);
+	if (signal(SIGQUIT, SIG_IGN))
+		g_data.keeprunning = 1;
+	if (*env)
+		envp = ft_getenv(env);
+	init_signal();
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler);
+	envp = ft_getenv(env);
+	while (g_data.keeprunning)
+	{
+		init_signal();
+		g_data.status = ft_readline(envp, s);
+		if (g_data.status == -42)
+			return (0);
+			return (gc_free(), 0);
+	}
+	return (gc_free(), 0);
 }

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/09 02:53:23 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/14 04:53:43 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,32 +61,32 @@ static char	*binary_file(t_cmd *cmd, char **path)
 
 int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 {
-	int	ret;
-
 	if (!path)
 		return (EXIT_FAILURE);
 	cmd->bin = binary_file(cmd, path);
 	if (!cmd->bin)
-		return (EXIT_FAILURE);
+		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), EXIT_FAILURE);
 	if (access(cmd->bin, F_OK))
-		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), 127);
-	ret = fork();
-	if (ret == -1)
+		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd),
+			g_data.status = 127);
+	g_data.pid = fork();
+	if (g_data.pid == -1)
 		return (EXIT_FAILURE);
-	if (ret == 0)
+	else if (g_data.pid == 0)
 	{
-		if (execve(cmd->bin, cmd->arg, envp->tab) == -1)
-			return (perror((const char *)cmd->name), EXIT_FAILURE);
-		return (EXIT_SUCCESS);
+		g_data.status = execve(cmd->bin, cmd->arg, envp->tab);
+		if (g_data.status == -1)
+			perror((const char *)cmd->name);
+		return (g_data.status);
 	}
 	else
-	{
-		wait(NULL);
-		return (errno);
-	}
-	return (EXIT_SUCCESS);
+		waitpid(g_data.pid, &g_data.status, 0);
+	if (g_data.sigint || g_data.sigquit)
+		return (g_data.status);
+	if (g_data.status == 512 || g_data.status == 256)
+		g_data.status = g_data.status / 256;
+	return (g_data.status);
 }
-
 /*
 ** I have to change SHLVL->value
 ** Each time i go into another minishell instance
@@ -97,13 +97,40 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 */
 int	ft_exec(t_env *envp, t_cmd *cmd)
 {
-	int	ret;
+	int	status;
 
-	ret = 0;
+	status = 0;
 	while (cmd)
 	{
-		ret = ft_router(envp, cmd);
+		status = ft_router(envp, cmd);
 		cmd = cmd->next;
 	}
-	return (ret);
+	return (status);
 }
+
+
+// int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
+// {
+// 	if (!path)
+// 		return (EXIT_FAILURE);
+// 	cmd->bin = binary_file(cmd, path);
+// 	if (!cmd->bin)
+// 		return (EXIT_FAILURE);
+// 	if (access(cmd->bin, F_OK))
+// 		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), cmd->status = 127);
+// 	cmd->pid = fork();
+// 	if (cmd->pid == -1)
+// 		return (EXIT_FAILURE);
+// 	if (cmd->pid == 0)
+// 	{
+// 		if (execve(cmd->bin, cmd->arg, envp->tab) == -1)
+// 			return (perror((const char *)cmd->name), EXIT_FAILURE);
+// 		return (EXIT_SUCCESS);
+// 	}
+// 	else
+// 	{
+// 		waitpid(NULL);
+// 		return (cmd->status = errno);
+// 	}
+// 	return (EXIT_SUCCESS);
+// }

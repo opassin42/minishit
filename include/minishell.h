@@ -6,25 +6,24 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/14 02:47:41 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/14 05:02:55 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "structs.h"
 # include "inc.h"
 # include "defines.h"
-# include "structs.h"
 
-extern int			g_status;
-extern t_gc			*start;
-static volatile int	keepRunning = 1;
+extern t_data	g_data;
 
 /******************************************************************************/
 /**********************************  INITS  ***********************************/
 /******************************************************************************/
 // t_flag	ft_init_flag(void);
+t_data	init_global(void);
 
 /******************************************************************************/
 /**********************************  LEXING  **********************************/
@@ -59,11 +58,11 @@ int		check_quotes_word(t_list *token);
 /******************************************************************************/
 /*********************************  EXPANSION  ********************************/
 /******************************************************************************/
-void	ft_expander(t_list **token, t_env envp);
+void	ft_expander(t_list **token, t_env *envp);
 
 char	*find_value(t_env *envp, char *var_name);
-char	*expand(t_env envp, char *s);
-char	*ft_recompose(t_env envp, char *s);
+char	*expand(t_env *envp, char *s);
+char	*ft_recompose(t_env *envp, char *s);
 void	hashing(char *s, int c, int factor);
 
 int		ft_alnum_underscore(int c);
@@ -75,19 +74,16 @@ char	*remove_quotes(t_list *token);
 /******************************************************************************/
 /***********************************  ENV  ************************************/
 /******************************************************************************/
-t_env	ft_init_env(char **env);
-t_var	*ft_init_var(t_list **env_list);
+t_env	*ft_getenv(char **env);
 
-// void	find_in_env(t_env *envp, char *var_name, char *(*f)());
 char	*get_in_env(t_env *envp, char *name);
 void	up_in_env(t_env *envp, char *var_name, char *s);
-t_env	ft_getenv(char **env);
 
-char	*ft_var_name(char *s);
-t_var	*ft_new_var(t_list *token);
-t_var	*ft_last_var(t_var *var);
-void	ft_var_addback(t_var **var, t_var *new_var);
 int		ft_size_of_env(t_var *var);
+char	*ft_var_name(char *s);
+void	ft_var_addback(t_var **var, t_var *new_var);
+t_var	*ft_last_var(t_var *var);
+t_var	*ft_new_var(t_list *token);
 
 /******************************************************************************/
 /*********************************  BUILT_IN  *********************************/
@@ -99,9 +95,9 @@ int		ft_env(t_env *envp, t_cmd *cmd);
 int		ft_unset(t_env *envp, t_cmd *cmd);
 int		ft_exit(t_env *envp, t_cmd *cmd);
 
-char	*get_pwd(void);
 int		is_alphanum(t_upvarenv *upvarenv);
 int		ft_no_home(t_upvarenv *upvarenv);
+char	*get_pwd(void);
 
 /* Unset */
 int		get_nb_var(t_cmd *cmd);
@@ -110,11 +106,11 @@ void	ft_delete_var(t_env *envp, char *var_name);
 
 /* Export*/
 // int		is_valid_name(char *str);
+void	ft_export_env(t_var *var);
+int		ft_export(t_env *envp, t_cmd *cmd);
 char	*split_name(t_cmd *cmd, int i);
 char	*split_value(t_cmd *cmd, int i);
 t_var	*ft_new_var_env(t_cmd *cmd, int i);
-int		ft_export(t_env *envp, t_cmd *cmd);
-void	ft_export_env(t_var *var);
 
 /* Exec */
 void	hash_token(t_list *token);
@@ -139,6 +135,11 @@ int		rd_in(t_cmd *cmd);
 /******************************************************************************/
 /**********************************  UTILS  ***********************************/
 /******************************************************************************/
+/* Print utils */
+void	ft_putchar_fd(char c, int fd);
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putnbr_fd(int n, int fd);
+
 /* Mem utils */
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	*ft_memset(void *s, int c, size_t n);
@@ -146,30 +147,27 @@ void	*ft_memmove(void *dest, void *src, size_t n);
 void	*ft_realloc(char *s, size_t new_len);
 void	*ft_strjoin_char(char *s1, char c);
 
-/* Print utils */
-void	ft_putchar_fd(char c, int fd);
-void	ft_putstr_fd(char *s, int fd);
-void	ft_putnbr_fd(int n, int fd);
-
 /* Str utils */
-char	*ft_itoa(int n);
 int		ft_atoi(const char *str);
 int		ft_is_digit(int c);
 int		ft_isalpha(int c);
+int		ft_isalnum(int a);
 int		ft_white_spaces(void *p);
 int		ft_strlen(char *s);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_strncmp(char *s1, char *s2, size_t n);
+char	*ft_itoa(int n);
 char	*ft_strcpy(char *dest, char *src);
 char	*ft_strchr(char *s, int c);
 char	*ft_strdup(char *s);
+char	*ft_substr(char *s, int start, size_t len);
+char	*ft_strtrim(char *s1, char *set);
 char	**ft_split(char *s, char c);
 char	**free_double_p(char **s);
 char	*ft_strjoin(char *s1, char *s2);
-char	*ft_substr(char *s, int start, size_t len);
-char	*ft_strtrim(char *s1, char *set);
 
 /* List utils */
+int		is_nb(char *s);
 t_list	*ft_lstnew(void *content);
 t_list	*ft_lstlast(t_list *lst);
 int		ft_lstsize(t_list *lst);
@@ -186,10 +184,10 @@ void	ft_print_env(t_var *var);
 void	ft_free_token(t_list **token, void (*clr)(void*));
 void	ft_add_history(void *s);
 void	*ft_void_skipper(t_list **token);
-void	*push_top(t_gc **head, size_t data_size);
-void	printList(t_gc	*node);
 void	gc_free(void);
 void	ft_pop_in_gc(t_gc **start, void *p);
+void	printList(t_gc	*node);
+void	*push_top(t_gc **head, size_t data_size);
 
 /******************************************************************************/
 /**********************************  ERRORS  **********************************/
@@ -201,6 +199,7 @@ void	cmd_error(char *token, char *err_msg, int fd, void (*f)());
 /******************************************************************************/
 /**********************************  SIGNALS  *********************************/
 /******************************************************************************/
-void	sig_handler(int dummy);
+void	init_signal(void);
+void	sig_handler(int sig);
 
 #endif

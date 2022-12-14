@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:52 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/02 08:07:51 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/14 04:58:50 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define ERRNO_1 "syntax error near unexpected token"
 # define ERRNO_2 "command not found"
 # define ERRNO_3 "no such file or directory"
+# define ERRNO_4 "too many arguments"
+# define ERRNO_5 "numeric argument required"
 /*
 ** ANSI COLORS
 */
