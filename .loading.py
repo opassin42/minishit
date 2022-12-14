@@ -4,9 +4,6 @@ import sys
 import glob
 
 def ft_progress(lst):
-	'''
-	Progress bar for Makefile
-	'''
 	start_time = time.time()
 	bar_size = 30
 	for i in range(len(lst)):
@@ -19,8 +16,9 @@ def ft_progress(lst):
 		else:
 			color = "\033[1;32m"
 		datas = (eta, color, ratio, color, bar.ljust(bar_size, ' '), color ,i + 1, len(lst),elapsed_time)
-		print("\rETA: %.2fs [%s%3d%%\033[m] [%s%s\033[m] Files:%s%d/%d\033[m | elapsed time %.2fs" % datas, end ="")
+		print("\rETA: %.2fs [%s%3d%%\033[m] [%s%s\033[m] %sFiles:%d/%d\033[m | elapsed time %.2fs" % datas, end ="")
 		yield i
+
 
 if __name__ == "__main__":
 	listy = glob.glob("srcs/*/*.c")
