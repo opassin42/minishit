@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/13 10:41:49 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/14 02:56:30 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int	ft_minishell(t_env *envp, char *s, t_data g_data)
 int	ft_readline(t_env *envp, char *s)
 {
 	s = readline((const char *)ft_shellname());
-	if (!s)
 		return (printf("exit\n"), g_data.status = -42);
 	if (s && *s && *s != '\n')
 		g_data.status = ft_minishell(envp, s, g_data);
