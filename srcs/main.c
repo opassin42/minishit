@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/15 01:09:42 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/20 12:12:10 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,22 +61,21 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	s = NULL;
 	g_data = init_global();
 	if (isatty(STDIN_FILENO) == 0)
 		return (gc_free(), 0);
 	if (signal(SIGINT, sig_handler) == SIG_ERR)
-		return (gc_free(), 0);
+		return (0);
 	if (signal(SIGQUIT, SIG_IGN))
 		g_data.keeprunning = 1;
 	envp = ft_getenv(env);
 	while (g_data.keeprunning)
 	{
 		s = readline((const char *)ft_shellname());
+		if (!s)
+			return (gc_free(), printf("exit\n"), g_data.status);
 		if (s && *s && ft_not_only_space((void *)s))
 			g_data.status = ft_minishell(envp, s, g_data.status);
-		if (s == NULL)
-			return (gc_free(), printf("exit\n"), g_data.status);
 	}
 	return (gc_free(), 0);
 }

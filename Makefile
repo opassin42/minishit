@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/12/14 08:29:11 by ccouliba         ###   ########.fr        #
+#    Updated: 2022/12/20 11:49:20 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,8 @@ $(NAME): $(OBJS)
 		$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lreadline
 		@echo "[$(_GREEN)!$(_END)] Compilation ... 	  [$(_BK_GREEN)SUCCESS$(_END)]"
 		@echo "[$(_GREEN)!$(_END)] Creating .out ... 	  [$(_BK_GREEN)SUCCESS$(_END)]"
-		@python .loading.py
+		@bash .script_bar.sh
+# @python .loading.py
 		@echo "[$(_YELLOW)!$(_END)] Exec name :		[$(_YELLOW)$(NAME)$(_END)]"
 
 %o: %.c

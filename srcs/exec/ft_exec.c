@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/15 01:06:41 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/20 12:16:58 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,22 +74,15 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 		return (EXIT_FAILURE);
 	else if (g_data.pid == 0)
 	{
-		signal(SIGQUIT, sig_handler);
 		g_data.status = execve(cmd->bin, cmd->arg, envp->tab);
 		if (g_data.status == -1)
 			perror((const char *)cmd->name);
-		exit(g_data.status);
+		return (g_data.status);
 	}
 	else
 	{
 		waitpid(g_data.pid, &g_data.status, 0);
-		if (signal(SIGQUIT, sig_handler))
-		{
-			ft_putstr_fd("Quit: (core dump)\n", 2);
-			return (g_data.status = 131);
-		}
-		// if (g_data.sigint || g_data.sigquit)
-		// 	return (g_data.status);
+		return (g_data.status = 131);
 	}
 	if (g_data.status == 512 || g_data.status == 256)
 		g_data.status = g_data.status / 256;
