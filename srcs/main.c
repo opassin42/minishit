@@ -76,6 +76,7 @@ int	main(int ac, char **av, char **env)
 	char	*s;
 	t_env	envp;
 
+
 	(void)ac;
 	(void)av;
 	s = NULL;

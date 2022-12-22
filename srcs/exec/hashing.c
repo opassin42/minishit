@@ -33,6 +33,7 @@ static void	positive_hashing(char *s)
 	while (s[i])
 	{
 		if ((int)s[i] < 0)
+			
 			s[i] = (int)s[i] * -1;
 		++i;
 	}

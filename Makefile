@@ -48,6 +48,7 @@ SRCS =	srcs/main.c \
 		srcs/exec/ft_signal.c \
 		srcs/exec/ft_exec.c \
 		srcs/exec/hashing.c \
+		srcs/pipe/pipes.c \
 		utils/ft_init.c \
 		utils/ft_split.c \
 		utils/lib_utils_0.c \
@@ -89,7 +90,7 @@ re: fclean all
 
 leak: re
 	@echo "				$(_BG_CYAN)LEAK TEST$(_END) (valgrind)"
-	@valgrind --suppressions=leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
+	@valgrind --suppressions=.leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
 # @valgrind ./$(NAME)
 
 debug : fclean

@@ -87,5 +87,6 @@ int	ft_router(t_env *envp, t_cmd *cmd)
 	}
 	else
 		status = ft_builtin_ret(envp, cmd, builtin, id);
+	p_father(cmd);
 	return (status);
 }
