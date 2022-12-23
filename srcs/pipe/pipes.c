@@ -50,8 +50,8 @@ void     p_child(t_env *envp, t_cmd *cmd)
             {
                 if(execve(cmd->bin, cmd->arg, envp->tab) == -1)
                 {
-                  //  perror((const char *)cmd->name);
-                    exit (1);
+                    //perror((const char *)cmd->name);
+                    ft_exit(envp, cmd);
                 }
             }
             exit(0);
