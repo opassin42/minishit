@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 02:41:11 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/11 02:29:18 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/23 19:23:00 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_env	*ft_getenv(char **env)
 
 	if (env && *env)
 	{
-		envp = (t_env *)push_top(&start, sizeof(t_env));
+		envp = (t_env *)push_top(&g_data.gc, sizeof(t_env));
 		if (!envp)
 			return (gc_free(), NULL);
 		envp = ft_init_env(env, envp);

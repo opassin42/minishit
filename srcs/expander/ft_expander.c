@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:45:01 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/11 02:39:44 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/23 19:27:14 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*expand(t_env *envp, char *s)
 	if (!name)
 		return (gc_free(), NULL);
 	if (!ft_strcmp(name, "?"))
-		var_val = ft_itoa(g_status);
+		var_val = ft_itoa(g_data.status);
 	else
 		var_val = find_value(envp, name);
 	if (!var_val)

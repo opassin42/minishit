@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/11 04:16:10 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/23 19:24:35 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_var	*ft_new_var_env(t_cmd *cmd, int i)
 {
 	t_var	*var;
 
-	var = (t_var *)push_top(&start, sizeof(t_var));
+	var = (t_var *)push_top(&g_data.gc, sizeof(t_var));
 	if (!var)
 		return (gc_free(), NULL);
 	var->name = split_name(cmd, i);

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:42:36 by opassin           #+#    #+#             */
-/*   Updated: 2022/11/16 02:04:33 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/23 19:28:20 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ void	gc_free(void)
 {
 	t_gc	*current;
 
-	current = start;
+	current = g_data.gc;
 	while (current != NULL)
 	{
-		start = start->next;
+		g_data.gc = g_data.gc->next;
 		free(current->addr);
 		current->next = NULL;
 		free(current);
-		current = start;
+		current = g_data.gc;
 	}
 }

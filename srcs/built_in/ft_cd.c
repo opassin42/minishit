@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 17:56:53 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/18 05:53:32 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/23 19:22:27 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static t_upvarenv	*init_upvarenv(void)
 {
 	t_upvarenv	*tmp;
 
-	tmp = push_top(&start, sizeof(t_upvarenv));
+	tmp = push_top(&g_data.gc, sizeof(t_upvarenv));
 	if (!tmp)
 	{
 		gc_free();
