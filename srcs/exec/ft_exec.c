@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/20 12:16:58 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/20 12:31:29 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +72,15 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 	g_data.pid = fork();
 	if (g_data.pid == -1)
 		return (EXIT_FAILURE);
-	else if (g_data.pid == 0)
+	if (g_data.pid == 0)
 	{
 		g_data.status = execve(cmd->bin, cmd->arg, envp->tab);
 		if (g_data.status == -1)
 			perror((const char *)cmd->name);
-		return (g_data.status);
+		return(g_data.status);
 	}
 	else
-	{
 		waitpid(g_data.pid, &g_data.status, 0);
-		return (g_data.status = 131);
-	}
 	if (g_data.status == 512 || g_data.status == 256)
 		g_data.status = g_data.status / 256;
 	return (g_data.status);

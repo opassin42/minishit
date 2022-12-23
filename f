@@ -7,6 +7,9 @@ minishell
 minishell_to_do.txt
 srcs
 utils
+FOUR
+TWO
+ONE
+TRHEE
 [?2004h[0;32m/home/carrel/Documents/projets/minishit:$>[0m^C[?2004l
 [0;32m/home/carrel/Documents/projets/minishit:$>[0m[?2004h[?2004l
-exit

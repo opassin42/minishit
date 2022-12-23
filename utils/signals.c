@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/20 11:52:41 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/20 12:36:12 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	sig_handler(int sig)
 		g_data.keeprunning = 1;
 		ft_putstr_fd("\n", 1);
 		g_data.status = 130;
-		rl_replace_line("", 0);
 		rl_on_new_line();
+		rl_replace_line("", 1);
 		rl_redisplay();
 	}
 	return ;
