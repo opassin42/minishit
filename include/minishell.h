@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/23 19:22:15 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/24 16:05:24 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,11 @@ void	ft_free_token(t_list **token, void (*clr)(void*));
 void	ft_add_history(void *s);
 void	*ft_void_skipper(t_list **token);
 void	gc_free(void);
+void	*push_top(t_gc **head, size_t data_size);
+void	printList(t_gc	*node);
+void	gc_free(void);
 void	ft_pop_in_gc(t_gc **gc, void *p);
+
 
 /******************************************************************************/
 /**********************************  ERRORS  **********************************/
