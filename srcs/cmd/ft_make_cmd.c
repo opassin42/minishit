@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 02:32:23 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/15 00:46:06 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/20 11:44:02 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	init_rd(t_cmd *cmd, t_list *token)
 			cmd->hdoc = 0;
 		if (rd_in(cmd) != EXIT_SUCCESS)
 			printf("erreur redir in\n");
+		printf("RD_IN HANDLER\n");
 	}
 	else if (!ft_strcmp((char *)token->val, ">")
 		|| !ft_strcmp((char *)token->val, ">>"))

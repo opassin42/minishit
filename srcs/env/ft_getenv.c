@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 02:41:11 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/14 06:28:23 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/23 19:23:00 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 ** Init a tab with the shell env
 ** Then make a chained list with the env
 */
-
 static t_env	*ft_init_env(char **env, t_env *envp)
 {
 	int		i;
@@ -43,7 +42,7 @@ static t_var	*ft_init_var(t_list **env_list)
 	tmp = *env_list;
 	var = ft_new_var(tmp);
 	if (!var)
-		return (gc_free(), NULL);
+		return (NULL);
 	tmp = tmp->next;
 	while (tmp)
 	{
@@ -53,21 +52,22 @@ static t_var	*ft_init_var(t_list **env_list)
 	return ((t_var *)var);
 }
 
-
 t_env	*ft_getenv(char **env)
 {
 	t_env	*envp;
 
-	if (!env)
-		return (NULL);
-	envp = (t_env *)push_top(&g_data.gc, sizeof(t_env));
-	if (!envp)
-		return (NULL);
-	envp = ft_init_env(env, envp);
-	if (!envp)
-		return (NULL);
-	envp->var = ft_init_var(&envp->list);
-	if (!envp->var)
-		return (NULL);
-	return (envp);
+	if (env && *env)
+	{
+		envp = (t_env *)push_top(&g_data.gc, sizeof(t_env));
+		if (!envp)
+			return (gc_free(), NULL);
+		envp = ft_init_env(env, envp);
+		if (!envp)
+			return (NULL);
+		envp->var = ft_init_var(&envp->list);
+		if (!envp->var)
+			return (NULL);
+		return (envp);
+	}
+	return (NULL);
 }

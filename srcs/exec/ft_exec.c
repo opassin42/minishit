@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/20 12:31:29 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/11 05:21:55 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,13 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 			perror((const char *)cmd->name);
 		return(g_data.status);
 	}
-	else
+//	else
+//	{
+//		wait(&ret);
+//		return (errno);
+//	}
+//	return (EXIT_SUCCESS);
+  else
 		waitpid(g_data.pid, &g_data.status, 0);
 	if (g_data.status == 512 || g_data.status == 256)
 		g_data.status = g_data.status / 256;

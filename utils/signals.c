@@ -6,20 +6,11 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/20 12:36:12 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/23 19:26:10 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-// void	restore_prompt(int sig)
-// {
-// 	(void)sig;
-// 	g_data.status = 130;
-// 	rl_on_new_line();
-// 	rl_replace_line("", 0);
-// 	rl_redisplay();
-// }
 
 void	sig_handler(int sig)
 {

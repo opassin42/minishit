@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/20 12:12:10 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/23 19:32:21 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,32 +26,44 @@ char	*ft_shellname(void)
 	return (tmp);
 }
 
-int	ft_minishell(t_env *envp, char *s, int g_status)
+static int	ft_minishell(t_env *envp, char *s, int status)
 {
 	t_list	*token;
 	t_cmd	*cmd;
 
 	if (!s)
 		return (EXIT_SUCCESS);
-	add_history(s);
+	add_history((void *)s);
 	token = (t_list *)ft_lexer(s);
 	if (!token)
-		return (g_status);
-	g_status = ft_parser(&token);
-	if (g_status)
-		return (g_status);
+		return (status);
+	status = ft_parser(&token);
+	if (status)
+		return (status);
 	ft_expander(&token, envp);
 	hash_quote(&token, -1);
 	cmd = ft_cmd(&token);
 	if (cmd)
 	{
-		g_status = ft_exec(envp, cmd);
+		status = ft_exec(envp, cmd);
 		if (STDOUT_FILENO != 1)
 			dup2(cmd->finalfdout, STDOUT_FILENO);
 		if (STDIN_FILENO != 0)
 			dup2(cmd->finalfdin, STDIN_FILENO);
 	}
-	return (g_status);
+	return (status);
+}
+
+int	ft_readline(t_env *envp, char *s)
+{
+	s = readline((const char *)ft_shellname());
+	if (!s)
+		return (gc_free(), printf("exit\n"), g_data.status = -42);
+	if (s && *s && *s != '\n')
+		g_data.status = ft_minishell(envp, s, g_data.status);
+	if (s)
+		free(s);
+	return (g_data.status);
 }
 
 int	main(int ac, char **av, char **env)
@@ -61,21 +73,20 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
+	s = NULL;
 	g_data = init_global();
 	if (isatty(STDIN_FILENO) == 0)
-		return (gc_free(), 0);
+		g_data.keeprunning = 1;
 	if (signal(SIGINT, sig_handler) == SIG_ERR)
 		return (0);
 	if (signal(SIGQUIT, SIG_IGN))
 		g_data.keeprunning = 1;
-	envp = ft_getenv(env);
+	if (*env)
+		envp = ft_getenv(env);
 	while (g_data.keeprunning)
 	{
-		s = readline((const char *)ft_shellname());
-		if (!s)
-			return (gc_free(), printf("exit\n"), g_data.status);
-		if (s && *s && ft_not_only_space((void *)s))
-			g_data.status = ft_minishell(envp, s, g_data.status);
-	}
+		g_data.status = ft_readline(envp, s);
+		if (g_data.status == -42)
+			return (0);
 	return (gc_free(), 0);
 }
