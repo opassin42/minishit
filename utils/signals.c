@@ -19,8 +19,8 @@ void	sig_handler(int sig)
 		g_data.keeprunning = 1;
 		ft_putstr_fd("\n", 1);
 		g_data.status = 130;
-		rl_replace_line("", 0);
 		rl_on_new_line();
+		rl_replace_line("", 1);
 		rl_redisplay();
 	}
 	return ;

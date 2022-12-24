@@ -16,12 +16,13 @@
 ** Init a tab with the shell env
 ** Then make a chained list with the env
 */
-
 static t_env	*ft_init_env(char **env, t_env *envp)
 {
 	int		i;
 	void	*tmp;
 
+	if (!env)
+		return (NULL);
 	envp->tab = env;
 	envp->list = ft_lstnew((void *)env[0]);
 	i = 0;
@@ -33,7 +34,7 @@ static t_env	*ft_init_env(char **env, t_env *envp)
 	return (envp);
 }
 
-t_var	*ft_init_var(t_list **env_list)
+static t_var	*ft_init_var(t_list **env_list)
 {
 	t_list	*tmp;
 	t_var	*var;
@@ -41,7 +42,7 @@ t_var	*ft_init_var(t_list **env_list)
 	tmp = *env_list;
 	var = ft_new_var(tmp);
 	if (!var)
-		return (gc_free(), NULL);
+		return (NULL);
 	tmp = tmp->next;
 	while (tmp)
 	{

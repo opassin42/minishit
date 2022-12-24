@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:41:35 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/05 02:21:30 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/14 06:39:14 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_env(t_env *envp, t_cmd *cmd)
 
 	var = envp->var;
 	if (!var)
-		return (gc_free(), EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	if (cmd->param && *cmd->param)
 	{
 		tmp = cmd->param;

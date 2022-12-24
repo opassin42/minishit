@@ -12,9 +12,9 @@
 
 #include "../../include/minishell.h"
 
-int	is_valid_name(char *name)
+int		is_valid_name(char *name)
 {
-	int		n;
+	int	n;
 
 	n = ft_strlen(name);
 	if (name[0] == '_' || ft_isalnum(name[0]))
@@ -62,7 +62,7 @@ t_var	*ft_new_var_env(t_cmd *cmd, int i)
 		return (gc_free(), NULL);
 	var->name = split_name(cmd, i);
 	if (is_valid_name(var->name) == 0)
-		return (gc_free(), NULL);
+		return (NULL);
 	if (!ft_strcmp(var->name, cmd->param[i]))
 		++i;
 	var->value = split_value(cmd, i);

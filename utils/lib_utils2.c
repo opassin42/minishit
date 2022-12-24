@@ -22,7 +22,7 @@ char	*ft_substr(char *s, int begin, size_t len)
 	char	*sub;
 
 	if (!s)
-		return (gc_free(), NULL);
+		return (NULL);
 	sub = push_top(&g_data.gc, sizeof(char) * (len + 1));
 	if (!sub)
 		return (gc_free(), NULL);

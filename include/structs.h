@@ -13,6 +13,9 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+# include <unistd.h>
+# include <sys/types.h>
+
 typedef struct s_gc
 {
 	void			*addr;

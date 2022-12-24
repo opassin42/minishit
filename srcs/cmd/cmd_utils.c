@@ -57,7 +57,7 @@ void	*join_token(t_list *token)
 	{
 		s = ft_strjoin(s, tmp->expand);
 		if (!s)
-			return (gc_free(), NULL);
+			return (NULL);
 		tmp = tmp->next;
 	}
 	return ((void *)s);
@@ -79,7 +79,7 @@ char	**ft_malloc_double_p(t_list *token)
 	{
 		param[i] = ft_strdup(token->val);
 		if (!param[i])
-			return (gc_free(), (char **) NULL);
+			return ((char **) NULL);
 		token = token->next;
 		++i;
 	}

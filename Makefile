@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/12/11 00:26:27 by ccouliba         ###   ########.fr        #
+#    Updated: 2022/12/20 11:49:20 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,6 +72,7 @@ $(NAME): $(OBJS)
 		@echo "[$(_GREEN)!$(_END)] Compilation ... 	  [$(_BK_GREEN)SUCCESS$(_END)]"
 		@echo "[$(_GREEN)!$(_END)] Creating .out ... 	  [$(_BK_GREEN)SUCCESS$(_END)]"
 		@bash .script_bar.sh
+# @python .loading.py
 		@echo "[$(_YELLOW)!$(_END)] Exec name :		[$(_YELLOW)$(NAME)$(_END)]"
 
 %o: %.c
@@ -107,7 +108,7 @@ gitt: fclean
 	@echo "[$(_GREEN)!$(_END)] Committing ... 	  [$(_BK_GREEN)SUCCESS$(_END)]\n"
 	git push
 	@echo "[$(_GREEN)!$(_END)] Pushing :		    [$(_BK_GREEN)SUCCESS$(_END)]\n"
-	@bash .script_bar.sh
+# @python .loading.py
 	@echo "--> Repo up to pull or merge"
 
-.PHONY : all clean fclean re leak debug git
+.PHONY : all clean fclean re leak debug gitt

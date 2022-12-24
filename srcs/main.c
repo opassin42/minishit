@@ -20,7 +20,7 @@ char	*ft_shellname(void)
 
 	tmp = get_pwd();
 	dup2(STDIN_FILENO, 0);
-	dup2(STDIN_FILENO, 1);
+	dup2(STDOUT_FILENO, 1);
 	tmp = ft_strjoin("\e[0;32m", tmp);
 	tmp = ft_strjoin(tmp, ":$>\e[0m");
 	return (tmp);
@@ -78,7 +78,7 @@ int	main(int ac, char **av, char **env)
 	if (isatty(STDIN_FILENO) == 0)
 		g_data.keeprunning = 1;
 	if (signal(SIGINT, sig_handler) == SIG_ERR)
-		return (EXIT_FAILURE);
+		return (0);
 	if (signal(SIGQUIT, SIG_IGN))
 		g_data.keeprunning = 1;
 	if (*env)
@@ -88,6 +88,5 @@ int	main(int ac, char **av, char **env)
 		g_data.status = ft_readline(envp, s);
 		if (g_data.status == -42)
 			return (0);
-	}
 	return (gc_free(), 0);
 }
