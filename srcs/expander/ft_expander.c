@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:45:01 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/14 06:42:02 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/23 19:27:14 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,12 @@ char	*find_value(t_env *envp, char *var_name)
 	while (var)
 	{
 		if (var->name && !ft_strcmp(var->name, var_name))
-			return (var->value);
+		{
+			if (var->value)
+				return (var->value);
+			else
+				break ;
+		}
 		var = var->next;
 	}
 	return (ft_strdup(""));

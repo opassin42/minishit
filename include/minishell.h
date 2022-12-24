@@ -6,25 +6,23 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/14 13:41:14 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/23 19:22:15 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "structs.h"
 # include "inc.h"
+# include "structs.h"
 # include "defines.h"
 
-extern t_data	g_data;
+extern t_data   g_data;
 
 /******************************************************************************/
 /**********************************  INITS  ***********************************/
 /******************************************************************************/
-// t_flag	ft_init_flag(void);
 t_data	init_global(void);
-void	init_signal(void);
 
 /******************************************************************************/
 /**********************************  LEXING  **********************************/
@@ -75,10 +73,9 @@ char	*remove_quotes(t_list *token);
 /******************************************************************************/
 /***********************************  ENV  ************************************/
 /******************************************************************************/
-t_env	*ft_getenv(char **env);
-
 char	*get_in_env(t_env *envp, char *name);
 void	up_in_env(t_env *envp, char *var_name, char *s);
+t_env	*ft_getenv(char **env);
 
 int		ft_size_of_env(t_var *var);
 char	*ft_var_name(char *s);
@@ -185,9 +182,7 @@ void	ft_free_token(t_list **token, void (*clr)(void*));
 void	ft_add_history(void *s);
 void	*ft_void_skipper(t_list **token);
 void	gc_free(void);
-void	ft_pop_in_gc(t_gc **start, void *p);
-void	printList(t_gc	*node);
-void	*push_top(t_gc **head, size_t data_size);
+void	ft_pop_in_gc(t_gc **gc, void *p);
 
 /******************************************************************************/
 /**********************************  ERRORS  **********************************/

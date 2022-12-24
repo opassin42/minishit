@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 04:45:05 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/09 02:56:19 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/11 02:41:32 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	expand_quote_flag(t_list *token)
 	char	*s;
 
 	s = (char *)token->val;
+	if (!s)
+		return ;
 	token->quote = 0;
 	token->exp_flag = 0;
 	if (ft_strchr(s, '$') && *(s + 1))
