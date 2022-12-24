@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/23 19:32:21 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/24 16:02:37 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ int	main(int ac, char **av, char **env)
 		g_data.status = ft_readline(envp, s);
 		if (g_data.status == -42)
 			return (0);
+	}
 	return (gc_free(), 0);
 }
