@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:42:36 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/11 04:05:36 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/24 20:37:03 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	ft_unset(t_env *envp, t_cmd *cmd)
 	t_var	*var;
 	int		nb_var;
 
-	if (!cmd)
+	if (!cmd || !envp)
 		return (0);
 	nb_var = get_nb_var(cmd);
 	while (nb_var--)

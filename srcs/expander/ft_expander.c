@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:45:01 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/23 19:27:14 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/24 20:11:17 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ char	*find_value(t_env *envp, char *var_name)
 {
 	t_var	*var;
 
+	if (!envp)
+		return (NULL);
 	if (!var_name || (*var_name == '$' && !(*var_name + 1)))
 		return (NULL);
 	var = envp->var;
