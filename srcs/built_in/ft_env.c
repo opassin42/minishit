@@ -35,11 +35,6 @@ void	ft_export_env(t_var *var)
 	}
 }
 
-// static t_	single_env()
-// {
-	
-// }
-
 int	ft_env(t_env *envp, t_cmd *cmd)
 {
 	char	**tmp;
