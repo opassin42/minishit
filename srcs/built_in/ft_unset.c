@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:42:36 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/17 20:08:15 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/24 20:37:03 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	ft_delete_var(t_env *envp, char *var_name)
 	var = envp->var;
 	if (!ft_strcmp(var->name, var_name))
 	{
-		tmp = envp->var->next;
+		// tmp = envp->var->next;
 		ft_free_var(var);
 		return ;
 	}
@@ -97,7 +97,7 @@ int	ft_unset(t_env *envp, t_cmd *cmd)
 	t_var	*var;
 	int		nb_var;
 
-	if (!cmd)
+	if (!cmd || !envp)
 		return (0);
 	nb_var = get_nb_var(cmd);
 	while (nb_var--)

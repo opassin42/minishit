@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:47 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/02 06:44:36 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/23 19:15:04 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,16 @@ typedef struct s_gc
 	void			*addr;
 	struct s_gc		*next;
 }				t_gc;
+
+typedef struct s_data
+{
+	int				status;
+	int				sigint;
+	int				sigquit;
+	pid_t			pid;
+	volatile int	keeprunning;
+	t_gc			*gc;
+}				t_data;
 
 typedef enum s_type
 {
@@ -89,7 +99,6 @@ typedef struct s_upvarenv
 	char	*path;
 }				t_upvarenv;
 
-typedef int(*t_func[5])(t_list *);
 typedef int(*t_syntaxer[4])(t_list *);
 typedef int(*t_exec[7])(t_env *, t_cmd *);
 

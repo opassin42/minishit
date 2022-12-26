@@ -6,19 +6,11 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 03:29:08 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/23 17:43:43 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/11 04:16:47 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-static int	ft_is_space(int c)
-{
-	if (c == '\f' || c == '\n' || c == '\r' || c == '\t' || c == '\v'
-		|| c == 32)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
 
 int	ft_is_digit(int c)
 {
@@ -31,6 +23,21 @@ int	ft_is_digit(int c)
 int	ft_isalpha(int c)
 {
 	return (((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')));
+}
+
+int	ft_isalnum(int a)
+{
+	if ((a >= 65 && a <= 90) || (a >= 97 && a <= 122))
+		return (1);
+	return (0);
+}
+
+static int	ft_is_space(int c)
+{
+	if (c == '\f' || c == '\n' || c == '\r' || c == '\t' || c == '\v'
+		|| c == 32)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 /*
@@ -51,20 +58,4 @@ int	ft_white_spaces(void *p)
 		++tmp;
 	}
 	return (EXIT_SUCCESS);
-}
-
-char	*ft_strtrim(char *s1, char *set)
-{
-	char	*a_s;
-	size_t	len;
-
-	if (!set || !s1)
-		return (NULL);
-	while (*s1 && ft_strchr(set, *s1))
-		s1++;
-	len = ft_strlen(s1);
-	while (len && ft_strchr(set, s1[len]))
-		len--;
-	a_s = ft_substr((char *)s1, 0, len + 1);
-	return (a_s);
 }

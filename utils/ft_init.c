@@ -6,11 +6,24 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 03:35:24 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/16 02:57:02 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/23 19:23:00 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+t_data	init_global(void)
+{
+	t_data	g_data;
+
+	g_data.status = 0;
+	g_data.sigint = 0;
+	g_data.sigquit = 0;
+	g_data.pid = -1;
+	g_data.gc = 0;
+	g_data.keeprunning = 1;
+	return (g_data);
+}
 
 void	ft_free_token(t_list **token, void (*clr)(void*))
 {
@@ -38,7 +51,7 @@ void	*ft_realloc(char *s, size_t new_len)
 	len = (size_t)ft_strlen(s);
 	if (len < new_len || len > new_len)
 	{
-		p = (char *)push_top(&start, sizeof(char) * ((int)new_len + 1));
+		p = (char *)push_top(&g_data.gc, sizeof(char) * ((int)new_len + 1));
 		if (!p)
 			return (gc_free(), NULL);
 		p = (char *)ft_memcpy(p, s, ft_strlen(s));

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:41:35 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/05 02:21:30 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/25 00:39:53 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,22 @@ void	ft_export_env(t_var *var)
 	}
 }
 
+// static t_	single_env()
+// {
+	
+// }
+
 int	ft_env(t_env *envp, t_cmd *cmd)
 {
 	char	**tmp;
 	t_var	*var;
 
+	if (!envp)
+		return (syntax_error(cmd->name, ERRNO_ENV, 2, ft_putstr_fd),
+			EXIT_SUCCESS);
 	var = envp->var;
 	if (!var)
-		return (gc_free(), EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	if (cmd->param && *cmd->param)
 	{
 		tmp = cmd->param;

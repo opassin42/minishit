@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/07 05:09:06 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/24 18:24:05 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,15 @@
 # define MINISHELL_H
 
 # include "inc.h"
-# include "defines.h"
 # include "structs.h"
+# include "defines.h"
 
-extern int	g_status;
-extern t_gc			*start;
-static volatile int	keepRunning = 1;
+extern t_data   g_data;
 
 /******************************************************************************/
 /**********************************  INITS  ***********************************/
 /******************************************************************************/
-// t_flag	ft_init_flag(void);
+t_data	init_global(void);
 
 /******************************************************************************/
 /**********************************  LEXING  **********************************/
@@ -59,11 +57,11 @@ int		check_quotes_word(t_list *token);
 /******************************************************************************/
 /*********************************  EXPANSION  ********************************/
 /******************************************************************************/
-void	ft_expander(t_list **token, t_env envp);
+void	ft_expander(t_list **token, t_env *envp);
 
 char	*find_value(t_env *envp, char *var_name);
-char	*expand(t_env envp, char *s);
-char	*ft_recompose(t_env envp, char *s);
+char	*expand(t_env *envp, char *s);
+char	*ft_recompose(t_env *envp, char *s);
 void	hashing(char *s, int c, int factor);
 
 int		ft_alnum_underscore(int c);
@@ -75,13 +73,13 @@ char	*remove_quotes(t_list *token);
 /******************************************************************************/
 /***********************************  ENV  ************************************/
 /******************************************************************************/
-t_env	ft_init_env(char **env);
-t_var	*ft_init_var(t_list **env_list);
+// t_env	*ft_init_env(char **env);
+// t_var	*ft_init_var(t_list **env_list);
 
 // void	find_in_env(t_env *envp, char *var_name, char *(*f)());
 char	*get_in_env(t_env *envp, char *name);
 void	up_in_env(t_env *envp, char *var_name, char *s);
-t_env	ft_getenv(char **env);
+t_env	*ft_getenv(char **env);
 
 char	*ft_var_name(char *s);
 t_var	*ft_new_var(t_list *token);
@@ -133,9 +131,8 @@ int		ft_non_builtin(t_env *envp, t_cmd *cmd, char **path);
 int		ft_router(t_env *envp, t_cmd *cmd);
 int		ft_exec(t_env *envp, t_cmd *cmd);
 
-// int		rd_out(t_cmd *cmd, int mod);
-// int		rd_in(t_cmd *cmd);
-// int		ft_rd(t_cmd *cmd);
+int		rd_out(t_cmd *cmd);
+int		rd_in(t_cmd *cmd);
 
 /******************************************************************************/
 /**********************************  UTILS  ***********************************/
@@ -157,6 +154,7 @@ char	*ft_itoa(int n);
 int		ft_atoi(const char *str);
 int		ft_is_digit(int c);
 int		ft_isalpha(int c);
+int		ft_isalnum(int a);
 int		ft_white_spaces(void *p);
 int		ft_strlen(char *s);
 int		ft_strcmp(char *s1, char *s2);
@@ -190,7 +188,7 @@ void	*ft_void_skipper(t_list **token);
 void	*push_top(t_gc **head, size_t data_size);
 void	printList(t_gc	*node);
 void	gc_free(void);
-void	ft_pop_in_gc(t_gc **start, void *p);
+void	ft_pop_in_gc(t_gc **gc, void *p);
 
 /******************************************************************************/
 /**********************************  ERRORS  **********************************/
