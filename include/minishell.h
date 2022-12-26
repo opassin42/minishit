@@ -186,7 +186,7 @@ void	ft_free_token(t_list **token, void (*clr)(void*));
 void	ft_add_history(void *s);
 void	*ft_void_skipper(t_list **token);
 void	*push_top(t_gc **head, size_t data_size);
-void	printList(t_gc	*node);
+void	printlist(t_gc	*node);
 void	gc_free(void);
 void	ft_pop_in_gc(t_gc **gc, void *p);
 
