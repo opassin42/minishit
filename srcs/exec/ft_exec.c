@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/26 15:47:18 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/26 23:29:51 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,33 +61,15 @@ static char	*binary_file(t_cmd *cmd, char **path)
 
 int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 {
-	//int	ret;
-
 	if (!path)
 		return (EXIT_FAILURE);
 	cmd->bin = binary_file(cmd, path);
 	if (!cmd->bin)
 		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), EXIT_FAILURE);
 	if (access(cmd->bin, F_OK))
-		return (127);
-//		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), 127);
+		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), 127);
 	p_child(envp, cmd);
-	/*remplacer creation child
-	ret = fork();
-	if (ret == -1)
-		return (EXIT_FAILURE);
-	if (ret == 0)
-	{
-		if (execve(cmd->bin, cmd->arg, envp->tab) == -1)
-			return (perror((const char *)cmd->name), EXIT_FAILURE);
-		return (EXIT_SUCCESS);
-	}
-	else
-	{
-		wait(&ret);
-		return (errno);
-	}*/
-	return (EXIT_SUCCESS);
+	return (g_data.status);
 }
 
 /*
