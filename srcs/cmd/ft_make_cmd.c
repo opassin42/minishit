@@ -45,7 +45,6 @@ static void	init_rd(t_cmd *cmd, t_list *token)
 			cmd->hdoc = 0;
 		if (rd_in(cmd) != EXIT_SUCCESS)
 			printf("erreur redir in\n");
-		printf("RD_IN HANDLER\n");
 	}
 	else if (!ft_strcmp((char *)token->val, ">")
 		|| !ft_strcmp((char *)token->val, ">>"))
