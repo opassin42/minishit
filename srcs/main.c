@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/24 20:00:33 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/26 15:45:41 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int	main(int ac, char **av, char **env)
 {
 	char	*s;
 	t_env	*envp;
-
 
 	(void)ac;
 	(void)av;
