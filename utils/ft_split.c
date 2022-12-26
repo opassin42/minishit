@@ -111,9 +111,8 @@ char	**ft_split(char *s, char c)
 		if (*s && *s != c)
 		{
 			split[i] = get_mem(s, c);
-			if (!split[i])
+			if (!split[i++])
 				return (gc_free(), NULL);
-			++i;
 			while (*s && *s != c)
 				++s;
 		}
