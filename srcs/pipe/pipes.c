@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:35:41 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/26 23:51:48 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/27 00:06:28 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	p_father(t_cmd *cmd)
 	int	i;
 
 	i = 0;
-	while (i < (count_pipe(cmd)))
+	close(cmd->fd_in);
+	while (i < (count_pipe(cmd) + 1))
 	{
 		waitpid(g_data.pid, &g_data.status, 0);
 		i++;
