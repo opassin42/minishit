@@ -43,17 +43,11 @@ void     p_child(t_env *envp, t_cmd *cmd)
             if ((i + 1) != count_pipe(cmd))
                 dup2(pipes[1], cmd->fd_out);
             close(pipes[1]);
-            //close(pipes[0]);
             dup2(pipes[0], cmd->fd_in);
             dup2(pipes[1], cmd->fd_out);
             if ((!cmd->infile  || !cmd->outfile))
-            {
                 if(execve(cmd->bin, cmd->arg, envp->tab) == -1)
-                {
-                    //perror((const char *)cmd->name);
                     ft_exit(envp, cmd);
-                }
-            }
             exit(0);
         }
         close(pipes[1]);

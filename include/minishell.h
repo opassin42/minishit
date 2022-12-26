@@ -17,7 +17,7 @@
 # include "defines.h"
 # include "structs.h"
 
-extern int			g_status;
+extern int	g_status;
 extern t_gc			*start;
 static volatile int	keepRunning = 1;
 

@@ -66,7 +66,6 @@ void	ft_delete_var(t_env *envp, char *var_name)
 	{
 		tmp = envp->var->next;
 		ft_free_var(var);
-		//var = tmp; // No need to stock tmp. So WHY ????
 		return ;
 	}
 	while (var->next)
