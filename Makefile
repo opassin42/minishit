@@ -48,6 +48,7 @@ SRCS =	srcs/main.c \
 		srcs/exec/ft_signal.c \
 		srcs/exec/ft_exec.c \
 		srcs/exec/hashing.c \
+		srcs/pipe/pipes.c \
 		utils/ft_init.c \
 		utils/ft_split.c \
 		utils/lib_utils_0.c \

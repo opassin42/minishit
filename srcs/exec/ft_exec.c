@@ -61,7 +61,7 @@ static char	*binary_file(t_cmd *cmd, char **path)
 
 int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 {
-	int	ret;
+	//int	ret;
 
 	if (!path)
 		return (EXIT_FAILURE);
@@ -69,7 +69,10 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 	if (!cmd->bin)
 		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), EXIT_FAILURE);
 	if (access(cmd->bin, F_OK))
-		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), 127);
+		return (127);
+//		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), 127);
+	p_child(envp, cmd);
+	/*remplacer creation child
 	ret = fork();
 	if (ret == -1)
 		return (EXIT_FAILURE);
@@ -83,7 +86,7 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 	{
 		wait(&ret);
 		return (errno);
-	}
+	}*/
 	return (EXIT_SUCCESS);
 }
 
