@@ -17,7 +17,7 @@
 # include "structs.h"
 # include "defines.h"
 
-extern t_data   g_data;
+extern t_data	g_data;
 
 /******************************************************************************/
 /**********************************  INITS  ***********************************/
@@ -207,6 +207,5 @@ void	sig_handler(int dummy);
 /******************************************************************************/
 void	p_child(t_env *envp, t_cmd *cmd);
 void	p_father(t_cmd *cmd);
-
 
 #endif
