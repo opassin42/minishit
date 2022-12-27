@@ -47,9 +47,9 @@ static int	ft_minishell(t_env *envp, char *s, int status)
 	{
 		status = ft_exec(envp, cmd);
 		// if (STDOUT_FILENO != 1)
-			dup2(cmd->finalfdout, STDOUT_FILENO);
+			dup2(cmd->fd_out, STDOUT_FILENO);
 		// if (STDIN_FILENO != 0)
-			dup2(cmd->finalfdin, STDIN_FILENO);
+			dup2(cmd->fd_in, STDIN_FILENO);
 	}
 	return (status);
 }

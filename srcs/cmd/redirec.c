@@ -18,10 +18,10 @@ int	rd_in(t_cmd *cmd)
 		printf("heredoc detected\n");
 	else
 		cmd->ret = open(cmd->infile, O_RDONLY, 0666);
-	cmd->finalfdin = dup(STDIN_FILENO);
+	cmd->fd_in = dup(STDIN_FILENO);
 	if (cmd->ret == -1)
 		return (errno);
-	dup2(cmd->ret, cmd->fd_in);
+	dup2(cmd->ret, STDIN_FILENO);
 	return (EXIT_SUCCESS);
 }
 
@@ -31,9 +31,9 @@ int	rd_out(t_cmd *cmd)
 		cmd->ret = open(cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	else
 		cmd->ret = open(cmd->outfile, O_WRONLY | O_CREAT | O_APPEND, 0666);
-	cmd->finalfdout = dup(STDOUT_FILENO);
+	cmd->fd_out = dup(STDOUT_FILENO);
 	if (cmd->ret == -1)
 		return (errno);
-	dup2(cmd->ret, cmd->fd_out);
+	dup2(cmd->ret, STDOUT_FILENO);
 	return (EXIT_SUCCESS);
 }

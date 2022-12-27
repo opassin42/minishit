@@ -68,8 +68,6 @@ typedef struct s_cmd
 	int				pid;
 	int				status;
 	int				ret;
-	int				finalfdin;
-	int				finalfdout;
 	int				fd_in;
 	int				fd_out;
 	int				hdoc;

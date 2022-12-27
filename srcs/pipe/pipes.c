@@ -54,9 +54,9 @@ void	p_child(t_env *envp, t_cmd *cmd)
         signal(SIGINT, sig_handler);
         signal(SIGQUIT, SIG_IGN);
         if (i != 0)
-          dup2(cmd->finalfdin, STDIN_FILENO);
+          dup2(cmd->fd_in, STDIN_FILENO);
         if ((i + 1) != count_pipe(cmd))
-          dup2(pipes[1], cmd->fd_out);
+          dup2(pipes[1], STDOUT_FILENO);
         close(pipes[0]);
         close(pipes[1]);
         dup2(pipes[0], cmd->fd_in);
@@ -71,6 +71,6 @@ void	p_child(t_env *envp, t_cmd *cmd)
       }
       close(pipes[1]);
       close(pipes[0]);
-      dup2(pipes[0], cmd->finalfdin);
+      dup2(pipes[0], cmd->fd_in);
     }
 }

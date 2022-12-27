@@ -17,12 +17,10 @@ static void	ft_init_cmd_struct(t_cmd *cmd, char *key)
 	cmd->id = 0;
 	cmd->pid = 0;
 	cmd->status = 0;
-	cmd->ret = STDOUT_FILENO;
+	cmd->ret = 0;
 	cmd->fd_in = STDIN_FILENO;
 	cmd->fd_out = STDOUT_FILENO;
 	cmd->append = 0;
-	cmd->finalfdin = 0;
-	cmd->finalfdout = 1;
 	cmd->infile = NULL;
 	cmd->outfile = NULL;
 	cmd->delim = NULL;
