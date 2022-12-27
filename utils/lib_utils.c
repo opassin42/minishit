@@ -26,7 +26,7 @@ char	*ft_strchr(char *s, int c)
 {
 	char	*tmpsrc;
 
-	tmpsrc = (char*)s;
+	tmpsrc = (char *)s;
 	while (*tmpsrc)
 	{
 		if (*tmpsrc == (char)c)

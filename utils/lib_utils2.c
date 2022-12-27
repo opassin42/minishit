@@ -12,10 +12,6 @@
 
 #include "../include/minishell.h"
 
-/*
-** Seems like i have some invalid reead of size 1
-** Because of this function ??
-*/
 char	*ft_substr(char *s, int begin, size_t len)
 {
 	size_t	i;

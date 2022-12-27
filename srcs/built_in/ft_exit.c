@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-int		ft_exit(t_env *envp, t_cmd *cmd)
+int	ft_exit(t_env *envp, t_cmd *cmd)
 {
 	(void)envp;
 	(void)cmd;

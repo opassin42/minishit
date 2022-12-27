@@ -19,7 +19,6 @@ int	ft_is_digit(int c)
 	return (EXIT_SUCCESS);
 }
 
-
 int	ft_isalpha(int c)
 {
 	return (((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')));

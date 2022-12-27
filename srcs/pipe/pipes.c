@@ -44,33 +44,33 @@ void	p_child(t_env *envp, t_cmd *cmd)
 	int	i;
 	int	pipes[2];
 
-	i = -1;
-	while (++i < count_pipe(cmd))
-	{
-		pipe(pipes);
-		g_data.pid = fork();
-		if (g_data.pid == 0)
-		{
-			signal(SIGINT, sig_handler);
-			signal(SIGQUIT, SIG_IGN);
-			if (i != 0)
-				dup2(cmd->finalfdin, STDIN_FILENO);
-			if ((i + 1) != count_pipe(cmd))
-				dup2(pipes[1], cmd->fd_out);
-			close(pipes[0]);
-			close(pipes[1]);
-			dup2(pipes[0], cmd->fd_in);
-			dup2(pipes[1], cmd->fd_out);
-			if ((!cmd->infile || !cmd->outfile))
-			{
-				g_data.status = execve(cmd->bin, cmd->arg, envp->tab);
-				if (g_data.status == -1)
-					ft_exit(envp, cmd);
-			}
-			exit(g_data.status);
-		}
-		close(pipes[1]);
-		close(pipes[0]);
-		dup2(pipes[0], cmd->finalfdin);
-	}
+  i = -1;
+    while (++i < count_pipe(cmd))
+    {
+      pipe(pipes);
+      g_data.pid = fork();
+      if (g_data.pid == 0)
+      {
+        signal(SIGINT, sig_handler);
+        signal(SIGQUIT, SIG_IGN);
+        if (i != 0)
+          dup2(cmd->finalfdin, STDIN_FILENO);
+        if ((i + 1) != count_pipe(cmd))
+          dup2(pipes[1], cmd->fd_out);
+        close(pipes[0]);
+        close(pipes[1]);
+        dup2(pipes[0], cmd->fd_in);
+        dup2(pipes[1], cmd->fd_out);
+        if ((!cmd->infile || !cmd->outfile))
+        {
+          g_data.status = execve(cmd->bin, cmd->arg, envp->tab);
+          if (g_data.status == -1)
+            ft_exit(envp, cmd);
+        }
+        exit(g_data.status);
+      }
+      close(pipes[1]);
+      close(pipes[0]);
+      dup2(pipes[0], cmd->finalfdin);
+    }
 }

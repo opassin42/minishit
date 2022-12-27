@@ -12,6 +12,13 @@
 
 #include "../../include/minishell.h"
 
+int	ft_check(t_cmd *cmd, t_env *envp)
+{
+	if (!cmd || !envp)
+		return (0);
+	return (get_nb_var(cmd));
+}
+
 /*
 Type : Integer
 Arg : list cmd
@@ -64,7 +71,6 @@ void	ft_delete_var(t_env *envp, char *var_name)
 	var = envp->var;
 	if (!ft_strcmp(var->name, var_name))
 	{
-		// tmp = envp->var->next;
 		ft_free_var(var);
 		return ;
 	}
@@ -97,9 +103,7 @@ int	ft_unset(t_env *envp, t_cmd *cmd)
 	t_var	*var;
 	int		nb_var;
 
-	if (!cmd || !envp)
-		return (0);
-	nb_var = get_nb_var(cmd);
+	nb_var = ft_check(cmd, envp);
 	while (nb_var--)
 	{
 		if (envp->var)
