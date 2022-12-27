@@ -21,7 +21,7 @@ int	rd_in(t_cmd *cmd)
 	cmd->fd_in = dup(STDIN_FILENO);
 	if (cmd->ret == -1)
 		return (errno);
-	dup2(cmd->ret, cmd->fd_in);
+	dup2(cmd->ret, STDIN_FILENO);
 	return (EXIT_SUCCESS);
 }
 
@@ -34,6 +34,6 @@ int	rd_out(t_cmd *cmd)
 	cmd->fd_out = dup(STDOUT_FILENO);
 	if (cmd->ret == -1)
 		return (errno);
-	dup2(cmd->ret, cmd->fd_out);
+	dup2(cmd->ret, STDOUT_FILENO);
 	return (EXIT_SUCCESS);
 }

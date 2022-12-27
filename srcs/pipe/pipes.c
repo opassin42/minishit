@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:35:41 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/27 07:24:33 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/27 08:07:23 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void	p_child(t_env *envp, t_cmd *cmd)
 		{
 			signal(SIGINT, sig_handler);
 			signal(SIGQUIT, SIG_DFL);
-			// if (i != 0)
-			// 	dup2(0STDIN_FILENO);
+			if (i != 0)
+				dup2(cmd->fd_in, STDIN_FILENO);
 			if ((i + 1) != count_pipe(cmd))
 				dup2(pipes[1], cmd->fd_out);
 			close(pipes[0]);
@@ -71,6 +71,7 @@ void	p_child(t_env *envp, t_cmd *cmd)
 		}
 		close(pipes[1]);
 		close(pipes[0]);
-		dup2(pipes[0], STDIN_FILENO);
+		dup2(pipes[0], cmd->fd_in);
+		// dup2(pipes[0], STDIN_FILENO);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/27 07:19:09 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/27 08:08:19 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,8 @@ static int	ft_minishell(t_env *envp, char *s, int status)
 	if (cmd)
 	{
 		status = ft_exec(envp, cmd);
-		// if (STDOUT_FILENO != 1)
-			dup2(1, STDOUT_FILENO);
-		// if (STDIN_FILENO != 0)
-			dup2(0, STDIN_FILENO);
+		dup2(cmd->fd_out, STDOUT_FILENO);
+		dup2(cmd->fd_in, STDIN_FILENO);
 	}
 	return (status);
 }
