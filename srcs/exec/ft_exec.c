@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/27 08:17:39 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/27 10:11:53 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), EXIT_FAILURE);
 	if (access(cmd->bin, F_OK))
 		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), 127);
-	p_child(envp, cmd);
+	// p_child(envp, cmd);
+	process(envp, cmd);
 	return (g_data.status);
 }
 

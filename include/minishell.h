@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/24 18:24:05 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/27 10:12:26 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,8 @@ void	sig_handler(int dummy);
 /******************************************************************************/
 /**********************************  PIPES    *********************************/
 /******************************************************************************/
-void	p_child(t_env *envp, t_cmd *cmd);
-void	p_father(t_cmd *cmd);
+void	p_child(t_env *envp, t_cmd *cmd, int *pipes);
+void	p_father(t_cmd *cmd, int *pipes);
+void	process(t_env *envp, t_cmd *cmd);
 
 #endif

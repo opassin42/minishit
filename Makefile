@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/12/24 20:12:18 by ccouliba         ###   ########.fr        #
+#    Updated: 2022/12/27 09:34:16 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,7 +90,7 @@ re: fclean all
 
 leak: re
 	@echo "				$(_BG_CYAN)LEAK TEST$(_END) (valgrind)"
-	@valgrind --suppressions=.leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
+	@valgrind --trace-children=yes --quiet --track-fds=yes --suppressions=.leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
 # @valgrind ./$(NAME)
 
 debug : fclean
