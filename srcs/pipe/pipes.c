@@ -46,12 +46,19 @@ void     p_child(t_env *envp, t_cmd *cmd)
             close(pipes[1]);
             dup2(pipes[0], cmd->fd_in);
             dup2(pipes[1], cmd->fd_out);
+            //printf("fd_in: %d, fd_out: %d finalfdin:%d fdinaldout: %d\n", cmd->fd_in, cmd->fd_out, cmd->finalfdin, cmd->finalfdout);
             if ((!cmd->infile  || !cmd->outfile))
+            {
                 if(execve(cmd->bin, cmd->arg, envp->tab) == -1)
+                {
+                    //printf("2: fd_in: %d, fd_out: %d finalfdin:%d fdinaldout: %d\n", cmd->fd_in, cmd->fd_out, cmd->finalfdin, cmd->finalfdout);
                     ft_exit(envp, cmd);
+                }
+            }
+
             exit(0);
         }
-        
+
         close(pipes[0]);
         close(pipes[1]);
         dup2(pipes[0], cmd->finalfdin);

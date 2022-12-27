@@ -71,7 +71,10 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 	if (access(cmd->bin, F_OK))
 		return (127);
 //		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), 127);
-	p_child(envp, cmd);
+	if (envp && cmd)
+		p_child(envp, cmd);
+	else
+		return(g_data.status);
 	/*remplacer creation child
 	ret = fork();
 	if (ret == -1)
