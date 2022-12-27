@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 02:32:23 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/27 02:52:32 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/27 05:17:52 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ static void	ft_init_cmd_struct(t_cmd *cmd, char *key)
 	cmd->id = 0;
 	cmd->pid = 0;
 	cmd->status = 0;
-	cmd->ret = STDOUT_FILENO;
+	cmd->ret = 0;
 	cmd->fd_in = STDIN_FILENO;
 	cmd->fd_out = STDOUT_FILENO;
 	cmd->append = 0;
-	cmd->finalfdin = 0;
-	cmd->finalfdout = 1;
+	// 0 = 0;
+	// 1 = 1;
 	cmd->infile = NULL;
 	cmd->outfile = NULL;
 	cmd->delim = NULL;

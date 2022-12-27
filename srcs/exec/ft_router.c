@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:49:33 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/27 00:37:35 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/27 07:17:04 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,11 @@ int	ft_router(t_env *envp, t_cmd *cmd)
 			return (-1);
 		status = ft_non_builtin(envp, cmd, path);
 	}
-	else
+	if (id >= 0)
+	{
 		status = ft_builtin_ret(envp, cmd, builtin, id);
-	p_father(cmd);
+		p_father(cmd);
+	}
 	if (g_data.sigint == 1 || g_data.sigquit == 1)
 		return (g_data.status);
 	if (g_data.status == 512 || g_data.status == 256)
