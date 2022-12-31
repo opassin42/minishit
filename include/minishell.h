@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/27 10:12:26 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/30 19:31:35 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	ft_expander(t_list **token, t_env *envp);
 char	*find_value(t_env *envp, char *var_name);
 char	*expand(t_env *envp, char *s);
 char	*ft_recompose(t_env *envp, char *s);
+void	positive_hashing(char *s);
 void	hashing(char *s, int c, int factor);
 
 int		ft_alnum_underscore(int c);
@@ -205,8 +206,8 @@ void	sig_handler(int dummy);
 /******************************************************************************/
 /**********************************  PIPES    *********************************/
 /******************************************************************************/
-void	p_child(t_env *envp, t_cmd *cmd, int *pipes);
-void	p_father(t_cmd *cmd, int *pipes);
+void	p_child(t_env *envp, t_cmd *cmd);
+void	p_father(t_cmd *cmd);
 void	process(t_env *envp, t_cmd *cmd);
 
 #endif

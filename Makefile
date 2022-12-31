@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/12/27 09:34:16 by ccouliba         ###   ########.fr        #
+#    Updated: 2022/12/31 02:17:16 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ NAME = minishell
 CC = @gcc
 
 CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
+
+OBJS_D	=	objs/
 
 include .color_code.txt
 
@@ -63,10 +65,11 @@ SRCS =	srcs/main.c \
 		utils/signals.c
 		
 OBJS = $(SRCS:.c=.o)
+# OBJS_D := $(addprefix $(OBJS_D), $(OBJS))
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) #$(OBJS_D)
 		@echo "[$(_BLUE)!$(_END)] Rules :\t[$(_BLUE)all$(_END)] [$(_BLUE)clean$(_END)] [$(_BLUE)fclean$(_END)] [$(_BLUE)re$(_END)] [$(_BLUE)leak$(_END)] [$(_BLUE)debug$(_END)]"
 		@echo -n "\n"
 		$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lreadline
@@ -77,10 +80,13 @@ $(NAME): $(OBJS)
 
 %o: %.c
 	$(CC) $(FLAGS) -o $@ -c $<
+# mkdir -p $(OBJS_D)
 
 clean:
 	@rm -f $(OBJS)
 	@echo "[$(_RED)!$(_END)] Removing objects ...  [$(_BK_GREEN)SUCCESS$(_END)]"
+# rm -f $(OBJS_D)
+# rm -f *.o
 
 fclean: clean
 	@rm -f $(NAME)
@@ -90,7 +96,8 @@ re: fclean all
 
 leak: re
 	@echo "				$(_BG_CYAN)LEAK TEST$(_END) (valgrind)"
-	@valgrind --trace-children=yes --quiet --track-fds=yes --suppressions=.leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
+	@valgrind --suppressions=.leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
+# --trace-children=yes --quiet --track-fds=yes : For checking lefting opened fd -> carefull about this
 # @valgrind ./$(NAME)
 
 debug : fclean

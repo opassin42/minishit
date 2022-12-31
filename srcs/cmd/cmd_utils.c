@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:28 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/23 19:23:00 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/30 19:40:34 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	*join_token(t_list *token)
 	{
 		s = ft_strjoin(s, tmp->expand);
 		if (!s)
-			return (gc_free(), NULL);
+			return (NULL);
 		tmp = tmp->next;
 	}
 	return ((void *)s);

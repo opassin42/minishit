@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/27 10:13:43 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/31 02:20:20 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,32 @@ char	*ft_shellname(void)
 	char	*tmp;
 
 	tmp = get_pwd();
-	// dup2(STDIN_FILENO, 0);
-	// dup2(STDIN_FILENO, 1);
+	dup2(STDIN_FILENO, 0);
+	dup2(STDIN_FILENO, 1);
 	tmp = ft_strjoin("\e[0;32m", tmp);
 	tmp = ft_strjoin(tmp, ":$>\e[0m");
 	return (tmp);
 }
+
+// void	*definitive_value_change(char *s)
+// {
+// 	if (!s)
+// 		return (NULL);
+// 	if (*s == ' ' || *s == '\t')
+// 	{
+// 		if (*s == ' ')
+// 			++s;
+// 		else if (*s == '\t')
+// 			*s = ' ';
+// 		while (*s == ' ')
+// 			++s;
+// 	}
+// 	while (*s)
+// 	{
+		
+// 		++s;	
+// 	}
+// }
 
 static int	ft_minishell(t_env *envp, char *s, int status)
 {
@@ -42,6 +62,7 @@ static int	ft_minishell(t_env *envp, char *s, int status)
 		return (status);
 	ft_expander(&token, envp);
 	hash_quote(&token, -1);
+	//Have to change the token->val RIGHT HERE ; depending on quote flag HERE
 	cmd = ft_cmd(&token);
 	if (cmd)
 	{

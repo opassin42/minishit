@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:45:01 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/24 20:11:17 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/31 06:38:09 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	*var_name(char *str, int start)
 		{
 			tmp = (void *)ft_substr(str, start, i - start);
 			if (!tmp)
-				return (gc_free(), NULL);
+				return (NULL);
 			return (tmp);
 		}
 	}
@@ -56,8 +56,8 @@ char	*find_value(t_env *envp, char *var_name)
 {
 	t_var	*var;
 
-	if (!envp)
-		return (NULL);
+	
+	
 	if (!var_name || (*var_name == '$' && !(*var_name + 1)))
 		return (NULL);
 	var = envp->var;
@@ -86,10 +86,10 @@ char	*expand(t_env *envp, char *s)
 	pos = ft_get_dollar_pos(s);
 	name = (char *)var_name(s, pos);
 	if (!name)
-		return (gc_free(), NULL);
+		return (NULL);
 	name = check_name(name);
 	if (!name)
-		return (gc_free(), NULL);
+		return (NULL);
 	if (!ft_strcmp(name, "?"))
 		var_val = ft_itoa(g_data.status);
 	else
@@ -100,12 +100,6 @@ char	*expand(t_env *envp, char *s)
 	return (var_val);
 }
 
-/*
-** Correct
-** I may recompose (ft_recompose) right here, (after)removing quotes
-** Handle this input : $1abc
-** warning : if export a="o hi" -> ech$a = hi
-*/
 void	ft_expander(t_list **token, t_env *envp)
 {
 	char	*exp_val;
@@ -135,3 +129,4 @@ void	ft_expander(t_list **token, t_env *envp)
 		tmp = tmp->next;
 	}
 }
+	

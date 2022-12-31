@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 08:11:34 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/11 02:14:39 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/31 06:37:34 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static char	*replace(t_env *envp, char *val)
 {
 	char	*tmp;
 
+	// if (!envp)
+	// 	return (NULL);
 	if (!val)
 		return (NULL);
 	tmp = NULL;

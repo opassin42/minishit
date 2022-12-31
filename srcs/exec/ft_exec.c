@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/27 10:11:53 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/31 08:57:10 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,17 @@ static char	*bin_path(t_cmd *cmd, char **path)
 	bin = NULL;
 	if (!cmd->name || !*cmd->name)
 		return (NULL);
+	if (*cmd->name == '.' || *cmd->name == '/')
+		return (cmd->name);
 	i = -1;
 	while (path[++i])
 	{
 		tmp = ft_strjoin(path[i], "/");
 		if (!tmp)
-			return (gc_free(), NULL);
+			return (NULL);
 		bin = ft_strjoin(tmp, cmd->name);
 		if (!bin)
-			return (gc_free(), NULL);
+			return (NULL);
 		if (!access(bin, F_OK))
 			return (bin);
 	}
@@ -52,24 +54,41 @@ static char	*binary_file(t_cmd *cmd, char **path)
 {
 	if (!path)
 		return (NULL);
-	if (!access(cmd->name, F_OK))
+	if ((*cmd->name == '.' || *cmd->name == '/') && access(cmd->name, F_OK))
 		cmd->bin = cmd->name;
 	else
 		cmd->bin = bin_path(cmd, path);
+	if (!cmd->bin)
+		return (NULL);
 	return (cmd->bin);
+}
+
+int	check_binary(t_cmd *cmd)
+{
+	if ((*cmd->name == '.') && ft_strlen(cmd->name) <= 2)
+		return (EXIT_FAILURE);
+	if (*cmd->name == '.' || *cmd->name == '/')
+	{
+		if (*(cmd->name + 1) && (*(cmd->name + 1) == '.'
+				|| *(cmd->name + 1) == '/'))
+			return (EXIT_FAILURE);
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }
 
 int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 {
+	(void)envp;
 	if (!path)
 		return (EXIT_FAILURE);
 	cmd->bin = binary_file(cmd, path);
 	if (!cmd->bin)
-		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), EXIT_FAILURE);
-	if (access(cmd->bin, F_OK))
+		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), 110);
+	printf("cmd->bin = %s\n", cmd->bin);
+	if (!cmd->bin || check_binary(cmd) || access(cmd->bin, F_OK))
 		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), 127);
-	// p_child(envp, cmd);
-	process(envp, cmd);
+	p_child(envp, cmd);
 	return (g_data.status);
 }
 

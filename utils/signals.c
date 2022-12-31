@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/27 08:12:56 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/28 21:16:49 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,7 @@
 void	parent_handler(int sig)
 {
 	if (sig == SIGQUIT)
-	{
 		ft_putstr_fd("\b\b \b\b", 2);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
 	if (sig == SIGINT)
 	{
 		ft_putstr_fd("\n", 1);

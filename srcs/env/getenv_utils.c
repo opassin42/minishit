@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 03:28:46 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/23 19:23:00 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/30 16:26:32 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_var_name(char *s)
 	int	i;
 
 	i = -1;
+	if (!s)
+		return (NULL);
 	while (s[++i])
 	{
 		if (s[i] == '=')
@@ -37,11 +39,11 @@ t_var	*ft_new_var(t_list *token)
 		return (gc_free(), NULL);
 	var->name = ft_var_name(str);
 	if (!var->name)
-		return (gc_free(), NULL);
+		return (NULL);
 	begin = ft_strlen(var->name) + 1;
 	var->value = ft_substr(str, begin, ft_strlen(str));
 	if (!var->value)
-		return (gc_free(), NULL);
+		return (NULL);
 	var->next = NULL;
 	return (var);
 }
