@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:52 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/31 12:08:50 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/31 14:41:18 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define ERRNO_ENV "There is no printable environment"
 
 # define PATH_VALUE "/mnt/nfs/homes/ccouliba/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
+# define MISSING_ENV "No env ; you cannot export variable.\nPlease exit then relauch minishell again"
 /*
 ** ANSI COLORS
 */

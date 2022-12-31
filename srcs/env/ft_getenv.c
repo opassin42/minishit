@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 02:41:11 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/31 13:38:01 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/31 14:29:42 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,33 +69,42 @@ void	*init_shlvl(t_env *envp)
 	return (NULL);
 }
 
-static char	**no_env(void)
-{
-	char	pwd[PATH_MAX];
-	char	**a_env;
+// static t_var	*no_env(void)
+// {
+// 	char	buff[PATH_MAX];
+// 	t_var	*pwd;
+// 	t_var	*path;
+// 	t_var	*shlvl;
 
-	a_env = (char **) NULL;
-	if (getcwd(pwd, sizeof(pwd)) == NULL)
-		return (NULL);
-	a_env[0] = "SHLVL=42";
-	if (!a_env[0])
-		return (NULL);
-	a_env[1] = ft_strjoin("PATH=", PATH_VALUE);
-	if (!a_env[1])
-		return (NULL);
-	a_env[2] = ft_strjoin("PWD=", ft_strdup(pwd));
-	if (!a_env[2])
-		return (NULL);
-	a_env[3] = 0;
-	return (a_env);
-}
+// 	if (getcwd(buff, sizeof(buff)) == NULL)
+// 		return (NULL);
+// 	shlvl = push_top(&g_data.gc, sizeof(t_var));
+// 	if (!shlvl)
+// 		return (gc_free(), NULL);
+// 	shlvl->name = "SHLVL";
+// 	shlvl->value = "42";
+// 	path = push_top(&g_data.gc, sizeof(t_var));
+// 	if (!path)
+// 		return (gc_free(), NULL);
+// 	path->name = "PATH";
+// 	path->value = PATH_VALUE;
+// 	ft_var_addback(&shlvl, path);
+// 	pwd = push_top(&g_data.gc, sizeof(t_var));
+// 	if (!pwd)
+// 		return (gc_free(), NULL);
+// 	pwd->name = "PWD";
+// 	pwd->value = ft_strdup(buff);
+// 	if (!pwd->value)
+// 		return (NULL);
+// 	return (ft_var_addback(&shlvl, pwd), shlvl);
+// }
 
 t_env	*ft_getenv(char **env)
 {
 	t_env	*envp;
 
 	if (!env)
-		env = no_env();
+		return (NULL);
 	envp = (t_env *)push_top(&g_data.gc, sizeof(t_env));
 	if (!envp)
 		return (gc_free(), NULL);
