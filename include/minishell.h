@@ -205,7 +205,13 @@ void	sig_handler(int dummy);
 /******************************************************************************/
 /**********************************  PIPES    *********************************/
 /******************************************************************************/
-void	p_child(t_env *envp, t_cmd *cmd);
-void	p_father(t_cmd *cmd);
+int	count_pipe(t_cmd *cmd);
+void   ft_pipes(t_env *envp, t_cmd *cmd, int nb_pipes);
+int ft_wait_procs(int ac, pid_t *list);
+int ft_close_pipes(int **pipefd, int nb_pipes);
+int ft_handle_pipe(int **pipefd, int pipes_left, int nb_pipes, int *fd_in);
+int **create_pipe_arr(int nb_pipes);
+
+// void	p_father(t_cmd *cmd);
 
 #endif

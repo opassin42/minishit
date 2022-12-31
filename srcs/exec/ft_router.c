@@ -78,6 +78,12 @@ int	ft_router(t_env *envp, t_cmd *cmd)
 
 	ft_init_t_builtin(builtin);
 	id = which_builtin(builtin, cmd);
+	cmd->pid = fork();
+	if (cmd->pid < 0)
+	{
+		perror("");
+		return (g_data.status);
+	}
 	if (id == -1)
 	{
 		path = path_in_env(envp, "PATH");
@@ -87,6 +93,5 @@ int	ft_router(t_env *envp, t_cmd *cmd)
 	}
 	else
 		status = ft_builtin_ret(envp, cmd, builtin, id);
-	//p_father(cmd);
 	return (status);
 }

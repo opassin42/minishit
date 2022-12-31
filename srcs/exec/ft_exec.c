@@ -61,6 +61,9 @@ static char	*binary_file(t_cmd *cmd, char **path)
 
 int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 {
+	// int		nb_pipes;
+
+	// nb_pipes = count_pipe(cmd);
 	if (!path)
 		return (EXIT_FAILURE);
 	cmd->bin = binary_file(cmd, path);
@@ -68,7 +71,10 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), EXIT_FAILURE);
 	if (access(cmd->bin, F_OK))
 		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), 127);
-	p_child(envp, cmd);
+	g_data.status = execve(cmd->bin, cmd->arg, envp->tab);
+			if (g_data.status == -1)
+				ft_exit(envp, cmd);
+	// ft_pipes(envp, cmd, nb_pipes);
 	return (g_data.status);
 }
 

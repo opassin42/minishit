@@ -68,9 +68,9 @@ typedef struct s_cmd
 	int				pid;
 	int				status;
 	int				ret;
-	int				fd_in;
-	int				fd_out;
+	int				fd[2];
 	int				hdoc;
+	char 			**heredoc;
 	int				append;
 	char			*outfile;
 	char			*infile;
@@ -79,7 +79,6 @@ typedef struct s_cmd
 	char			**param;
 	char			**arg;
 	char			*bin;
-	char			**heredoc;
 	struct s_cmd	*next;
 }				t_cmd;
 

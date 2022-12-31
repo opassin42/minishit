@@ -14,26 +14,30 @@
 
 int	rd_in(t_cmd *cmd)
 {
+	int	infd;
+
 	if (cmd->hdoc)
 		printf("heredoc detected\n");
 	else
-		cmd->ret = open(cmd->infile, O_RDONLY, 0666);
-	cmd->fd_in = dup(STDIN_FILENO);
-	if (cmd->ret == -1)
+		infd = open(cmd->infile, O_RDONLY);
+	if (infd < 0)
 		return (errno);
-	dup2(cmd->ret, STDIN_FILENO);
+	dup2(infd, STDIN_FILENO);
+	close(infd);
 	return (EXIT_SUCCESS);
 }
 
 int	rd_out(t_cmd *cmd)
 {
+	int	outfd;
+
 	if (!cmd->append)
-		cmd->ret = open(cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		outfd = open(cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
-		cmd->ret = open(cmd->outfile, O_WRONLY | O_CREAT | O_APPEND, 0666);
-	cmd->fd_out = dup(STDOUT_FILENO);
-	if (cmd->ret == -1)
+		outfd = open(cmd->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (outfd < 0)
 		return (errno);
-	dup2(cmd->ret, STDOUT_FILENO);
+	dup2(outfd, STDOUT_FILENO);
+	close(outfd);
 	return (EXIT_SUCCESS);
 }
