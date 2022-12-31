@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/30 19:31:35 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/31 12:14:52 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,6 @@ char	*remove_quotes(t_list *token);
 /******************************************************************************/
 /***********************************  ENV  ************************************/
 /******************************************************************************/
-// t_env	*ft_init_env(char **env);
-// t_var	*ft_init_var(t_list **env_list);
-
-// void	find_in_env(t_env *envp, char *var_name, char *(*f)());
 char	*get_in_env(t_env *envp, char *name);
 void	up_in_env(t_env *envp, char *var_name, char *s);
 t_env	*ft_getenv(char **env);

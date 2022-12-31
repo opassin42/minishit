@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:52 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/24 20:19:01 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/31 12:08:50 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # define ERRNO_2 "command not found"
 # define ERRNO_3 "no such file or directory"
 # define ERRNO_ENV "There is no printable environment"
+
+# define PATH_VALUE "/mnt/nfs/homes/ccouliba/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
 /*
 ** ANSI COLORS
 */

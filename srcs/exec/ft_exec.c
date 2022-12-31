@@ -6,21 +6,11 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/31 08:57:10 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/31 11:45:45 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-void	cmd_error(char *token, char *err_msg, int fd, void (*f)())
-{
-	f("minishell: ", fd);
-	f(token, fd);
-	f(": ", fd);
-	f(err_msg, fd);
-	f("\n", fd);
-	return ;
-}
 
 static char	*bin_path(t_cmd *cmd, char **path)
 {
@@ -63,16 +53,19 @@ static char	*binary_file(t_cmd *cmd, char **path)
 	return (cmd->bin);
 }
 
-int	check_binary(t_cmd *cmd)
+static int	check_cmd(t_cmd *cmd)
 {
-	if ((*cmd->name == '.') && ft_strlen(cmd->name) <= 2)
+	if ((*cmd->name == '.') && ft_strlen(cmd->name) < 2)
 		return (EXIT_FAILURE);
 	if (*cmd->name == '.' || *cmd->name == '/')
 	{
-		if (*(cmd->name + 1) && (*(cmd->name + 1) == '.'
-				|| *(cmd->name + 1) == '/'))
+		if (*cmd->name == '/' && ft_strlen(cmd->name) < 2)
 			return (EXIT_FAILURE);
-		return (EXIT_FAILURE);
+		if (*(cmd->name + 1))
+		{
+			if (*(cmd->name + 1) == '.' || *(cmd->name + 1) == '/')
+				return (EXIT_FAILURE);
+		}
 	}
 	return (EXIT_SUCCESS);
 }
@@ -83,10 +76,8 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 	if (!path)
 		return (EXIT_FAILURE);
 	cmd->bin = binary_file(cmd, path);
-	if (!cmd->bin)
-		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), 110);
-	printf("cmd->bin = %s\n", cmd->bin);
-	if (!cmd->bin || check_binary(cmd) || access(cmd->bin, F_OK))
+	if (!cmd->bin || check_cmd(cmd)
+		|| access(cmd->bin, F_OK | R_OK | X_OK) != 0)
 		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), 127);
 	p_child(envp, cmd);
 	return (g_data.status);

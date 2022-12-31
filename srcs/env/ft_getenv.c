@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 02:41:11 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/30 18:32:26 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/31 13:38:01 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** Then make a chained list with the env
 */
 
-static t_env	*ft_init_env(char **env, t_env *envp)
+static t_env	*init_env(char **env, t_env *envp)
 {
 	int		i;
 	void	*tmp;
@@ -37,7 +37,7 @@ static t_env	*ft_init_env(char **env, t_env *envp)
 	return (envp);
 }
 
-t_var	*ft_init_var(t_list **env_list)
+static t_var	*init_var(t_list **env_list)
 {
 	t_list	*tmp;
 	t_var	*var;
@@ -55,27 +55,54 @@ t_var	*ft_init_var(t_list **env_list)
 	return ((t_var *)var);
 }
 
-// t_env	*ft_no_env(void)
-// {
-// 	t_env	*envp;
+void	*init_shlvl(t_env *envp)
+{
+	t_var	*var;
 
-// 	envp = 
-// 	return (envp);
-// }
+	var = envp->var;
+	while (var)
+	{
+		if (!ft_strcmp(var->name, "SHLVL"))
+			return (var->value = "42");
+		var = var->next;
+	}
+	return (NULL);
+}
+
+static char	**no_env(void)
+{
+	char	pwd[PATH_MAX];
+	char	**a_env;
+
+	a_env = (char **) NULL;
+	if (getcwd(pwd, sizeof(pwd)) == NULL)
+		return (NULL);
+	a_env[0] = "SHLVL=42";
+	if (!a_env[0])
+		return (NULL);
+	a_env[1] = ft_strjoin("PATH=", PATH_VALUE);
+	if (!a_env[1])
+		return (NULL);
+	a_env[2] = ft_strjoin("PWD=", ft_strdup(pwd));
+	if (!a_env[2])
+		return (NULL);
+	a_env[3] = 0;
+	return (a_env);
+}
 
 t_env	*ft_getenv(char **env)
 {
 	t_env	*envp;
 
 	if (!env)
-		return (NULL);
+		env = no_env();
 	envp = (t_env *)push_top(&g_data.gc, sizeof(t_env));
 	if (!envp)
 		return (gc_free(), NULL);
-	envp = ft_init_env(env, envp);
+	envp = init_env(env, envp);
 	if (!envp)
 		return (NULL);
-	envp->var = ft_init_var(&envp->list);
+	envp->var = init_var(&envp->list);
 	if (!envp->var)
 		return (NULL);
 	return (envp);

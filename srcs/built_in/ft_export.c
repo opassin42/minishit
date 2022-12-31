@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/31 02:47:17 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/31 13:55:02 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_var	*ft_new_var_env(t_cmd *cmd, int i)
 		return (gc_free(), NULL);
 	var->name = split_name(cmd, i);
 	if (is_valid_name(var->name) == 0)
-		return (gc_free(), NULL);
+		return (NULL);
 	if (!ft_strcmp(var->name, cmd->param[i]))
 		++i;
 	var->value = split_value(cmd, i);
@@ -77,17 +77,18 @@ int	ft_export(t_env *envp, t_cmd *cmd)
 	int		i;
 
 	i = 0;
+	var = NULL;
 	if (cmd)
 		nb_var = get_nb_var(cmd);
 	if (!cmd->param)
+		return (ft_export_env(envp->var), 0);
+	if (envp)
 	{
-		ft_export_env(envp->var);
-		return (0);
-	}
-	if (envp->var)
-	{
-		var = envp->var;
-		positive_hashing(var->value);
+		if (envp->var)
+		{
+			var = envp->var;
+			// positive_hashing(var->value);
+		}
 	}
 	while (i < nb_var)
 		ft_var_addback(&var, ft_new_var_env(cmd, i++));

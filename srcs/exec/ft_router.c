@@ -6,13 +6,13 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:49:33 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/31 02:58:44 by ccouliba         ###   ########.fr       */
+/*   Updated: 2022/12/31 11:57:44 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	ft_init_t_builtin(t_builtin *builtin)
+static void	ft_init_builtin(t_builtin *builtin)
 {
 	builtin[0].key = "echo";
 	builtin[0].f = ft_echo;
@@ -30,14 +30,6 @@ static void	ft_init_t_builtin(t_builtin *builtin)
 	builtin[6].f = ft_exit;
 }
 
-static int	ft_builtin_ret(t_env *envp, t_cmd *cmd, t_builtin *builtin, int i)
-{
-	int	res;
-
-	res = builtin[i].f(envp, cmd);
-	return (res);
-}
-
 static int	which_builtin(t_builtin *builtin, t_cmd *cmd)
 {
 	int	i;
@@ -53,13 +45,19 @@ static int	which_builtin(t_builtin *builtin, t_cmd *cmd)
 	return (-1);
 }
 
+static int	exec_builtin(t_env *envp, t_cmd *cmd, t_builtin *builtin, int i)
+{
+	int	res;
+
+	res = builtin[i].f(envp, cmd);
+	return (res);
+}
+
 static char	**path_in_env(t_env *envp, char *var_name)
 {
 	char	*value;
 	char	**path;
 
-	// if (!envp)
-	// 	return (NULL);
 	if (!var_name)
 		return (NULL);
 	value = find_value(envp, var_name);
@@ -78,9 +76,7 @@ int	ft_router(t_env *envp, t_cmd *cmd)
 	char		**path;
 	t_builtin	builtin[7];
 
-	// if (!envp)
-	// 	return (0);
-	ft_init_t_builtin(builtin);
+	ft_init_builtin(builtin);
 	id = which_builtin(builtin, cmd);
 	if (id == -1)
 	{
@@ -90,7 +86,7 @@ int	ft_router(t_env *envp, t_cmd *cmd)
 		status = ft_non_builtin(envp, cmd, path);
 	}
 	else
-		status = ft_builtin_ret(envp, cmd, builtin, id);
+		status = exec_builtin(envp, cmd, builtin, id);
 	p_father(cmd);
 	if (g_data.sigint == 1 || g_data.sigquit == 1)
 		return (g_data.status);
