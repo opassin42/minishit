@@ -14,6 +14,7 @@
 
 t_data	g_data;
 
+
 char	*ft_shellname(void)
 {
 	char	*tmp;
@@ -25,6 +26,7 @@ char	*ft_shellname(void)
 	tmp = ft_strjoin(tmp, ":$>\e[0m");
 	return (tmp);
 }
+
 
 static int	ft_minishell(t_env *envp, char *s, int status)
 {
@@ -43,16 +45,19 @@ static int	ft_minishell(t_env *envp, char *s, int status)
 	ft_expander(&token, envp);
 	hash_quote(&token, -1);
 	cmd = ft_cmd(&token);
-	if (cmd)
+	if (cmd){
 		status = ft_exec(envp, cmd);
+	}
 	return (status);
 }
 
 int	ft_readline(t_env *envp, char *s)
 {
 	s = readline((const char *)ft_shellname());
-	if (!s)
-		return (printf("exit\n"), g_data.status = -420);
+	if (!s){
+		printf("exit\n");
+		return (-420);
+	}
 	if (s && *s && *s != '\n')
 		g_data.status = ft_minishell(envp, s, g_data.status);
 	return (g_data.status);
@@ -66,7 +71,7 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	s = NULL;
-	g_data = init_global();
+	init_global(&g_data);
 	if (isatty(STDIN_FILENO) == 0)
 		return (gc_free(), 0);
 	// signal(SIGINT, sig_handler);
@@ -79,7 +84,9 @@ int	main(int ac, char **av, char **env)
 		g_data.sigquit = 0;
 		signal(SIGINT, sig_handler);
 		signal(SIGQUIT, sig_handler);
+		printf("%d\n", g_data.status);
 		g_data.status = ft_readline(envp, s);
+		 // printf("%d\n", g_data.status);
 		if (g_data.status == -420)
 			return (gc_free(), 0);
 	}

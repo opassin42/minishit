@@ -71,6 +71,8 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), EXIT_FAILURE);
 	if (access(cmd->bin, F_OK))
 		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), 127);
+			printf("%d\n", g_data.status);
+
 	printf("bin: %s, name: %s\n", cmd->bin, cmd->arg[0]);
 	g_data.status = execve(cmd->bin, cmd->arg, envp->tab);
 	if (g_data.status == -1)
@@ -78,6 +80,7 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 	// ft_pipes(envp, cmd, nb_pipes);
 	return (g_data.status);
 }
+
 
 /*
 ** I have to change SHLVL->value

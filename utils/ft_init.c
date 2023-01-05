@@ -12,21 +12,22 @@
 
 #include "../include/minishell.h"
 
-t_data	init_global(void)
+void	init_global(t_data *g_data)
 {
-	t_data	g_data;
+	// t_data	g_data;
 
-	g_data.status = 0;
-	// g_data.sigint = 0;
-	// g_data.sigquit = 0;
-	g_data.pid = 0;
-	g_data.gc = 0;
-	g_data.keeprunning = 1;
-	return (g_data);
+	g_data->status = 0;
+	g_data->sigint = 0;
+	g_data->sigquit = 0;
+	g_data->pid = 0;
+	g_data->gc = 0;
+	g_data->keeprunning = 1;
+	// return (g_data);
 }
-
-void	init_sigflag(void)
+/*
+void	init_sigflag(t_data *g_data)
 {
-	g_data.sigint = 0;
-	g_data.sigquit = 0;
+	g_data->sigint = 0;
+	g_data->sigquit = 0;
 }
+*/

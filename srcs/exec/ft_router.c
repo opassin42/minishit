@@ -72,7 +72,7 @@ static char	**path_in_env(t_env *envp, char *var_name)
 int	ft_router(t_env *envp, t_cmd *cmd, int i)
 {
 	int			id;
-	int			status;
+	// int			status;
 	char		**path;
 	t_builtin	builtin[7];
 	int			prevfd;
@@ -82,7 +82,7 @@ int	ft_router(t_env *envp, t_cmd *cmd, int i)
 	id = which_builtin(builtin, cmd);
 	if (i != count_pipe(cmd) && pipe(cmd->fd) == -1)
 		return (error_pipe(prevfd), errno);
-	if (ft_fork(&prevfd, cmd) == -1)
+	if ((cmd->pid = ft_fork(&prevfd, cmd)) == -1)
 		return (errno);
 	if (cmd->pid == 0)
 	{
@@ -92,12 +92,12 @@ int	ft_router(t_env *envp, t_cmd *cmd, int i)
 			path = path_in_env(envp, "PATH");
 			if (!path)
 				return (-1);
-			status = ft_non_builtin(envp, cmd, path);
+			g_data.status = ft_non_builtin(envp, cmd, path);
 		}
 		else
-			status = ft_builtin_ret(envp, cmd, builtin, id);
+			g_data.status = ft_builtin_ret(envp, cmd, builtin, id);
 	}
 	else
-		pid_father(cmd, &prevfd, i);
-	return (status);
+		pid_father(cmd, &prevfd);
+	return (g_data.status);
 }

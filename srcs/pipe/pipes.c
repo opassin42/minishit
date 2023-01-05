@@ -59,16 +59,16 @@ int   ft_fork(int *prevfd, t_cmd *cmd)
 
 int ft_waitpid(int pid_last, t_cmd *cmd)
 {
-  int status;
+  // int status;
   int tmp;
   int ret;
 
-  tmp = wait(&status);
+  tmp = wait(&g_data.status);
   while (tmp != -1)
   {
     if (tmp == pid_last)
-      ret = status;
-    tmp = wait(&status);
+      ret = g_data.status;
+    tmp = wait(&g_data.status);
   }
   if (!cmd->infile || !cmd->outfile)
     return (1);

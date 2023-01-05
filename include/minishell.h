@@ -17,12 +17,12 @@
 # include "structs.h"
 # include "defines.h"
 
-extern t_data	g_data;
+extern t_data g_data;
 
 /******************************************************************************/
 /**********************************  INITS  ***********************************/
 /******************************************************************************/
-t_data	init_global(void);
+void	init_global(t_data *g_data);
 
 /******************************************************************************/
 /**********************************  LEXING  **********************************/
@@ -207,7 +207,7 @@ void	sig_handler(int dummy);
 /******************************************************************************/
 int	count_pipe(t_cmd *cmd);
 int	pid_child(t_cmd *cmd, t_env *envp, int prevfd, int i, int id);
-int	pid_father(t_cmd *cmd, int *prevfd, int i);
+int	pid_father(t_cmd *cmd, int *prevfd);
 int count_pipe(t_cmd *cmd);
 void  error_pid(int prevfd, t_cmd *cmd);
 void  error_pipe(int prevfd);
