@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/31 12:14:52 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/04 20:01:13 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,11 @@ void	ft_expander(t_list **token, t_env *envp);
 char	*find_value(t_env *envp, char *var_name);
 char	*expand(t_env *envp, char *s);
 char	*ft_recompose(t_env *envp, char *s);
-void	positive_hashing(char *s);
-void	hashing(char *s, int c, int factor);
+
+void	positive_hashing(char *s, int c);
+void	negative_hashing(char *s, int c);
+void	hash_token(t_list *token);
+void	hash_quote(t_list **token);
 
 int		ft_alnum_underscore(int c);
 int		check_quotes(char *s, int c);
@@ -104,7 +107,6 @@ void	ft_free_var(t_var *var);
 void	ft_delete_var(t_env *envp, char *var_name);
 
 /* Export*/
-// int		is_valid_name(char *str);
 char	*split_name(t_cmd *cmd, int i);
 char	*split_value(t_cmd *cmd, int i);
 t_var	*ft_new_var_env(t_cmd *cmd, int i);
@@ -112,10 +114,9 @@ int		ft_export(t_env *envp, t_cmd *cmd);
 void	ft_export_env(t_var *var);
 
 /* Exec */
-void	hash_token(t_list *token);
-void	hash_quote(t_list **token, int flag);
 
 void	*make_cmd(t_list *token);
+int		check_cmd(char *s);
 void	*ft_cmd(t_list **token);
 
 t_cmd	*ft_new_cmd(t_list *token);

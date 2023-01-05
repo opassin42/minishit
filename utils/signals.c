@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/28 21:16:49 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/05 19:13:21 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	child_handler(int sig)
 {
 	if (sig == SIGQUIT)
 	{
-		ft_putstr_fd("Quit: (core dumped)\n", 2);
+		ft_putstr_fd("(core dumped)\n", 2);
 		g_data.status = 131;
 		g_data.sigquit = 1;
 	}

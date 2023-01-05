@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:45:01 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/31 13:50:12 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:38:25 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char	*expand(t_env *envp, char *s)
 		var_val = find_value(envp, name);
 	if (!var_val)
 		return (ft_strdup(""));
-	hashing(var_val, ' ', -1);
+	negative_hashing(var_val, ' ');
 	return (var_val);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/31 13:46:14 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:43:28 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_data	g_data;
 
-char	*ft_shellname(void)
+static char	*ft_shellname(void)
 {
 	char	*tmp;
 
@@ -26,25 +26,17 @@ char	*ft_shellname(void)
 	return (tmp);
 }
 
-// void	*definitive_value_change(char *s)
-// {
-// 	if (!s)
-// 		return (NULL);
-// 	if (*s == ' ' || *s == '\t')
-// 	{
-// 		if (*s == ' ')
-// 			++s;
-// 		else if (*s == '\t')
-// 			*s = ' ';
-// 		while (*s == ' ')
-// 			++s;
-// 	}
-// 	while (*s)
-// 	{
-		
-// 		++s;	
-// 	}
-// }
+static void	hash_var_value(t_var **var)
+{
+	t_var	*tmp;
+
+	tmp = *var;
+	while (tmp)
+	{
+		positive_hashing(tmp->value, 0);
+		tmp = tmp->next;
+	}
+}
 
 static int	ft_minishell(t_env *envp, char *s, int status)
 {
@@ -61,8 +53,7 @@ static int	ft_minishell(t_env *envp, char *s, int status)
 	if (status)
 		return (status);
 	ft_expander(&token, envp);
-	hash_quote(&token, -1);
-	//Have to change the token->val RIGHT HERE ; depending on quote flag HERE
+	hash_quote(&token);
 	cmd = ft_cmd(&token);
 	if (cmd)
 	{
@@ -73,13 +64,17 @@ static int	ft_minishell(t_env *envp, char *s, int status)
 	return (status);
 }
 
-int	ft_readline(t_env *envp, char *s)
+static int	ft_readline(t_env *envp, char *s)
 {
 	s = readline((const char *)ft_shellname());
 	if (!s)
 		return (printf("exit\n"), g_data.status = -420);
 	if (s && *s && *s != '\n')
+	{
+		if (envp->var)
+			hash_var_value(&envp->var);
 		g_data.status = ft_minishell(envp, s, g_data.status);
+	}
 	return (g_data.status);
 }
 

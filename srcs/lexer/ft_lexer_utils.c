@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 06:36:46 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/31 02:53:49 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:37:15 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	ft_flag_char(int c, char *m_char)
 
 /*
 ** Seems like i have some invalid reead of size 1
-** Because of this function ??
 */
 void	*ft_meta_quotes(char *s, int c)
 {

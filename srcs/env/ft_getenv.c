@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 02:41:11 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/31 14:29:42 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:56:30 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,49 +55,24 @@ static t_var	*init_var(t_list **env_list)
 	return ((t_var *)var);
 }
 
-void	*init_shlvl(t_env *envp)
+static void	init_shlvl(t_env *envp)
 {
 	t_var	*var;
 
 	var = envp->var;
+	if (!var)
+		return ;
 	while (var)
 	{
 		if (!ft_strcmp(var->name, "SHLVL"))
-			return (var->value = "42");
+		{
+			var->value = "42";
+			return ;
+		}
 		var = var->next;
 	}
-	return (NULL);
+	return ;
 }
-
-// static t_var	*no_env(void)
-// {
-// 	char	buff[PATH_MAX];
-// 	t_var	*pwd;
-// 	t_var	*path;
-// 	t_var	*shlvl;
-
-// 	if (getcwd(buff, sizeof(buff)) == NULL)
-// 		return (NULL);
-// 	shlvl = push_top(&g_data.gc, sizeof(t_var));
-// 	if (!shlvl)
-// 		return (gc_free(), NULL);
-// 	shlvl->name = "SHLVL";
-// 	shlvl->value = "42";
-// 	path = push_top(&g_data.gc, sizeof(t_var));
-// 	if (!path)
-// 		return (gc_free(), NULL);
-// 	path->name = "PATH";
-// 	path->value = PATH_VALUE;
-// 	ft_var_addback(&shlvl, path);
-// 	pwd = push_top(&g_data.gc, sizeof(t_var));
-// 	if (!pwd)
-// 		return (gc_free(), NULL);
-// 	pwd->name = "PWD";
-// 	pwd->value = ft_strdup(buff);
-// 	if (!pwd->value)
-// 		return (NULL);
-// 	return (ft_var_addback(&shlvl, pwd), shlvl);
-// }
 
 t_env	*ft_getenv(char **env)
 {
@@ -114,5 +89,5 @@ t_env	*ft_getenv(char **env)
 	envp->var = init_var(&envp->list);
 	if (!envp->var)
 		return (NULL);
-	return (envp);
+	return (init_shlvl(envp), envp);
 }
