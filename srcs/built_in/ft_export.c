@@ -31,7 +31,7 @@ char	*split_name(t_cmd *cmd, int i)
 	char	*str2;
 	size_t	name_size;
 
-	if (!cmd->param)
+	if (!cmd || !cmd->param)
 		return (NULL);
 	str = cmd->param[i];
 	str2 = ft_strchr(str, '=');
@@ -79,6 +79,8 @@ int	ft_export(t_env *envp, t_cmd *cmd)
 	i = 0;
 	if (cmd)
 		nb_var = get_nb_var(cmd);
+	else
+		return (EXIT_FAILURE);
 	if (cmd->param != NULL)
 	{
 		ft_export_env(envp->var);

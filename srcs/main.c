@@ -53,6 +53,7 @@ static int	ft_minishell(t_env *envp, char *s, int status)
 
 int	ft_readline(t_env *envp, char *s)
 {
+
 	s = readline((const char *)ft_shellname());
 	if (!s){
 		printf("exit\n");
@@ -60,6 +61,7 @@ int	ft_readline(t_env *envp, char *s)
 	}
 	if (s && *s && *s != '\n')
 		g_data.status = ft_minishell(envp, s, g_data.status);
+	g_data.status = -420;
 	return (g_data.status);
 }
 
@@ -72,12 +74,15 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	s = NULL;
 	init_global(&g_data);
+	g_data.status = 0;
 	if (isatty(STDIN_FILENO) == 0)
 		return (gc_free(), 0);
 	// signal(SIGINT, sig_handler);
 	// signal(SIGQUIT, SIG_IGN);
 	if (*env)
 		envp = ft_getenv(env);
+	else
+		envp = NULL;
 	while (g_data.keeprunning)
 	{
 		g_data.sigint = 0;

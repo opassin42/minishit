@@ -16,6 +16,7 @@ int	rd_in(t_cmd *cmd)
 {
 	int	infd;
 
+	infd = 0;
 	if (cmd->hdoc)
 		printf("heredoc detected\n");
 	else
