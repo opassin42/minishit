@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2022/12/31 15:11:16 by ccouliba         ###   ########.fr        #
+#    Updated: 2023/01/06 22:41:30 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,8 +74,8 @@ $(NAME): $(OBJS) #$(OBJS_D)
 		@echo "[$(_BLUE)!$(_END)] Rules :\t[$(_BLUE)all$(_END)] [$(_BLUE)clean$(_END)] [$(_BLUE)fclean$(_END)] [$(_BLUE)re$(_END)] [$(_BLUE)leak$(_END)] [$(_BLUE)debug$(_END)]"
 		@echo -n "\n"
 		$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lreadline
-		@echo "[$(_GREEN)!$(_END)] Compilation ... 	  [$(_BK_GREEN)SUCCESS$(_END)]"
-		@echo "[$(_GREEN)!$(_END)] Creating .out ... 	  [$(_BK_GREEN)SUCCESS$(_END)]"
+		@echo "[$(_GREEN)!$(_END)] Compilation ... 	  [$(_GREEN)SUCCESS$(_END)]"
+		@echo "[$(_GREEN)!$(_END)] Creating .out ... 	  [$(_GREEN)SUCCESS$(_END)]"
 		@bash .script_bar.sh
 		@echo "[$(_YELLOW)!$(_END)] Exec name :		[$(_YELLOW)$(NAME)$(_END)]"
 
@@ -85,13 +85,13 @@ $(NAME): $(OBJS) #$(OBJS_D)
 
 clean:
 	@rm -f $(OBJS)
-	@echo "[$(_RED)!$(_END)] Removing objects ...  [$(_BK_GREEN)SUCCESS$(_END)]"
+	@echo "[$(_RED)!$(_END)] Removing objects ...  [$(_GREEN)SUCCESS$(_END)]"
 # rm -f $(OBJS_D)
 # rm -f *.o
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "[$(_RED)!$(_END)] Removing .out ...	  [$(_BK_GREEN)SUCCESS$(_END)]"
+	@echo "[$(_RED)!$(_END)] Removing .out ...	  [$(_GREEN)SUCCESS$(_END)]"
 
 re: fclean all
 
@@ -109,13 +109,13 @@ gitt: fclean
 	@echo "\n"
 	@echo "				$(_BG_CYAN)GIT FEATURES$(_END)\n"
 	git add . 
-	@echo "[$(_GREEN)!$(_END)] Adding files ... 	  [$(_BK_GREEN)SUCCESS$(_END)]"
-	@echo "[$(_RED)!$(_END)] Committing ... 	  [$(_RED)  FAIL $(_END)]"
+	@echo "[$(_GREEN)!$(_END)] Adding files ... 	  [$(_GREEN)SUCCESS$(_END)]"
+	@echo "[$(_RED)!$(_END)] Committing ... 	  [$(_BK_RED)  FAIL $(_END)]"
 	@read -p "--> Need a name to commit (one word)&> " var
 	git commit -m var
-	@echo "[$(_GREEN)!$(_END)] Committing ... 	  [$(_BK_GREEN)SUCCESS$(_END)]\n"
+	@echo "[$(_GREEN)!$(_END)] Committing ... 	  [$(_GREEN)SUCCESS$(_END)]\n"
 	git push
-	@echo "[$(_GREEN)!$(_END)] Pushing :		    [$(_BK_GREEN)SUCCESS$(_END)]\n"
+	@echo "[$(_GREEN)!$(_END)] Pushing :		    [$(_GREEN)SUCCESS$(_END)]\n"
 	@bash .script_bar.sh
 	@echo "--> Repo up to pull or merge"
 
