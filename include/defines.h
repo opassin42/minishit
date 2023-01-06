@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:52 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/31 14:41:18 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/06 20:42:00 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
 # define FAIL -1
 # define SUCCESS 0
 
-# define ERRNO_1 "syntax error near unexpected token"
-# define ERRNO_2 "command not found"
-# define ERRNO_3 "no such file or directory"
+# define ERRNO_1 "Syntax error near unexpected token"
+# define ERRNO_2 "Command not found"
+# define ERRNO_3 "No such file or directory"
 # define ERRNO_ENV "There is no printable environment"
 
 # define PATH_VALUE "/mnt/nfs/homes/ccouliba/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"

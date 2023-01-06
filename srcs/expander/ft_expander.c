@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:45:01 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/04 17:38:25 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/06 18:04:41 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,10 @@ char	*find_value(t_env *envp, char *var_name)
 	return (ft_strdup(""));
 }
 
+/*
+** $_ -> last arg given to a cmd ! If no arg, print build_in PATH
+** 
+*/
 char	*expand(t_env *envp, char *s)
 {
 	int		pos;

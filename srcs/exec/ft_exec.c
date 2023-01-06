@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/04 20:00:54 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/06 20:43:05 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,9 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path)
 	if (!path)
 		return (EXIT_FAILURE);
 	cmd->bin = binary_file(cmd, path);
-	if (!cmd->bin || access(cmd->bin, F_OK | X_OK) != 0 || check_cmd(cmd->name))
+	if (check_cmd(cmd->name))
+		return (cmd_error(cmd->name, ERRNO_3, 2, ft_putstr_fd), 127);
+	if (!cmd->bin || access(cmd->bin, F_OK | X_OK) != 0)
 		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), 127);
 	p_child(envp, cmd);
 	return (g_data.status);

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:35:41 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/05 19:22:11 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/05 19:49:46 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	p_father(t_cmd *cmd)
 
 	i = 0;
 	// signal(SIGINT, sig_handler);
-	signal(SIGQUIT, SIG_IGN);
+	// signal(SIGQUIT, sig_handler);
 	while (i < (count_pipe(cmd) + 1))
 	{
 		waitpid(g_data.pid, &g_data.status, 0);
@@ -67,8 +67,8 @@ void	p_child(t_env *envp, t_cmd *cmd)
 		g_data.pid = fork();
 		if (g_data.pid == 0)
 		{
-			signal(SIGINT, SIG_DFL);
-			signal(SIGQUIT, sig_handler);
+			signal(SIGINT, sig_handler);
+			signal(SIGQUIT, SIG_DFL);
 			if (i != 0)
 				dup2(cmd->fd_in, STDIN_FILENO);
 			if ((i + 1) != count_pipe(cmd))

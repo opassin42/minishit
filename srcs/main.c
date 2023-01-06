@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/04 17:43:28 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/06 20:37:22 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static void	hash_var_value(t_var **var)
 	tmp = *var;
 	while (tmp)
 	{
-		positive_hashing(tmp->value, 0);
+		if (tmp && tmp->value && *tmp->value)
+			positive_hashing(tmp->value, 0);
 		tmp = tmp->next;
 	}
 }
@@ -71,7 +72,7 @@ static int	ft_readline(t_env *envp, char *s)
 		return (printf("exit\n"), g_data.status = -420);
 	if (s && *s && *s != '\n')
 	{
-		if (envp->var)
+		if (envp->var && envp->var->value)
 			hash_var_value(&envp->var);
 		g_data.status = ft_minishell(envp, s, g_data.status);
 	}
