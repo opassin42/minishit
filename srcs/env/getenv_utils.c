@@ -6,36 +6,11 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 03:28:46 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/07 00:55:24 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/07 04:39:29 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-char	**when_no_env(void)
-{
-	char	*tmp;
-	char	**env;
-
-	env = (char **)push_top(&g_data.gc, sizeof(char *) * 3);
-	if (!env)
-		return (gc_free(), (char **) NULL);
-	tmp = ft_strjoin("PWD=", get_pwd());
-	if (!tmp)
-		return ((char **) NULL);
-	*env = ft_strdup(tmp);
-	if (!*env)
-		return ((char **) NULL);
-	tmp = NULL;
-	tmp = ft_strjoin("SHLVL=", "42");
-	if (!tmp)
-		return ((char **) NULL);
-	*(env + 1) = ft_strdup(tmp);
-	if (!*(env + 1))
-		return ((char **) NULL);
-	*(env + 2) = 0;
-	return (env);
-}
 
 char	*ft_var_name(char *s)
 {
@@ -92,4 +67,29 @@ void	ft_var_addback(t_var **var, t_var *new_var)
 		else
 			*var = new_var;
 	}
+}
+
+char	**when_no_env(void)
+{
+	char	*tmp;
+	char	**env;
+
+	env = (char **)push_top(&g_data.gc, sizeof(char *) * 3);
+	if (!env)
+		return (gc_free(), (char **) NULL);
+	tmp = ft_strjoin("PWD=", get_pwd());
+	if (!tmp)
+		return ((char **) NULL);
+	*env = ft_strdup(tmp);
+	if (!*env)
+		return ((char **) NULL);
+	tmp = NULL;
+	tmp = ft_strjoin("SHLVL=", "42");
+	if (!tmp)
+		return ((char **) NULL);
+	*(env + 1) = ft_strdup(tmp);
+	if (!*(env + 1))
+		return ((char **) NULL);
+	*(env + 2) = 0;
+	return (env);
 }

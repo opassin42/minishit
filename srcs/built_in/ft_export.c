@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/07 02:26:47 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/07 05:34:44 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,31 @@ t_var	*ft_new_var_env(t_cmd *cmd, int i)
 	return (var);
 }
 
+// void	change_var_value(t_env *envp, t_cmd *cmd, int i)
+// {
+// 	t_var	*var;
+// 	char	*name;
+
+// 	if (!envp)
+// 		return ;
+// 	var = envp->var;
+// 	if (!s)
+// 		return ;
+// 	name = split_name(cmd, i);
+// 	if (!name)
+// 		return ;
+// 	while (var)
+// 	{
+// 		if (!ft_strcmp(var->name, name))
+// 		{
+// 			var->value = split_value(cmd, i);
+// 			if (!var->value)
+// 				return ;
+// 		}
+// 		var = var->next;
+// 	}
+// }
+
 int	ft_export(t_env *envp, t_cmd *cmd)
 {
 	t_var	*var;
@@ -95,10 +120,11 @@ int	ft_export(t_env *envp, t_cmd *cmd)
 	{
 		if (envp->var)
 			var = envp->var;
-		// if (var->name)
-			// ft_delete_var(envp, var->name);
 	}
 	while (i < nb_var)
+	{
+		// change_value(envp, cmd, i);
 		ft_var_addback(&var, ft_new_var_env(cmd, i++));
+	}
 	return (0);
 }
