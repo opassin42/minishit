@@ -86,13 +86,12 @@ int	ft_router(t_env *envp, t_cmd *cmd, int i)
 		return (errno);
 	if (cmd->pid == 0)
 	{
-		pid_child(cmd, envp, prevfd, i, id);
 		if (id == -1)
 		{
 			path = path_in_env(envp, "PATH");
 			if (!path)
 				return (-1);
-			g_data.status = ft_non_builtin(envp, cmd, path);
+			g_data.status = ft_non_builtin(envp, cmd, path, prevfd, i, id);
 		}
 		else
 			g_data.status = ft_builtin_ret(envp, cmd, builtin, id);

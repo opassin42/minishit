@@ -34,14 +34,14 @@ void  error_pid(int prevfd, t_cmd *cmd)
     close(cmd->fd[0]);
     close(cmd->fd[1]);
   }
-  perror("");
+  perror("error_pid");
 }
 
 void  error_pipe(int prevfd)
 {
   if (prevfd)
     close(prevfd);
-  perror("");
+  perror("error_pipe");
 }
 
 

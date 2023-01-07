@@ -127,7 +127,8 @@ void	ft_cmd_addback(t_cmd **cmd, t_cmd *new_cmd);
 void	*join_token(t_list *token);
 char	**ft_malloc_double_p(t_list *token);
 
-int		ft_non_builtin(t_env *envp, t_cmd *cmd, char **path);
+// int		ft_non_builtin(t_env *envp, t_cmd *cmd, char **path);
+int		ft_non_builtin(t_env *envp, t_cmd *cmd, char **path, int prevfd, int i, int id);
 int		ft_router(t_env *envp, t_cmd *cmd, int i);
 int		ft_exec(t_env *envp, t_cmd *cmd);
 
