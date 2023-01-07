@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 02:41:11 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/02 16:56:30 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/06 23:43:26 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ static void	init_shlvl(t_env *envp)
 {
 	t_var	*var;
 
+	if (!envp)
+		return ;
 	var = envp->var;
 	if (!var)
 		return ;
@@ -80,6 +82,10 @@ t_env	*ft_getenv(char **env)
 
 	if (!env)
 		return (NULL);
+	{
+		// env = when_no_env();
+		// printf("*env = [%s]\n", *env);
+	}
 	envp = (t_env *)push_top(&g_data.gc, sizeof(t_env));
 	if (!envp)
 		return (gc_free(), NULL);

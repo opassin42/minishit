@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/06 20:37:22 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/07 00:08:01 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	hash_var_value(t_var **var)
 	tmp = *var;
 	while (tmp)
 	{
-		if (tmp && tmp->value && *tmp->value)
+		if (tmp->value)
 			positive_hashing(tmp->value, 0);
 		tmp = tmp->next;
 	}
@@ -67,12 +67,13 @@ static int	ft_minishell(t_env *envp, char *s, int status)
 
 static int	ft_readline(t_env *envp, char *s)
 {
-	s = readline((const char *)ft_shellname());
+	if (!s)
+		s = readline((const char *)ft_shellname());
 	if (!s)
 		return (printf("exit\n"), g_data.status = -420);
 	if (s && *s && *s != '\n')
 	{
-		if (envp->var && envp->var->value)
+		if (envp)
 			hash_var_value(&envp->var);
 		g_data.status = ft_minishell(envp, s, g_data.status);
 	}
@@ -90,6 +91,8 @@ int	main(int ac, char **av, char **env)
 	g_data = init_global();
 	if (isatty(STDIN_FILENO) == 0)
 		return (gc_free(), 0);
+	if (!*env)
+		env = when_no_env();
 	envp = ft_getenv(env);
 	while (g_data.keeprunning)
 	{

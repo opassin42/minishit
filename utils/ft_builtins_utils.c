@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtins_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: opassin <ccouliba@student.42.fr>  	        +#+  +:+       +#+        */
+/*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 00:38:26 by opassin           #+#    #+#             */
-/*   Updated: 2022/07/12 01:48:56 by opassin          ###   ########.fr       */
+/*   Updated: 2023/01/07 01:54:30 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  */
 int	ft_no_home(t_upvarenv *upvarenv)
 {
-	free(upvarenv);
+	(void)upvarenv;
 	printf("minishell: cd: HOME not set\n");
 	return (1);
 }
@@ -39,4 +39,16 @@ int	is_alphanum(t_upvarenv *upvarenv)
 		|| (upvarenv->path[0] == 126 && upvarenv->path[1] == 47))
 		return (1);
 	return (0);
+}
+
+void	update_env(t_env *envp, t_upvarenv *upvarenv, void (*f)())
+{
+	if (!ft_strcmp(upvarenv->path, "-")
+		|| !ft_strcmp(upvarenv->path, "--"))
+		f(upvarenv, envp, "OLDPWD", "PWD");
+	else if (upvarenv->path[0] == '/' || upvarenv->path[0] == '.'
+		|| (upvarenv->path[0] == '.' && upvarenv->path[1] == '.'))
+		f(upvarenv, envp, upvarenv->path, "PWD");
+	else if (is_alphanum(upvarenv))
+		f(upvarenv, envp, "PWD", "PWD");
 }

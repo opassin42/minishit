@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/31 14:40:37 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/07 02:26:47 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ char	*split_value(t_cmd *cmd, int i)
 	char	*str;
 	size_t	value_size;
 
+	if (!cmd->param[i])
+		return (NULL);
 	str = ft_strchr(cmd->param[i], '=');
 	if (str == NULL)
 		return (cmd->param[i]);
@@ -61,11 +63,15 @@ t_var	*ft_new_var_env(t_cmd *cmd, int i)
 	if (!var)
 		return (gc_free(), NULL);
 	var->name = split_name(cmd, i);
+	if (!var->name)
+		return (NULL);
 	if (is_valid_name(var->name) == 0)
 		return (NULL);
 	if (!ft_strcmp(var->name, cmd->param[i]))
 		++i;
 	var->value = split_value(cmd, i);
+	if (!var->value)
+		return (NULL);
 	var->next = NULL;
 	return (var);
 }
@@ -89,6 +95,8 @@ int	ft_export(t_env *envp, t_cmd *cmd)
 	{
 		if (envp->var)
 			var = envp->var;
+		// if (var->name)
+			// ft_delete_var(envp, var->name);
 	}
 	while (i < nb_var)
 		ft_var_addback(&var, ft_new_var_env(cmd, i++));

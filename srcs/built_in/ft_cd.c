@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 17:56:53 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/06 20:15:35 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/07 01:54:42 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,23 +110,18 @@ int	ft_cd(t_env *envp, t_cmd *cmd)
 
 	upvarenv = init_upvarenv();
 	if (!cmd->param || !ft_strcmp(*cmd->param, "~"))
+	{
+		if (get_in_env(envp, "HOME") == NULL)
+			return (ft_no_home(upvarenv));
 		ft_upenv(upvarenv, envp, "HOME", "PWD");
+	}
 	else
 	{
 		upvarenv->path = ft_strdup(*cmd->param);
 		if (ft_strlen(upvarenv->path) == 0)
 			return (ft_no_home(upvarenv));
 		else
-		{
-			if (!ft_strcmp(upvarenv->path, "-")
-				|| !ft_strcmp(upvarenv->path, "--"))
-				ft_upenv(upvarenv, envp, "OLDPWD", "PWD");
-			else if (upvarenv->path[0] == '/' || upvarenv->path[0] == '.'
-				|| (upvarenv->path[0] == '.' && upvarenv->path[1] == '.'))
-				ft_upenv(upvarenv, envp, upvarenv->path, "PWD");
-			else if (is_alphanum(upvarenv))
-				ft_upenv(upvarenv, envp, "PWD", "PWD");
-		}
+			update_env(envp, upvarenv, ft_upenv);
 	}
 	return ((int)ft_chdir(envp, upvarenv));
 }

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/04 20:01:13 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/07 01:54:13 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@ char	*get_in_env(t_env *envp, char *name);
 void	up_in_env(t_env *envp, char *var_name, char *s);
 t_env	*ft_getenv(char **env);
 
+char	**when_no_env(void);
 char	*ft_var_name(char *s);
 t_var	*ft_new_var(t_list *token);
 t_var	*ft_last_var(t_var *var);
 void	ft_var_addback(t_var **var, t_var *new_var);
-int		ft_size_of_env(t_var *var);
 
 /******************************************************************************/
 /*********************************  BUILT_IN  *********************************/
@@ -100,6 +100,7 @@ int		ft_exit(t_env *envp, t_cmd *cmd);
 char	*get_pwd(void);
 int		is_alphanum(t_upvarenv *upvarenv);
 int		ft_no_home(t_upvarenv *upvarenv);
+void	update_env(t_env *envp, t_upvarenv *upvarenv, void (*f)());
 
 /* Unset */
 int		get_nb_var(t_cmd *cmd);

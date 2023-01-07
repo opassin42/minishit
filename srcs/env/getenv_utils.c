@@ -6,11 +6,36 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 03:28:46 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/30 16:26:32 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/07 00:55:24 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+char	**when_no_env(void)
+{
+	char	*tmp;
+	char	**env;
+
+	env = (char **)push_top(&g_data.gc, sizeof(char *) * 3);
+	if (!env)
+		return (gc_free(), (char **) NULL);
+	tmp = ft_strjoin("PWD=", get_pwd());
+	if (!tmp)
+		return ((char **) NULL);
+	*env = ft_strdup(tmp);
+	if (!*env)
+		return ((char **) NULL);
+	tmp = NULL;
+	tmp = ft_strjoin("SHLVL=", "42");
+	if (!tmp)
+		return ((char **) NULL);
+	*(env + 1) = ft_strdup(tmp);
+	if (!*(env + 1))
+		return ((char **) NULL);
+	*(env + 2) = 0;
+	return (env);
+}
 
 char	*ft_var_name(char *s)
 {
@@ -67,21 +92,4 @@ void	ft_var_addback(t_var **var, t_var *new_var)
 		else
 			*var = new_var;
 	}
-}
-
-int	ft_size_of_env(t_var *var)
-{
-	int	i;
-
-	i = 0;
-	if (var)
-	{
-		i = 0;
-		while (var)
-		{
-			var = var->next;
-			++i;
-		}
-	}
-	return (i);
 }

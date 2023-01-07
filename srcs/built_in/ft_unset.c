@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:42:36 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/24 20:37:03 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/07 02:10:58 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	ft_free_var(t_var *var)
 {
 	if (var)
 	{
-		free(var->name);
-		free(var->value);
+		// free(var->name);
+		// free(var->value);
 		var->next = NULL;
 		var = NULL;
 	}

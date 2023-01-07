@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:40:17 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/10/28 17:10:43 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/07 01:19:52 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 */
 int	ft_no_home(t_upvarenv *upvarenv)
 {
-	free(upvarenv);
+	// free(upvarenv);
 	ft_putstr_fd("minishell: cd: HOME not set\n", 1);
 	return (1);
 }
@@ -30,7 +30,3 @@ int	is_alphanum(t_upvarenv *upvarenv)
 		return (1);
 	return (0);
 }
-
-/*
-**
-*/
