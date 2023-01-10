@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/07 05:34:44 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/07 21:05:08 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ int	ft_export(t_env *envp, t_cmd *cmd)
 	}
 	while (i < nb_var)
 	{
-		// change_value(envp, cmd, i);
 		ft_var_addback(&var, ft_new_var_env(cmd, i++));
 	}
 	return (0);
