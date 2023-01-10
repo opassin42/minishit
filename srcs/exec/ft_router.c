@@ -74,7 +74,6 @@ int	ft_router(t_env *envp, t_cmd *cmd)
 	int			id;
 	char		**path;
 	t_builtin	builtin[7];
-	// t_cmd		*prev;
 	int			prevfd;
 	int			i;
 
@@ -86,8 +85,6 @@ int	ft_router(t_env *envp, t_cmd *cmd)
 		id = which_builtin(builtin, cmd);
 		if (i != count_pipe(cmd) && pipe(cmd->fd) == -1)
 			return (error_pid(prevfd, cmd), errno);
-		// if ((cmd->pid = ft_fork(&prevfd, cmd)) == -1)
-		// 	return (errno);
 		cmd->pid = fork();
 		if (cmd->pid == -1)
 			return (error_pid(prevfd, cmd), errno);
@@ -105,7 +102,6 @@ int	ft_router(t_env *envp, t_cmd *cmd)
 		}
 		else if (pid_father(cmd, &prevfd, i) == -1)
 			return (EXIT_FAILURE);
-		// prev = cmd;
 		if (!cmd->next)
 			break;
 		cmd = cmd->next;

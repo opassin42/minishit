@@ -40,7 +40,7 @@ static int	excmd_last(t_cmd *cmd, t_env *envp, int prevfd)
 		return (close(fd), perror("last: dup2"), -1);
 	printf("bin: %s, arg: %s\n", cmd->bin, cmd->arg[0] );
 	if (execve(cmd->bin, cmd->arg, envp->tab) == -1)
-		return (perror("execve"), -1);
+		return (perror("execve"), exit(g_data.status), -1);
 	return (0);
 }
 
