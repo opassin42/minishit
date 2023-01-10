@@ -61,20 +61,13 @@ static char	*binary_file(t_cmd *cmd, char **path)
 
 int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path, int prevfd, int i, int id)
 {
-	// int		nb_pipes;
-
-	// nb_pipes = count_pipe(cmd);
 	if (!path)
 		return (EXIT_FAILURE);
 	cmd->bin = binary_file(cmd, path);
 	if (!cmd->bin)
 		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), EXIT_FAILURE);
 	if (access(cmd->bin, F_OK))
-		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), 127);
-	// g_data.status = execve(cmd->bin, cmd->arg, envp->tab);
-	// if (g_data.status == -1)
-	// 	return (ft_exit(envp, cmd));
-	// ft_pipes(envp, cmd, nb_pipes);
+		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), exit(127), 127);
 	return (pid_child(cmd, envp, prevfd, i, id));
 }
 
@@ -90,16 +83,8 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path, int prevfd, int i, int 
 int	ft_exec(t_env *envp, t_cmd *cmd)
 {
 	int	ret;
-	int i;
 
 	ret = 0;
-	i = -1;
-	while (cmd)
-	{
-		ret = ft_router(envp, cmd, ++i);
-		cmd = cmd->next;
-	}
-	if (cmd)
-		ft_waitpid(cmd->pid, cmd);
+	ret = ft_router(envp, cmd);
 	return (ret);
 }

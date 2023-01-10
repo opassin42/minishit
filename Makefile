@@ -90,6 +90,10 @@ fclean: clean
 
 re: fclean all
 
+gdb: re
+	@echo " GDB DEBUG"
+	@gdb ./$(NAME)
+
 leak: re
 	@echo "				$(_BG_CYAN)LEAK TEST$(_END) (valgrind)"
 	@valgrind --suppressions=.leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all --track-fds=yes ./$(NAME)

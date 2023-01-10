@@ -60,9 +60,8 @@ int	ft_readline(t_env *envp, char *s)
 		return (-420);
 	}
 	if (s && *s && *s != '\n')
-		g_data.status = ft_minishell(envp, s, g_data.status);
-	g_data.status = -420;
-	return (g_data.status);
+		return (ft_minishell(envp, s, g_data.status));
+	return (127);
 }
 
 int	main(int ac, char **av, char **env)
@@ -89,11 +88,10 @@ int	main(int ac, char **av, char **env)
 		g_data.sigquit = 0;
 		signal(SIGINT, sig_handler);
 		signal(SIGQUIT, sig_handler);
-		printf("%d\n", g_data.status);
 		g_data.status = ft_readline(envp, s);
 		 // printf("%d\n", g_data.status);
-		if (g_data.status == -420)
-			return (gc_free(), 0);
+		// if (g_data.status == -420)
+		// 	return (gc_free(), 0);
 	}
 	return (gc_free(), 0);
 }

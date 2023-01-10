@@ -69,34 +69,48 @@ static char	**path_in_env(t_env *envp, char *var_name)
 	return (path);
 }
 
-int	ft_router(t_env *envp, t_cmd *cmd, int i)
+int	ft_router(t_env *envp, t_cmd *cmd)
 {
 	int			id;
-	// int			status;
 	char		**path;
 	t_builtin	builtin[7];
+	// t_cmd		*prev;
 	int			prevfd;
+	int			i;
 
 	prevfd = 0;
+	i = 0;
 	ft_init_t_builtin(builtin);
-	id = which_builtin(builtin, cmd);
-	if (i != count_pipe(cmd) && pipe(cmd->fd) == -1)
-		return (error_pipe(prevfd), errno);
-	if ((cmd->pid = ft_fork(&prevfd, cmd)) == -1)
-		return (errno);
-	if (cmd->pid == 0)
+	while (i <= count_pipe(cmd))
 	{
-		if (id == -1)
+		id = which_builtin(builtin, cmd);
+		if (i != count_pipe(cmd) && pipe(cmd->fd) == -1)
+			return (error_pid(prevfd, cmd), errno);
+		// if ((cmd->pid = ft_fork(&prevfd, cmd)) == -1)
+		// 	return (errno);
+		cmd->pid = fork();
+		if (cmd->pid == -1)
+			return (error_pid(prevfd, cmd), errno);
+		else if (cmd->pid == 0)
 		{
-			path = path_in_env(envp, "PATH");
-			if (!path)
-				return (-1);
-			g_data.status = ft_non_builtin(envp, cmd, path, prevfd, i, id);
+			if (id == -1)
+			{
+				path = path_in_env(envp, "PATH");
+				if (!path)
+					return (-1);
+				g_data.status = ft_non_builtin(envp, cmd, path, prevfd, i, id);
+			}
+			else
+				g_data.status = ft_builtin_ret(envp, cmd, builtin, id);
 		}
-		else
-			g_data.status = ft_builtin_ret(envp, cmd, builtin, id);
+		else if (pid_father(cmd, &prevfd, i) == -1)
+			return (EXIT_FAILURE);
+		// prev = cmd;
+		if (!cmd->next)
+			break;
+		cmd = cmd->next;
+		++i;
 	}
-	else
-		pid_father(cmd, &prevfd);
+	ft_waitpid(cmd->pid, cmd);
 	return (g_data.status);
 }

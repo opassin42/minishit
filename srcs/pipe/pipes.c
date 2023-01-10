@@ -59,20 +59,46 @@ int   ft_fork(int *prevfd, t_cmd *cmd)
 
 int ft_waitpid(int pid_last, t_cmd *cmd)
 {
-  // int status;
-  int tmp;
-  int ret;
+	int i;
+	int status;
+	int w;
 
-  tmp = wait(&g_data.status);
-  while (tmp != -1)
-  {
-    if (tmp == pid_last)
-      ret = g_data.status;
-    tmp = wait(&g_data.status);
-  }
-  if (!cmd->infile || !cmd->outfile)
-    return (1);
-  return (WEXITSTATUS(ret));
+	i = 0;
+	while (i <= count_pipe(cmd))
+	{
+		w = waitpid(pid_last, &status, 0);
+		printf("status = %d\n", status);
+		if (w == -1)
+		{
+			perror("waitpid");
+			exit(EXIT_FAILURE);
+		}
+		if (WIFEXITED(status))
+			printf("terminé, code=%d\n", WEXITSTATUS(status));
+		else if (WIFSIGNALED(status))
+			printf("tué par le signal %d\n", WTERMSIG(status));
+		else if (WIFSTOPPED(status))
+			printf("arrêté par le signal %d\n", WSTOPSIG(status));
+		else if (WIFCONTINUED(status))
+			printf("relancé\n");
+		cmd = cmd->next;
+		i++;
+	}
+	return (0);
+  // // int status;
+  // int tmp;
+  // int ret;
+
+  // tmp = wait(&g_data.status);
+  // while (tmp != -1)
+  // {
+  //   if (tmp == pid_last)
+  //     ret = g_data.status;
+  //   tmp = wait(&g_data.status);
+  // }
+  // if (!cmd->infile || !cmd->outfile)
+  //   return (1);
+  // return (WEXITSTATUS(ret));
 }
 
 
