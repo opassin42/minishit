@@ -1,18 +1,0 @@
-i = 0
-bin: /usr/bin/ls, arg: ls
-i = 1
-bin: /usr/bin/wc, arg: wc
-include
-Makefile
-minishell
-srcs
-toto
-txt
-utils
-status = 0
-terminé, code=0
-[?2004h[0;32m/mnt/nfs/homes/opassin/42/preprod_minishell:$>[0m      0       0       0
-
-[?2004l[?2004h[0;32m/mnt/nfs/homes/opassin/42/preprod_minishell:$>[0m^C[?2004l
-[0;32m/mnt/nfs/homes/opassin/42/preprod_minishell:$>[0m[?2004h^C[?2004l
-[0;32m/mnt/nfs/homes/opassin/42/preprod_minishell:$>[0m[?2004h^Z[?2004l
