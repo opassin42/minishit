@@ -6,13 +6,13 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 02:32:23 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/27 08:08:38 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/10 21:16:46 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	ft_init_cmd_struct(t_cmd *cmd, char *key)
+static void	init_cmd_struct(t_cmd *cmd, char *key)
 {
 	cmd->id = 0;
 	cmd->pid = 0;
@@ -31,32 +31,6 @@ static void	ft_init_cmd_struct(t_cmd *cmd, char *key)
 	cmd->heredoc = (char **) NULL;
 }
 
-static void	init_rd(t_cmd *cmd, t_list *token)
-{
-	if (!ft_strcmp((char *)token->val, "<")
-		|| !ft_strcmp((char *)token->val, "<<"))
-	{
-		cmd->infile = (char *)token->next->val;
-		if (!ft_strcmp((char *)token->val, "<<"))
-			cmd->hdoc = 1;
-		else
-			cmd->hdoc = 0;
-		if (rd_in(cmd) != EXIT_SUCCESS)
-			printf("erreur redir in\n");
-	}
-	else if (!ft_strcmp((char *)token->val, ">")
-		|| !ft_strcmp((char *)token->val, ">>"))
-	{
-		cmd->outfile = (char *)token->next->val;
-		if (!ft_strcmp((char *)token->val, ">>"))
-			cmd->append = 1;
-		else
-			cmd->append = 0;
-		if (rd_out(cmd) != EXIT_SUCCESS)
-			printf("erreur redir out\n");
-	}
-}
-
 static void	*init_arg(t_list *token, t_cmd *cmd)
 {
 	t_list	*arg;
@@ -73,14 +47,14 @@ static void	*init_arg(t_list *token, t_cmd *cmd)
 			if (!token)
 				break ;
 		}
-		if (token->type == PIPE)
+		if (token && token->type == PIPE)
 			break ;
 		token = token->next;
 	}
 	return ((void *)arg);
 }
 
-static void	param_n_arg(t_list *token, t_cmd *cmd)
+static void	init_param_arg(t_list *token, t_cmd *cmd)
 {
 	t_list	*arg;
 	t_list	*param;
@@ -98,6 +72,34 @@ static void	param_n_arg(t_list *token, t_cmd *cmd)
 	return ;
 }
 
+void	*start_with_rd(t_list **token, t_cmd *cmd)
+{
+	int		rd;
+	char	*file;
+	t_list	*tmp;
+
+	rd = -1;
+	tmp = *token;
+	if (tmp && tmp->type == RD)
+	{
+		rd = witch_rd(tmp->val);
+		tmp = tmp->next;
+		if (!tmp)
+			return (NULL);
+		file = tmp->val;
+		tmp = tmp->next;
+		if (tmp && tmp->type == WORD)
+		{
+			cmd = ft_new_cmd(tmp);
+			if (!cmd)
+				return (NULL);
+		}
+		else
+			return (NULL);
+	}
+	return ((void *)cmd);
+}
+
 void	*make_cmd(t_list *token)
 {
 	t_cmd	*cmd;
@@ -107,8 +109,8 @@ void	*make_cmd(t_list *token)
 		cmd = ft_new_cmd(token);
 		if (!cmd)
 			return (NULL);
-		ft_init_cmd_struct(cmd, token->val);
-		param_n_arg(token, cmd);
+		init_cmd_struct(cmd, token->val);
+		init_param_arg(token, cmd);
 	}
 	else
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/07 21:05:08 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/10 16:39:42 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,31 +76,11 @@ t_var	*ft_new_var_env(t_cmd *cmd, int i)
 	return (var);
 }
 
-// void	change_var_value(t_env *envp, t_cmd *cmd, int i)
-// {
-// 	t_var	*var;
-// 	char	*name;
-
-// 	if (!envp)
-// 		return ;
-// 	var = envp->var;
-// 	if (!s)
-// 		return ;
-// 	name = split_name(cmd, i);
-// 	if (!name)
-// 		return ;
-// 	while (var)
-// 	{
-// 		if (!ft_strcmp(var->name, name))
-// 		{
-// 			var->value = split_value(cmd, i);
-// 			if (!var->value)
-// 				return ;
-// 		}
-// 		var = var->next;
-// 	}
-// }
-
+/*
+** This version of export does not crash an existing value
+** Before adding it to the env
+** Just have to check if the name value already exists 
+*/
 int	ft_export(t_env *envp, t_cmd *cmd)
 {
 	t_var	*var;

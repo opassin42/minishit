@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:28 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/30 19:40:34 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/10 16:53:13 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	**ft_malloc_double_p(t_list *token)
 	{
 		param[i] = ft_strdup(token->val);
 		if (!param[i])
-			return (gc_free(), (char **) NULL);
+			return ((char **) NULL);
 		token = token->next;
 		++i;
 	}
