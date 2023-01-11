@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/10 20:47:27 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/11 04:28:27 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	ft_export_env(t_var *var);
 /* Exec */
 
 void	*make_cmd(t_list *token);
+void	*first_cmd(t_list **token);
 int		check_cmd(char *s);
 void	*ft_cmd(t_list **token);
 
@@ -130,7 +131,7 @@ int		ft_non_builtin(t_env *envp, t_cmd *cmd, char **path);
 int		ft_router(t_env *envp, t_cmd *cmd);
 int		ft_exec(t_env *envp, t_cmd *cmd);
 
-int		witch_rd(char *val);
+int		which_rd(char *val);
 void	init_rd(t_cmd *cmd, t_list *token);
 
 /******************************************************************************/

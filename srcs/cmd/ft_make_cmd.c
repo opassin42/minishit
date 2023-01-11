@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 02:32:23 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/10 21:16:46 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/11 06:33:28 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	*init_arg(t_list *token, t_cmd *cmd)
 	{
 		if (token->type == WORD)
 			ft_lstadd_back(&arg, ft_lstnew(token->val));
-		else if (token->type == RD)
+		if (token->type == RD)
 		{
 			init_rd(cmd, token);
 			token = token->next;
@@ -72,32 +72,38 @@ static void	init_param_arg(t_list *token, t_cmd *cmd)
 	return ;
 }
 
-void	*start_with_rd(t_list **token, t_cmd *cmd)
+/*
+** Get the address of the token
+** How to create the first cmd beginning with RD
+** Returns (void *)cmd
+*/
+void	*first_cmd(t_list **token)
 {
-	int		rd;
-	char	*file;
+	t_list	*rd;
 	t_list	*tmp;
+	t_cmd	*cmd;
 
-	rd = -1;
 	tmp = *token;
 	if (tmp && tmp->type == RD)
 	{
-		rd = witch_rd(tmp->val);
-		tmp = tmp->next;
-		if (!tmp)
-			return (NULL);
-		file = tmp->val;
+		rd = tmp;
 		tmp = tmp->next;
 		if (tmp && tmp->type == WORD)
 		{
-			cmd = ft_new_cmd(tmp);
-			if (!cmd)
-				return (NULL);
+			tmp = tmp->next;
+			if (tmp)
+			{
+				cmd = ft_new_cmd(tmp);
+				if (!cmd)
+					return (NULL);
+				init_cmd_struct(cmd, tmp->val);
+				init_rd(cmd, rd);
+				init_param_arg(tmp, cmd);
+				return ((void *)cmd);
+			}
 		}
-		else
-			return (NULL);
 	}
-	return ((void *)cmd);
+	return (NULL);
 }
 
 void	*make_cmd(t_list *token)

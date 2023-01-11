@@ -6,13 +6,13 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 05:04:34 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/10 18:26:29 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/11 06:32:22 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	witch_rd(char *val)
+int	whith_rd(char *val)
 {
 	if (!ft_strcmp(val, "<"))
 		return (0);

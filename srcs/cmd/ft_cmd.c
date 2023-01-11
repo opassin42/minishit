@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:30 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/30 23:54:28 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/11 06:29:12 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,11 @@ void	*ft_cmd(t_list **token)
 	if (!tmp)
 		return (NULL);
 	hash_token(tmp);
-	cmd = (t_cmd *)make_cmd(tmp);
+	// cmd = (t_cmd *)make_cmd(tmp);
+	// if (tmp->type == RD)
+	// 	cmd = (t_cmd *)first_cmd(&tmp);
+	// else
+		cmd = (t_cmd *)make_cmd(tmp);
 	if (!cmd)
 		return (NULL);
 	while (tmp)
