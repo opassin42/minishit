@@ -81,9 +81,13 @@ int	main(int ac, char **av, char **env)
 	signal(SIGQUIT, sig_handler);
 	g_data.sigint = 0;
 	g_data.sigquit = 0;
+//	int z = 0;
 	while (g_data.keeprunning)
 	{
 		s = readline((const char *)ft_shellname());
+		//z++;
+		/*if (z > 1)
+			s = readline((const char *)ft_shellname());*/
 		if (s && *s != '\n')
 			ft_minishell(envp, s, g_data.status);
 		if (g_data.status == 127)

@@ -26,7 +26,7 @@ static void	ft_init_t_builtin(t_builtin *builtin)
 	builtin[4].f = ft_unset;
 	builtin[5].key = "export";
 	builtin[5].f = ft_export;
-	builtin[6].key = "exit";
+	builtin[6].key = "exit";   
 	builtin[6].f = ft_exit;
 }
 
