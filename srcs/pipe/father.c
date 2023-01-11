@@ -16,11 +16,13 @@ int pid_father(t_cmd *cmd, int *prevfd, int i)
 	{
 		close(cmd->fd[0]);
 		close(cmd->fd[1]);
-		close(*prevfd);
+		if (*prevfd != 0)
+			close(*prevfd);
 	}
 	else
 	{
-		close(*prevfd);
+		if (*prevfd != 0)
+			close(*prevfd);
 		*prevfd = dup(cmd->fd[0]);
 		// close(cmd->fd[0]);
 		// close(cmd->fd[1]);

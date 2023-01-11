@@ -20,8 +20,8 @@ char	*ft_shellname(void)
 	char	*tmp;
 
 	tmp = get_pwd();
-	dup2(STDIN_FILENO, 0);
-	dup2(STDIN_FILENO, 1);
+	// dup2(STDIN_FILENO, 0);
+	// dup2(STDIN_FILENO, 1);
 	tmp = ft_strjoin("\e[0;32m", tmp);
 	tmp = ft_strjoin(tmp, ":$>\e[0m");
 	return (tmp);
@@ -81,13 +81,12 @@ int	main(int ac, char **av, char **env)
 	signal(SIGQUIT, sig_handler);
 	g_data.sigint = 0;
 	g_data.sigquit = 0;
-//	int z = 0;
 	while (g_data.keeprunning)
 	{
+		printf("%d\n", g_data.keeprunning);
 		s = readline((const char *)ft_shellname());
-		//z++;
-		/*if (z > 1)
-			s = readline((const char *)ft_shellname());*/
+		if (!s)
+			printf("empty return\n");
 		if (s && *s != '\n')
 			ft_minishell(envp, s, g_data.status);
 		if (g_data.status == 127)

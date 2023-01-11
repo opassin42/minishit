@@ -83,7 +83,7 @@ int	ft_router(t_env *envp, t_cmd *cmd)
 	while (i <= count_pipe(cmd))
 	{
 		id = which_builtin(builtin, cmd);
-		if (i != count_pipe(cmd) && pipe(cmd->fd) == -1)
+		if (i != count_pipe(cmd) || pipe(cmd->fd) == -1)
 			return (error_pid(prevfd, cmd), errno);
 		cmd->pid = fork();
 		if (cmd->pid == -1)
