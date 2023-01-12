@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 00:51:18 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/01 04:08:54 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/12 20:00:15 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,26 @@ static int	ft_check_last_token(t_list *token)
 	return (EXIT_SUCCESS);
 }
 
+/*
+** Check if the modif does not create another error
+*/
 static int	ft_check_first_token(t_list *token)
 {
 	char	*s;
 
 	s = token->val;
-	if (token->type == PIPE || !ft_strcmp(s, "<"))
+	if (token->type == PIPE) // || !ft_strcmp(s, "<"))
 	{
 		if (token->type == PIPE)
 		{
 			syntax_error((char *)token->val, ERRNO_1, 2, ft_putstr_fd);
 			return (EXIT_FAILURE);
 		}
-		else if (!ft_strcmp(s, "<"))
-		{
-			ft_putstr_fd("minishell: no such file or directory\n", 2);
-			return (EXIT_FAILURE);
-		}
+		// else if (!ft_strcmp(s, "<"))
+		// {
+		// 	ft_putstr_fd("minishell: no such file or directory\n", 2);
+		// 	return (EXIT_FAILURE);
+		// }
 	}
 	return (EXIT_SUCCESS);
 }

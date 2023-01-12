@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/11 04:28:27 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:01:51 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ char	*get_pwd(void);
 int		is_alphanum(t_upvarenv *upvarenv);
 int		ft_no_home(t_upvarenv *upvarenv);
 void	update_env(t_env *envp, t_upvarenv *upvarenv, void (*f)());
+int		replace_if_exists(t_env *envp, t_var *new_var);
 
 /* Unset */
 int		get_nb_var(t_cmd *cmd);

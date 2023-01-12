@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 00:38:26 by opassin           #+#    #+#             */
-/*   Updated: 2023/01/07 05:31:11 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:59:41 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,21 @@ void	update_env(t_env *envp, t_upvarenv *upvarenv, void (*f)())
 		f(upvarenv, envp, upvarenv->path, "PWD");
 	else if (is_alphanum(upvarenv))
 		f(upvarenv, envp, "PWD", "PWD");
+}
+
+int	replace_if_exists(t_env *envp, t_var *new_var)
+{
+	t_var	*var;
+
+	var = envp->var;
+	while (var)
+	{
+		if (!ft_strcmp(var->name, new_var->name))
+		{
+			var->value = new_var->value;
+			return (EXIT_FAILURE);
+		}
+		var = var->next;
+	}
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/10 16:39:42 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:58:05 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ t_var	*ft_new_var_env(t_cmd *cmd, int i)
 */
 int	ft_export(t_env *envp, t_cmd *cmd)
 {
+	t_var	*tmp;
 	t_var	*var;
 	int		nb_var;
 	int		i;
@@ -97,13 +98,13 @@ int	ft_export(t_env *envp, t_cmd *cmd)
 	if (!cmd->param)
 		return (ft_export_env(envp->var), 0);
 	if (envp)
-	{
 		if (envp->var)
 			var = envp->var;
-	}
 	while (i < nb_var)
 	{
-		ft_var_addback(&var, ft_new_var_env(cmd, i++));
+		tmp = ft_new_var_env(cmd, i++);
+		if (!replace_if_exists(envp, tmp))
+			ft_var_addback(&var, tmp);
 	}
 	return (0);
 }

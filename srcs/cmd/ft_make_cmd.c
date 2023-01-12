@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 02:32:23 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/11 06:33:28 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:43:51 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	*first_cmd(t_list **token)
 			tmp = tmp->next;
 			if (tmp)
 			{
+				// printf("tmp->val = [%s]\n", (char *)tmp->val);
 				cmd = ft_new_cmd(tmp);
 				if (!cmd)
 					return (NULL);
