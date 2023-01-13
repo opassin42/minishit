@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/12 19:54:37 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/13 20:20:26 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ int	ft_exec(t_env *envp, t_cmd *cmd)
 	ret = 0;
 	while (cmd)
 	{
+		if (cmd->ret == -1)
+			return (EXIT_FAILURE);
 		ret = ft_router(envp, cmd);
 		cmd = cmd->next;
 	}

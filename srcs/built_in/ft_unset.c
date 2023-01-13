@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:42:36 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/07 04:22:57 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/13 20:21:21 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,10 @@ Arg : [envp] -> pointer to the first environment's element
 Role: unset all the named variable passed in command line
 Return value: this builtin always return 0 in case of success
 */
-/*
-** HAVE TO INITIALIZE NB_VAR if !CMD
-*/
 int	ft_unset(t_env *envp, t_cmd *cmd)
 {
-	t_var	*var;
 	int		nb_var;
+	t_var	*var;
 
 	nb_var = ft_check(cmd, envp);
 	while (nb_var--)

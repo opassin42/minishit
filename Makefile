@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2023/01/13 17:21:13 by ccouliba         ###   ########.fr        #
+#    Updated: 2023/01/13 17:37:05 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,17 +96,17 @@ fclean: clean
 re: fclean all
 
 leak: re
-	@echo "				$(_BG_CYAN)LEAK TEST$(_END) (valgrind)"
+	@echo "\t\t\t\t\t$(_BG_CYAN)LEAK TEST$(_END) (valgrind)"
 	@valgrind --suppressions=.leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
 # --trace-children=yes --quiet --track-fds=yes : For checking lefting opened fd -> carefull about this
 
 debug : fclean
-	@echo "				$(_BG_CYAN)BUGS SCAN$(_END)"
-	@scan-build-12 make -j
+	@echo "\t\t\t\t\t$(_BG_CYAN)BUGS SCAN$(_END)"
+	@scan-build-12 make -j | grep "scan-build:"
 
 gitt: fclean
 	@echo "\n"
-	@echo "				$(_BG_CYAN)GIT FEATURES$(_END)\n"
+	@echo "\t\t\t\t\t$(_BG_CYAN)GIT FEATURES$(_END)\n"
 	git add . 
 	@echo "[$(_GREEN)!$(_END)] Adding files ... 	  [$(_GREEN)SUCCESS$(_END)]"
 	@echo "[$(_RED)!$(_END)] Committing ... 	  [$(_BK_RED)  FAIL $(_END)]"

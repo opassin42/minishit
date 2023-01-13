@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 03:48:18 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/12 19:34:21 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/13 20:22:30 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ static int	is_n_opt(char *str)
 	return (EXIT_SUCCESS);
 }
 
+static void	check_for_flag(int nflag)
+{
+	if (!nflag)
+		printf("\n");
+}
+
 /*
  * ft_echo     : write paramuments to standard output
  * Type        : integer
@@ -49,7 +55,7 @@ int	ft_echo(t_env *envp, t_cmd *cmd)
 
 	(void)envp;
 	param = cmd->param;
-	if (!param || !*param)
+	if ((!param || !*param))
 		return (printf("\n"), EXIT_SUCCESS);
 	nflag = 0;
 	while (*param)
@@ -66,7 +72,5 @@ int	ft_echo(t_env *envp, t_cmd *cmd)
 				printf(" ");
 		}
 	}
-	if (!nflag)
-		printf("\n");
-	return (EXIT_SUCCESS);
+	return (check_for_flag(nflag), EXIT_SUCCESS);
 }

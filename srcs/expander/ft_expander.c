@@ -6,40 +6,11 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:45:01 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/13 17:19:52 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:23:55 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-/*
-** $_ -> last arg given to a cmd ! If no arg, print build_in PATH
-** 
-*/
-char	*expand(t_env *envp, char *s)
-{
-	int		pos;
-	char	*name;
-	char	*var_val;
-
-	if (!s)
-		return (NULL);
-	pos = ft_get_dollar_pos(s);
-	name = (char *)var_name(s, pos);
-	if (!name)
-		return (NULL);
-	name = check_name(name);
-	if (!name)
-		return (NULL);
-	if (!ft_strcmp(name, "?"))
-		var_val = ft_itoa(g_data.status);
-	else
-		var_val = find_value(envp, name);
-	if (!var_val)
-		return (ft_strdup(""));
-	negative_hashing(var_val, ' ');
-	return (var_val);
-}
 
 static void	*var_name(char *str, int start)
 {
@@ -76,6 +47,35 @@ static char	*check_name(char *name)
 	else
 		tmp = ft_strdup("");
 	return (tmp);
+}
+
+/*
+** $_ -> last arg given to a cmd ! If no arg, print build_in PATH
+** 
+*/
+char	*expand(t_env *envp, char *s)
+{
+	int		pos;
+	char	*name;
+	char	*var_val;
+
+	if (!s)
+		return (NULL);
+	pos = ft_get_dollar_pos(s);
+	name = (char *)var_name(s, pos);
+	if (!name)
+		return (NULL);
+	name = check_name(name);
+	if (!name)
+		return (NULL);
+	if (!ft_strcmp(name, "?"))
+		var_val = ft_itoa(g_data.status);
+	else
+		var_val = find_value(envp, name);
+	if (!var_val)
+		return (ft_strdup(""));
+	negative_hashing(var_val, ' ');
+	return (var_val);
 }
 
 static void	if_exp_flag(t_env *envp, t_list *tmp, char *first_val, char *(*f)())

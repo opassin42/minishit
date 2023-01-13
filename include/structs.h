@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:47 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/27 05:17:34 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/13 19:41:02 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_data
 	int				status;
 	int				sigint;
 	int				sigquit;
+	int				rd_error;
 	pid_t			pid;
 	volatile int	keeprunning;
 	t_gc			*gc;

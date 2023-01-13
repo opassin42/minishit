@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/12 18:58:05 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/13 20:22:58 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ int	ft_export(t_env *envp, t_cmd *cmd)
 	var = NULL;
 	nb_var = 0;
 	if (!envp)
-		return (printf("%s\n", MISSING_ENV));
+		return (EXIT_FAILURE);
 	if (cmd)
 		nb_var = get_nb_var(cmd);
-	if (!cmd->param)
+	if (cmd && !cmd->param)
 		return (ft_export_env(envp->var), 0);
 	if (envp)
 		if (envp->var)

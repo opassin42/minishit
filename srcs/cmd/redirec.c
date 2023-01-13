@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 05:04:34 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/13 16:50:47 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/13 19:51:14 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	input_without_cmd(t_list **token)
 				if (open(tmp->next->val, O_RDONLY, 0666) == -1)
 					cmd_error((char *)tmp->next->val, ERRNO_3, 2, ft_putstr_fd);
 			if (fd == -1)
+			{
+				g_data.rd_error = 1;
 				return ;
+			}
 		}
 	}
 }
@@ -84,6 +87,6 @@ void	init_rd(t_cmd *cmd, t_list *token)
 		else
 			cmd->append = 0;
 		if (rd_out(cmd) != EXIT_SUCCESS)
-			printf("erreur redir out\n");
+			cmd_error((char *)token->next->val, ERRNO_4, 2, ft_putstr_fd);
 	}
 }

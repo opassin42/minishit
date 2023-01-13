@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 03:35:24 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/13 15:52:53 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/13 19:40:27 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_data	init_global(void)
 	g_data.pid = -1;
 	g_data.gc = 0;
 	g_data.keeprunning = 1;
+	g_data.rd_error = 0;
 	return (g_data);
 }
 

@@ -4,7 +4,7 @@
 /*   ft_make_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                +Check line 57, m#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 02:32:23 by ccouliba          #+#    #+#             */
 /*   Updated: 2023/01/13 16:03:06 by ccouliba         ###   ########.fr       */
 /*                                                                            */
