@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/05 19:55:15 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:53:05 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	child_handler(int sig)
 {
-	printf("In child handler\n");
 	if (sig == SIGQUIT)
 		ft_putstr_fd("\b\b \b\b", 2);
 	else if (sig == SIGINT)
@@ -29,7 +28,6 @@ void	child_handler(int sig)
 
 void	parent_handler(int sig)
 {
-	printf("In parent handler\n");
 	if (sig == SIGQUIT)
 	{
 		ft_putstr_fd("Quit: (core dumped)\n", 2);

@@ -6,11 +6,40 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:45:01 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/06 18:04:41 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:19:52 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+/*
+** $_ -> last arg given to a cmd ! If no arg, print build_in PATH
+** 
+*/
+char	*expand(t_env *envp, char *s)
+{
+	int		pos;
+	char	*name;
+	char	*var_val;
+
+	if (!s)
+		return (NULL);
+	pos = ft_get_dollar_pos(s);
+	name = (char *)var_name(s, pos);
+	if (!name)
+		return (NULL);
+	name = check_name(name);
+	if (!name)
+		return (NULL);
+	if (!ft_strcmp(name, "?"))
+		var_val = ft_itoa(g_data.status);
+	else
+		var_val = find_value(envp, name);
+	if (!var_val)
+		return (ft_strdup(""));
+	negative_hashing(var_val, ' ');
+	return (var_val);
+}
 
 static void	*var_name(char *str, int start)
 {
@@ -49,70 +78,22 @@ static char	*check_name(char *name)
 	return (tmp);
 }
 
-/*
-** SEGV AT the RED DOT !!!!!!!
-*/
-char	*find_value(t_env *envp, char *var_name)
+static void	if_exp_flag(t_env *envp, t_list *tmp, char *first_val, char *(*f)())
 {
-	t_var	*var;
+	char	*exp_val;
 
-	if (envp)
-	{
-		if (!var_name || (*var_name == '$' && !(*var_name + 1)))
-			return (NULL);
-		var = envp->var;
-		while (var)
-		{
-			if (var->name && !ft_strcmp(var->name, var_name))
-			{
-				if (var->value)
-					return (var->value);
-				else
-					break ;
-			}
-			var = var->next;
-		}
-	}
-	return (ft_strdup(""));
-}
-
-/*
-** $_ -> last arg given to a cmd ! If no arg, print build_in PATH
-** 
-*/
-char	*expand(t_env *envp, char *s)
-{
-	int		pos;
-	char	*name;
-	char	*var_val;
-
-	if (!s)
-		return (NULL);
-	pos = ft_get_dollar_pos(s);
-	name = (char *)var_name(s, pos);
-	if (!name)
-		return (NULL);
-	name = check_name(name);
-	if (!name)
-		return (NULL);
-	if (!ft_strcmp(name, "?"))
-		var_val = ft_itoa(g_data.status);
-	else
-		var_val = find_value(envp, name);
-	if (!var_val)
-		return (ft_strdup(""));
-	negative_hashing(var_val, ' ');
-	return (var_val);
+	exp_val = f(envp, first_val);
+	if (exp_val)
+		tmp->expand = exp_val;
+	return ;
 }
 
 void	ft_expander(t_list **token, t_env *envp)
 {
-	char	*exp_val;
 	char	*first_val;
 	t_list	*tmp;
 
 	tmp = *token;
-	exp_val = NULL;
 	while (tmp)
 	{
 		expand_quote_flag(tmp);
@@ -124,14 +105,9 @@ void	ft_expander(t_list **token, t_env *envp)
 				return ;
 		}
 		if (tmp->exp_flag)
-		{
-			exp_val = ft_recompose(envp, first_val);
-			if (exp_val)
-				tmp->expand = exp_val;
-		}
+			if_exp_flag(envp, tmp, first_val, ft_recompose);
 		else
 			tmp->expand = first_val;
 		tmp = tmp->next;
 	}
 }
-	

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 22:25:14 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/10 23:53:12 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:38:30 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,3 @@ void	*ft_lexer(void *arg)
 	ft_type(&token);
 	return (prev_last_is_last(&token, VOID), token);
 }
-	

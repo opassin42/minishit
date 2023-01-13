@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:35:41 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/12 17:05:14 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:51:29 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ void	p_father(t_cmd *cmd)
 	int	i;
 
 	i = 0;
-	// signal(SIGINT, sig_handler);
-	// signal(SIGQUIT, sig_handler);
 	while (i < (count_pipe(cmd) + 1))
 	{
 		waitpid(g_data.pid, &g_data.status, 0);

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:30 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/12 19:59:09 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:49:00 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static void	*final_token(t_list **token)
 	if (!new)
 		return (NULL);
 	assign_a_type(&new);
-	return (new);
+	return ((void *)new);
 }
 
 void	*ft_cmd(t_list **token)
@@ -97,16 +97,12 @@ void	*ft_cmd(t_list **token)
 	t_cmd	*cmd;
 	t_list	*tmp;
 
-	tmp = final_token(token);
+	tmp = (t_list *)final_token(token);
 	if (!tmp)
 		return (NULL);
 	hash_token(tmp);
-	// cmd = (t_cmd *)make_cmd(tmp);
 	if (tmp->type == RD)
-	{
 		cmd = (t_cmd *)first_cmd(&tmp);
-		// printf("cmd->name = [%s] / cmd->infile = [%s] / cmd->outfile = [%s]\n", cmd->name, cmd->infile, cmd->outfile);	
-	}
 	else
 		cmd = (t_cmd *)make_cmd(tmp);
 	if (!cmd)
@@ -116,10 +112,9 @@ void	*ft_cmd(t_list **token)
 		if (tmp->type == PIPE)
 		{
 			tmp = tmp->next;
-			if (tmp)
-				ft_cmd_addback(&cmd, (t_cmd *)make_cmd(tmp));
-			else
+			if (!tmp)
 				return ((void *)cmd);
+			ft_cmd_addback(&cmd, (t_cmd *)make_cmd(tmp));
 		}
 		tmp = tmp->next;
 	}

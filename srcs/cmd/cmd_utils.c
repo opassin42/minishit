@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:28 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/10 16:53:13 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:51:14 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	**ft_malloc_double_p(t_list *token)
 	i = ft_lstsize(token);
 	param = (char **)push_top(&g_data.gc, (sizeof(char *) * (i + 1)));
 	if (!param)
-		return (gc_free(), NULL);
+		return (gc_free(), (char **) NULL);
 	i = 0;
 	while (token)
 	{

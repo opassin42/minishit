@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2023/01/12 19:58:32 by ccouliba         ###   ########.fr        #
+#    Updated: 2023/01/13 17:21:13 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS =	srcs/main.c \
 		srcs/built_in/ft_cd.c \
 		srcs/built_in/ft_exit.c \
 		srcs/built_in/ft_error.c \
+		srcs/built_in/builtin_utils.c \
 		srcs/lexer/ft_tokeniser.c \
 		srcs/lexer/ft_type.c \
 		srcs/lexer/ft_lexer.c \
@@ -61,7 +62,6 @@ SRCS =	srcs/main.c \
 		utils/lib_utils4.c \
 		utils/list_utils.c \
 		utils/list_utils2.c \
-		utils/ft_builtins_utils.c \
 		utils/ft_garbage_collector.c \
 		utils/signals.c
 		
@@ -97,8 +97,7 @@ re: fclean all
 
 leak: re
 	@echo "				$(_BG_CYAN)LEAK TEST$(_END) (valgrind)"
-	@valgrind ./$(NAME)
-# @valgrind --suppressions=.leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
+	@valgrind --suppressions=.leaks.txt --leak-check=full --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
 # --trace-children=yes --quiet --track-fds=yes : For checking lefting opened fd -> carefull about this
 
 debug : fclean

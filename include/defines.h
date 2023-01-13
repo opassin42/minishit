@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:52 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/06 20:42:00 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:55:29 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,32 @@
 # define STDOUT 1
 
 # define PROMPT "$> "
+
+# define FAIL -1
+# define SUCCESS 0
 # define EXIT "exit"
+
+/*
+** List of tokenizable
+*/
 # define R_D "><"
 # define DELIM "|><"
 # define M_CHAR "|><\"' "
 # define QUOTE_LIST "'\""
-# define FAIL -1
-# define SUCCESS 0
 
+/*
+** Messages error
+*/
 # define ERRNO_1 "Syntax error near unexpected token"
 # define ERRNO_2 "Command not found"
 # define ERRNO_3 "No such file or directory"
 # define ERRNO_ENV "There is no printable environment"
 
-# define PATH_VALUE "/mnt/nfs/homes/ccouliba/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
-# define MISSING_ENV "No env ; you cannot export variable.\nPlease exit then relauch minishell again"
+# define MISSING_ENV "No env ; Cannot export variable.\n"
+
 /*
 ** ANSI COLORS
 */
-
 # define RED "\e[1;31m"
 # define BK_RED "\e[5;31m"
 
