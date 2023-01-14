@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:47 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/13 19:41:02 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/14 19:00:14 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_list
 
 typedef struct s_var
 {
+	int				id;
 	char			*name;
 	char			*value;
 	struct s_var	*next;

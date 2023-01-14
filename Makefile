@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2023/01/13 17:37:05 by ccouliba         ###   ########.fr        #
+#    Updated: 2023/01/14 21:06:17 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS =	srcs/main.c \
 		srcs/built_in/ft_exit.c \
 		srcs/built_in/ft_error.c \
 		srcs/built_in/builtin_utils.c \
+		srcs/built_in/export_utils.c \
 		srcs/lexer/ft_tokeniser.c \
 		srcs/lexer/ft_type.c \
 		srcs/lexer/ft_lexer.c \

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/13 15:13:07 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/14 20:10:44 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ char	*split_value(t_cmd *cmd, int i);
 t_var	*ft_new_var_env(t_cmd *cmd, int i);
 int		ft_export(t_env *envp, t_cmd *cmd);
 void	ft_export_env(t_var *var);
+t_var	*var_index(t_var **var);
 
 /* Exec */
 

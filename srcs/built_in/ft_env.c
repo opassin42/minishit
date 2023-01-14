@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:41:35 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/13 20:22:19 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/14 21:46:35 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	ft_export_env(t_var *var)
 
 	var_env = NULL;
 	if (var)
+	{
 		var_env = var;
+		var_env = var_index(&var_env);
+	}
 	while (var_env)
 	{
 		printf("declare -x %s\e[0;33m=\e[0m%s\n", var_env->name, var_env->value);
