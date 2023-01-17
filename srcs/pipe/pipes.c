@@ -72,14 +72,14 @@ int ft_waitpid(int pid_last, t_cmd *cmd)
 				perror("waitpid");
 				exit(EXIT_FAILURE);
 			}
-			if (WIFEXITED(status))
-				return(WEXITSTATUS(status));
-			else if (WIFSIGNALED(status))
-				return(WTERMSIG(status));
-			else if (WIFSTOPPED(status))
-				return(WSTOPSIG(status));
-			else if (WIFCONTINUED(status))
-					printf("continue\n");
+			// if (WIFEXITED(status))
+			// 	return(WEXITSTATUS(status));
+			// else if (WIFSIGNALED(status))
+			// 	return(WTERMSIG(status));
+			// else if (WIFSTOPPED(status))
+			// 	return(WSTOPSIG(status));
+			// else if (WIFCONTINUED(status))
+			// 		printf("continue\n");
 			cmd = cmd->next;
 			i++;
 	}

@@ -83,10 +83,9 @@ int	main(int ac, char **av, char **env)
 	g_data.sigquit = 0;
 	while (g_data.keeprunning)
 	{
-		printf("%d\n", g_data.keeprunning);
 		s = readline((const char *)ft_shellname());
 		if (!s)
-			printf("empty return\n");
+			break;
 		if (s && *s != '\n')
 			ft_minishell(envp, s, g_data.status);
 		if (g_data.status == 127)

@@ -24,7 +24,7 @@ typedef struct s_data
 	int				status;
 	int				sigint;
 	int				sigquit;
-	pid_t			pid;
+	pid_t				pid;
 	volatile int	keeprunning;
 	t_gc			*gc;
 }				t_data;

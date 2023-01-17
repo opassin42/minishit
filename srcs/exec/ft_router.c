@@ -34,6 +34,7 @@ static int	ft_builtin_ret(t_env *envp, t_cmd *cmd, t_builtin *builtin, int i)
 {
 	int	res;
 
+	printf("%d\n", i);
 	res = builtin[i].f(envp, cmd);
 	return (res);
 }
@@ -79,31 +80,40 @@ int	ft_router(t_env *envp, t_cmd *cmd)
 
 	prevfd = -1;
 	i = 0;
-	ft_init_t_builtin(builtin);
 	while (i <= count_pipe(cmd))
 	{
-		if (i > 0)
-			prevfd = cmd->fd[1];
+		ft_init_t_builtin(builtin);
 		id = which_builtin(builtin, cmd);
-		if (pipe(cmd->fd) == -1)
-			return (error_pid(prevfd, cmd), errno);//error
-		cmd->pid = fork();
-		if (cmd->pid == -1)
-			return (error_pid(prevfd, cmd), errno);
-		else if (cmd->pid == 0)
+		if (i > 0) // si c'est la 2eme cmd on sauve le out precedent.
 		{
+			prevfd = cmd->fd[1];
+			if (pipe(cmd->fd) == -1) // 
+			return (error_pid(prevfd, cmd), errno);
+		}
+		if (id == -1)
+			cmd->pid = fork();
+		if (cmd->pid < 0)
+			return (error_pid(prevfd, cmd), errno);
+		if (cmd->pid == 0)
+		{
+			printf("child\n");
 			if (id == -1)
 			{
-				path = path_in_env(envp, "PATH");
+				path = path_in_env(envp, "PATH"); 
 				if (!path)
 					return (-1);
-				g_data.status = ft_non_builtin(envp, cmd, path, prevfd, i, id);//prevfd = cmd->fd[1] ?
+				printf("ft_non_builtin\n");
+				ft_non_builtin(envp, cmd, path, prevfd, i, id);//prevfd = cmd->fd[1] ?
 			}
 			else
-				g_data.status = ft_builtin_ret(envp, cmd, builtin, id);
+			{
+				printf("ft_builtin_ret\n");
+				exit(ft_builtin_ret(envp, cmd, builtin, id));
+			}
 		}
-		else if (pid_father(cmd, &prevfd, i) == -1)
-			return (EXIT_FAILURE);
+		else
+			if (pid_father(cmd, &prevfd, i) == -1)
+				return (EXIT_FAILURE);
 		if (!cmd->next)
 			break;
 		cmd = cmd->next;
