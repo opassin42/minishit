@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 19:20:33 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/23 19:23:00 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/17 19:08:39 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,21 @@ t_list	*ft_lstlast(t_list *lst)
 	return (lst);
 }
 
+void	ft_lst_prevlast(t_list **list)
+{
+	t_list	*last;
+	t_list	*prev_last;
+
+	last = *list;
+	prev_last = *list;
+	while (last->next)
+	{
+		prev_last = last;
+		last = last->next;
+	}
+	prev_last->next = NULL;
+}
+
 void	ft_lstadd_back(t_list **alst, t_list *new)
 {
 	if (new)
@@ -43,12 +58,6 @@ void	ft_lstadd_back(t_list **alst, t_list *new)
 		else
 			*alst = new;
 	}
-}
-
-void	ft_lstadd_front(t_list **alst, t_list *new)
-{
-	new->next = *alst;
-	*alst = new;
 }
 
 int	ft_lstsize(t_list *lst)

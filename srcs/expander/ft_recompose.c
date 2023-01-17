@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 08:11:34 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/13 16:58:24 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/17 18:29:31 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ static char	*substring(t_env *envp, char *s)
 	char	*tmp;
 
 	(void)envp;
+	if (!s)
+		return (NULL);
 	if (*s == '$')
 		tmp = ft_dollar_char(s);
 	else

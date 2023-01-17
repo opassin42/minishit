@@ -4,15 +4,15 @@
 /*   ft_make_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +Check line 57, m#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/13 02:32:23 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/13 16:03:06 by ccouliba         ###   ########.fr       */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/17 17:55:21 by ccouliba          #+#    #+#             */
+/*   Updated: 2023/01/17 18:39:07 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	init_cmd_struct(t_cmd *cmd, char *key)
+static void	init_struct(t_cmd *cmd, char *key)
 {
 	cmd->id = 0;
 	cmd->pid = 0;
@@ -54,7 +54,7 @@ static void	*init_arg(t_list *token, t_cmd *cmd)
 	return ((void *)arg);
 }
 
-static void	init_param_arg(t_list *token, t_cmd *cmd)
+static void	init_cmd_arg(t_list *token, t_cmd *cmd)
 {
 	t_list	*arg;
 	t_list	*param;
@@ -96,9 +96,9 @@ void	*first_cmd(t_list **token)
 				cmd = ft_new_cmd(tmp);
 				if (!cmd)
 					return (NULL);
-				init_cmd_struct(cmd, tmp->val);
+				init_struct(cmd, tmp->val);
 				init_rd(cmd, rd);
-				return (init_param_arg(tmp, cmd), (void *)cmd);
+				return (init_cmd_arg(tmp, cmd), (void *)cmd);
 			}
 			input_without_cmd(token);
 		}
@@ -115,8 +115,8 @@ void	*make_cmd(t_list *token)
 		cmd = ft_new_cmd(token);
 		if (!cmd)
 			return (NULL);
-		init_cmd_struct(cmd, token->val);
-		init_param_arg(token, cmd);
+		init_struct(cmd, token->val);
+		init_cmd_arg(token, cmd);
 	}
 	else
 		return (NULL);

@@ -6,30 +6,11 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 03:29:08 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/11 04:16:47 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/17 19:20:04 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	ft_is_digit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
-
-int	ft_isalpha(int c)
-{
-	return (((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')));
-}
-
-int	ft_isalnum(int a)
-{
-	if ((a >= 65 && a <= 90) || (a >= 97 && a <= 122))
-		return (1);
-	return (0);
-}
 
 static int	ft_is_space(int c)
 {
@@ -58,3 +39,67 @@ int	ft_white_spaces(void *p)
 	}
 	return (EXIT_SUCCESS);
 }
+
+int	ft_atoi(const char *str)
+{
+	int	res;
+	int	sign;
+
+	res = 0;
+	sign = 1;
+	while (*str == 32 || (*str >= 9 && *str <= 13))
+		str++;
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '-')
+			sign = -sign;
+		str++;
+	}
+	while (*str >= '0' && *str <= '9')
+		res = res * 10 + (*(str++) - '0') * sign;
+	return (res);
+}
+
+static int	get_size(long n)
+{
+	int	size;
+
+	if (n <= 0)
+		size = 1;
+	else
+		size = 0;
+	while (n)
+	{
+		n = n / 10;
+		size++;
+	}
+	return (size);
+}
+
+char	*ft_itoa(int n)
+{
+	char	*res;
+	int		len;
+	long	nb;
+
+	nb = n;
+	len = get_size(nb);
+	res = (char *)push_top(&g_data.gc, sizeof(char) * (len + 1));
+	if (!res)
+		return (gc_free(), NULL);
+	res[len] = '\0';
+	if (nb == 0)
+		res[0] = '0';
+	else if (nb < 0)
+	{
+		res[0] = '-';
+		nb = -nb;
+	}
+	while (len-- && nb)
+	{
+		res[len] = (nb % 10) + '0';
+		nb = nb / 10;
+	}
+	return (res);
+}
+

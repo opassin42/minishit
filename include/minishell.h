@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/14 20:10:44 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/17 19:12:07 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ extern t_data	g_data;
 /**********************************  INITS  ***********************************/
 /******************************************************************************/
 t_data	init_global(void);
+void	init_sigflag(void);
 
 /******************************************************************************/
 /**********************************  LEXING  **********************************/
@@ -114,10 +115,8 @@ char	*split_value(t_cmd *cmd, int i);
 t_var	*ft_new_var_env(t_cmd *cmd, int i);
 int		ft_export(t_env *envp, t_cmd *cmd);
 void	ft_export_env(t_var *var);
-t_var	*var_index(t_var **var);
 
 /* Exec */
-
 void	*make_cmd(t_list *token);
 void	*first_cmd(t_list **token);
 int		check_cmd(char *s);
@@ -141,34 +140,25 @@ void	init_rd(t_cmd *cmd, t_list *token);
 /******************************************************************************/
 /* Mem utils */
 void	*ft_memcpy(void *dest, const void *src, size_t n);
-void	*ft_memset(void *s, int c, size_t n);
-void	*ft_memmove(void *dest, void *src, size_t n);
-void	*ft_realloc(char *s, size_t new_len);
-void	*ft_strjoin_char(char *s1, char c);
 
 /* Print utils */
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
-void	ft_putnbr_fd(int n, int fd);
+
+/* Char_is utils */
+char	*ft_itoa(int n);
+int		ft_is_digit(int c);
+int		ft_isalnum(int a);
 
 /* Str utils */
-char	*ft_itoa(int n);
-int		ft_atoi(const char *str);
-int		ft_is_digit(int c);
-int		ft_isalpha(int c);
-int		ft_isalnum(int a);
-int		ft_white_spaces(void *p);
 int		ft_strlen(char *s);
 int		ft_strcmp(char *s1, char *s2);
-int		ft_strncmp(char *s1, char *s2, size_t n);
-char	*ft_strcpy(char *dest, char *src);
 char	*ft_strchr(char *s, int c);
 char	*ft_strdup(char *s);
 char	**ft_split(char *s, char c);
 char	**free_double_p(char **s);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_substr(char *s, int start, size_t len);
-char	*ft_strtrim(char *s1, char *set);
 
 /* List utils */
 t_list	*ft_lstnew(void *content);
@@ -176,10 +166,6 @@ t_list	*ft_lstlast(t_list *lst);
 int		ft_lstsize(t_list *lst);
 void	ft_lst_prevlast(t_list **list);
 void	ft_lstadd_back(t_list **alst, t_list *new);
-void	ft_lstadd_front(t_list **alst, t_list *new);
-void	ft_lstdelone(t_list *lst, void (*del)(void*));
-void	ft_lstclear(t_list **lst, void (*del)(void*));
-void	*ft_lstmap(t_list *lst, void *(*f)(void*), void (*del)(void*));
 
 /* Minishell utils */
 void	print_token(t_list *token);

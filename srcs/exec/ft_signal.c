@@ -6,27 +6,47 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 00:36:14 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/11/14 20:43:29 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/17 18:46:40 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/*
-** ctrl + d -> exit ingoing shell IF NO COMMAND = exit(0)
-** ctrl + c -> SIGINT print new prompt on a new line (130).
-** ctrl + \ -> SIGQUIT do nothing (131) if no ingoing op ; coredump(...) 
-*/
-// void	init_status(t_status g_stat)
-// {
-// 	g_stat.ret = 0;
-// 	g_stat.sigint = 0;
-// 	g_stat.sigquit = 0;
-// }
+static void	child_handler(int sig)
+{
+	if (sig == SIGQUIT)
+		ft_putstr_fd("\b\b \b\b", 2);
+	else if (sig == SIGINT)
+	{
+		ft_putstr_fd("\n", 1);
+		g_data.status = 130;
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+}
 
-// int	signal_handler(int sig)
-// {
-// 	if (sig == SIGINT)
-// 		// new_prompt
-// 	else if (sig == SIG)
-// }
+static void	parent_handler(int sig)
+{
+	if (sig == SIGQUIT)
+	{
+		ft_putstr_fd("Quit: (core dumped)\n", 2);
+		g_data.status = 131;
+		g_data.sigquit = 1;
+	}
+	else if (sig == SIGINT)
+	{
+		ft_putstr_fd("\n", 2);
+		g_data.status = 130;
+		g_data.sigint = 1;
+		g_data.keeprunning = 1;
+	}
+}
+
+void	sig_handler(int sig)
+{
+	if (g_data.pid)
+		parent_handler(sig);
+	else
+		child_handler(sig);
+}

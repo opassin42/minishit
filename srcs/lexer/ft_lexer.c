@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 22:25:14 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/13 16:38:30 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/17 18:08:51 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	ft_not_only_space(void *p)
 {
 	char	*tmp;
 
-	tmp = (char *)p;
 	if (!p)
 		return (EXIT_SUCCESS);
+	tmp = (char *)p;
 	while (*tmp)
 	{
 		if (*tmp != ' ')
@@ -40,7 +40,11 @@ static void	reduce_spaces(t_list **token)
 	while (tmp)
 	{
 		if (!ft_not_only_space(tmp->val))
+		{
 			tmp->val = ft_strdup(" ");
+			if (!tmp->val)
+				return ;
+		}
 		tmp = tmp->next;
 	}
 }
@@ -52,7 +56,7 @@ static void	prev_last_is_last(t_list **token, t_type type)
 
 	tmp = *token;
 	last = ft_lstlast(tmp);
-	if (last->type == type)
+	if (last && last->type == type)
 		ft_lst_prevlast(&tmp);
 	return ;
 }

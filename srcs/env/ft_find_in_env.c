@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 23:14:14 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/31 12:22:50 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/17 18:31:38 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*get_in_env(t_env *envp, char *name)
 {
 	t_var	*var;
 
-	if (!envp)
+	if (!name || !envp)
 		return (NULL);
 	var = envp->var;
 	if (var)
@@ -35,7 +35,7 @@ void	up_in_env(t_env *envp, char *var_name, char *s)
 {
 	t_var	*var;
 
-	if (!envp)
+	if (!s || !var_name || !envp)
 		return ;
 	var = envp->var;
 	while (var)

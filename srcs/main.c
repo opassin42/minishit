@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/13 15:48:09 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/17 18:53:54 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,7 @@ int	main(int ac, char **av, char **env)
 	envp = ft_getenv(env);
 	while (g_data.keeprunning)
 	{
-		g_data.sigint = 0;
-		g_data.sigquit = 0;
+		init_sigflag();
 		signal(SIGINT, sig_handler);
 		signal(SIGQUIT, SIG_IGN);
 		g_data.status = ft_readline(envp, s);

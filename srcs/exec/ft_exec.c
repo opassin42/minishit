@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/13 20:20:26 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/17 18:41:23 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*binary_file(t_cmd *cmd, char **path)
 	if (!path)
 		return (NULL);
 	if ((*cmd->name == '.' || *cmd->name == '/') && access(cmd->name, F_OK))
-		cmd->bin = cmd->name;
+		cmd->bin = ft_strdup(cmd->name);
 	else
 		cmd->bin = bin_path(cmd, path);
 	if (!cmd->bin)

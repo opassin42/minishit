@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:42:36 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/13 20:21:21 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/17 18:52:16 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	ft_delete_var(t_env *envp, char *var_name)
 	t_var	*tmp;
 	t_var	*var;
 
+	if (!var_name)
+		return ;
 	var = envp->var;
 	if (!ft_strcmp(var->name, var_name))
 	{

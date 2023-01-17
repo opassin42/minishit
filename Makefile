@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2023/01/14 21:06:17 by ccouliba         ###   ########.fr        #
+#    Updated: 2023/01/17 19:22:48 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,6 @@ SRCS =	srcs/main.c \
 		srcs/built_in/ft_exit.c \
 		srcs/built_in/ft_error.c \
 		srcs/built_in/builtin_utils.c \
-		srcs/built_in/export_utils.c \
 		srcs/lexer/ft_tokeniser.c \
 		srcs/lexer/ft_type.c \
 		srcs/lexer/ft_lexer.c \
@@ -56,15 +55,11 @@ SRCS =	srcs/main.c \
 		srcs/pipe/pipes.c \
 		utils/ft_init.c \
 		utils/ft_split.c \
-		utils/lib_utils_0.c \
 		utils/lib_utils.c \
 		utils/lib_utils2.c \
 		utils/lib_utils3.c \
-		utils/lib_utils4.c \
 		utils/list_utils.c \
-		utils/list_utils2.c \
-		utils/ft_garbage_collector.c \
-		utils/signals.c
+		utils/ft_garbage_collector.c
 		
 OBJS = $(SRCS:.c=.o)
 # OBJS_D := $(addprefix $(OBJS_D), $(OBJS))
