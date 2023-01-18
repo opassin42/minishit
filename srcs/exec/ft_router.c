@@ -105,7 +105,7 @@ int	ft_router(t_env *envp, t_cmd *cmd, int i, int prev)
 	else if (count_pipe(cmd) == 1)
 	{
 		status = exec_builtin(envp, cmd, builtin, id);
-		p_father(cmd, prev);
+		// p_father(cmd, prev);
 	}
 	if (g_data.sigint == 1 || g_data.sigquit == 1)
 		return (g_data.status);
