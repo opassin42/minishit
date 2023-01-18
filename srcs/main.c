@@ -55,7 +55,9 @@ static int	ft_minishell(t_env *envp, char *s, int status)
 	hash_quote(&token);
 	cmd = ft_cmd(&token);
 	if (cmd)
+	{
 		status = ft_exec(envp, cmd);
+	}
 	return (status);
 }
 
@@ -99,7 +101,7 @@ int	main(int ac, char **av, char **env)
 		signal(SIGQUIT, SIG_IGN);
 		g_data.status = ft_readline(envp, s);
 		if (g_data.status == -420)
-			return (gc_free(), 0);
+			break;
 	}
 	return (gc_free(), 0);
 }

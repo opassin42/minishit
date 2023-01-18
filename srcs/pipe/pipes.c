@@ -41,47 +41,31 @@ int	count_pipe(t_cmd *cmd)
 	return (i);
 }
 
-void	p_father(t_cmd *cmd, int prev)
+void	p_father(t_cmd *cmd)
 {
-	(void)prev;
-// 	int	i;
-
-// 	i = 0;
-	// while (i < (count_pipe(cmd) + 1))
-	// {
-		waitpid(cmd->pid, &g_data.status, 0);
-		// i++;
-	// }
-	// close(prev);
-	close(cmd->fd[0]);
 	close(cmd->fd[1]);
+	if (g_data.prev != -1)
+		close(g_data.prev);
+	g_data.prev = cmd->fd[0];
+	waitpid(cmd->pid, &g_data.status, 0);
 }
 
-void	p_child(t_env *envp, t_cmd *cmd, int i, int prev)
+void	p_child(t_env *envp, t_cmd *cmd, int i)
 {
+	int		max;
+
+	max = count_pipe(cmd);
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, SIG_DFL);
+	if (i != max - 1)
+		dup2(cmd->fd[1], STDOUT_FILENO);
 	if (i != 0)
 	{
-		if (i != (count_pipe(cmd) - 1))
-		{
-			dup2(cmd->fd[1], STDOUT_FILENO);
-		}
-		dup2(prev, STDIN_FILENO);
-		// close(prev);
+		dup2(g_data.prev, STDIN_FILENO);
+		close(g_data.prev);
 	}
-	// redir
-	printf("cmd = %s | fdin = %d | fdout = %d\n", cmd->name, cmd->fd[0], cmd->fd[1]);
-	if (count_pipe(cmd) > 0)
-	{
-		dup2(cmd->fd[1], prev);
-		close(cmd->fd[1]);
-		close(cmd->fd[0]);
-	}
+	close(cmd->fd[1]);
+	close(cmd->fd[0]);
 	g_data.status = execve(cmd->bin, cmd->arg, envp->tab);
-	// 	printf("okok\n");
 
-	// if (g_data.status == -1)
-	// 		ft_exit(envp, cmd);
-	// exit(g_data.status);
 }

@@ -69,13 +69,14 @@ static char	**path_in_env(t_env *envp, char *var_name)
 	return (path);
 }
 
-int	ft_router(t_env *envp, t_cmd *cmd, int i, int prev)
+int	ft_router(t_env *envp, t_cmd *cmd, int i)
 {
 	int			id;
 	int			status;
 	char		**path;
 	t_builtin	builtin[7];
 
+	status = -1;
 	ft_init_builtin(builtin);
 	id = which_builtin(builtin, cmd);
 	if (id == -1 || (count_pipe(cmd) > 1))
@@ -92,7 +93,7 @@ int	ft_router(t_env *envp, t_cmd *cmd, int i, int prev)
 				path = path_in_env(envp, "PATH");
 				if (!path)
 					return (-1);
-				status = ft_non_builtin(envp, cmd, path, i, prev);
+				status = ft_non_builtin(envp, cmd, path, i);
 				if (status == 127)
 					exit(status);
 			}
@@ -100,13 +101,10 @@ int	ft_router(t_env *envp, t_cmd *cmd, int i, int prev)
 				exit(exec_builtin(envp, cmd, builtin, id));
 		}
 		else
-			p_father(cmd, prev);
+			p_father(cmd);
 	}
 	else if (count_pipe(cmd) == 1)
-	{
 		status = exec_builtin(envp, cmd, builtin, id);
-		// p_father(cmd, prev);
-	}
 	if (g_data.sigint == 1 || g_data.sigquit == 1)
 		return (g_data.status);
 	if (g_data.status == 512 || g_data.status == 256)

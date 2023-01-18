@@ -72,7 +72,7 @@ int	check_for_slash(char *s)
 ** Flag existing means there is another char 
 */
 
-int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path, int i, int prev)
+int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path, int i)
 {
 	(void)envp;
 	if (!path)
@@ -82,7 +82,7 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path, int i, int prev)
 		return (cmd_error(cmd->name, ERRNO_3, 2, ft_putstr_fd), 127);
 	if (!cmd->bin || access(cmd->bin, F_OK | R_OK | X_OK) != 0)
 		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), 127);//exit herre if cmd failed
-	p_child(envp, cmd, i, prev);
+	p_child(envp, cmd, i);
 	return (g_data.status);
 }
 
@@ -96,20 +96,16 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path, int i, int prev)
 */
 int	ft_exec(t_env *envp, t_cmd *cmd)
 {
-	int	prev;
 	int	ret;
 	int i;
 
-	prev = -1;
 	ret = 0;
 	i = 0;
 	while (cmd)
 	{
 		if (cmd->ret == -1)
 			return (EXIT_FAILURE);
-		if (i > 0)
-			prev = cmd->fd[1];
-		ret = ft_router(envp, cmd, i, prev);
+		ret = ft_router(envp, cmd, i);
 		cmd = cmd->next;
 		++i;
 	}
