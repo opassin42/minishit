@@ -21,6 +21,7 @@ t_data	init_global(void)
 	g_data.gc = 0;
 	g_data.keeprunning = 1;
 	g_data.rd_error = 0;
+	g_data.prompt = NULL;
 	return (g_data);
 }
 

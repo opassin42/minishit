@@ -28,7 +28,7 @@ int	ft_cmdsize(t_list *cmd)
 	return (i);
 }
 
-static int	count_pipe(t_cmd *cmd)
+int	count_pipe(t_cmd *cmd)
 {
 	int	i;
 
@@ -41,40 +41,70 @@ static int	count_pipe(t_cmd *cmd)
 	return (i);
 }
 
-void	p_father(t_cmd *cmd)
+void	p_father(t_cmd *cmd, int prev)
 {
-	int	i;
+	(void)prev;
+// 	int	i;
 
-	i = 0;
-	while (i < (count_pipe(cmd) + 1))
-	{
-		waitpid(g_data.pid, &g_data.status, 0);
-		i++;
-	}
+// 	i = 0;
+	// while (i < (count_pipe(cmd) + 1))
+	// {
+		waitpid(cmd->pid, &g_data.status, 0);
+		// i++;
+	// }
+	// close(prev);
 }
 
-void	p_child(t_env *envp, t_cmd *cmd)
+void	p_child(t_env *envp, t_cmd *cmd, int i, int prev)
 {
-	int	i;
-	int	pipes[2];
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, SIG_DFL);
 
-	i = -1;
-	while (++i < count_pipe(cmd))
+	if (i != 0)
 	{
-		pipe(pipes);
-		g_data.pid = fork();
-		if (g_data.pid == 0)
+		if (i != (count_pipe(cmd) - 1))
 		{
+			dup2(cmd->fd[1], STDOUT_FILENO);
+		}
+		dup2(prev, STDIN_FILENO);
+		close(prev);
+	}
+	//redir
+	printf("cmd = %s | fdin = %d | fdout = %d\n", cmd->name, cmd->fd[0], cmd->fd[1]);
+	if (cmd->fd[1] != STDOUT_FILENO)
+		close(cmd->fd[1]);
+	if (cmd->fd[0] != STDIN_FILENO)
+		close(cmd->fd[0]);
+	g_data.status = execve(cmd->bin, cmd->arg, envp->tab);
+	if (g_data.status == -1)
+			ft_exit(envp, cmd);
+	exit(g_data.status);
+}
+/*
+void	p_child(t_env *envp, t_cmd *cmd, int i, int fd_in)
+{
+	// int	i;
+	// int	pipes[2];
+
+	// i = -1;
+	// while (++i < count_pipe(cmd))
+	// {
+	// 	pipe(pipes);
+	// 	cmd->pid = fork();
+	// 	if (cmd->pid == 0)
+	// 	{
 			signal(SIGINT, sig_handler);
 			signal(SIGQUIT, SIG_DFL);
 			if (i != 0)
-				dup2(cmd->fd_in, STDIN_FILENO);
+				dup2(cmd->fd[0], STDIN_FILENO);
 			if ((i + 1) != count_pipe(cmd))
-				dup2(pipes[1], cmd->fd_out);
-			close(pipes[0]);
-			close(pipes[1]);
-			dup2(pipes[0], cmd->fd_in);
-			dup2(pipes[1], cmd->fd_out);
+			{
+				dup2(fd_in, cmd->fd[1]);
+				return ;
+			}// close(pipes[0]);
+			// close(pipes[1]);
+			// dup2(pipes[0], cmd->fd[0]);
+			// dup2(pipes[1], cmd->fd[1]);
 			if ((!cmd->infile || !cmd->outfile))
 			{
 				g_data.status = execve(cmd->bin, cmd->arg, envp->tab);
@@ -82,9 +112,11 @@ void	p_child(t_env *envp, t_cmd *cmd)
 					ft_exit(envp, cmd);
 			}
 			exit(g_data.status);
-		}
-		close(pipes[1]);
-		close(pipes[0]);
-		dup2(pipes[0], cmd->fd_in);
-	}
+		// }
+		// close(pipes[1]);
+		// // close(pipes[0]);
+		// dup2(pipes[0], cmd->fd[0]);
+		// close(pipes[0]);
+	// }
 }
+*/

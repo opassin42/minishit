@@ -18,8 +18,8 @@ static void	init_struct(t_cmd *cmd, char *key)
 	cmd->pid = 0;
 	cmd->status = 0;
 	cmd->ret = 0;
-	cmd->fd_in = STDIN_FILENO;
-	cmd->fd_out = STDOUT_FILENO;
+	cmd->fd[0] = 0;
+	cmd->fd[1] = 1;
 	cmd->append = 0;
 	cmd->infile = NULL;
 	cmd->outfile = NULL;

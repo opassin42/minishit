@@ -16,11 +16,9 @@ t_data	g_data;
 
 static char	*ft_shellname(void)
 {
-	char	*tmp;
+	char *tmp;
 
 	tmp = get_pwd();
-	dup2(STDIN_FILENO, 0);
-	dup2(STDIN_FILENO, 1);
 	tmp = ft_strjoin("\e[0;32m", tmp);
 	tmp = ft_strjoin(tmp, ":$>\e[0m");
 	return (tmp);
@@ -57,18 +55,17 @@ static int	ft_minishell(t_env *envp, char *s, int status)
 	hash_quote(&token);
 	cmd = ft_cmd(&token);
 	if (cmd)
-	{
 		status = ft_exec(envp, cmd);
-		dup2(cmd->fd_out, STDOUT_FILENO);
-		dup2(cmd->fd_in, STDIN_FILENO);
-	}
 	return (status);
 }
 
 static int	ft_readline(t_env *envp, char *s)
 {
 	if (!s)
-		s = readline((const char *)ft_shellname());
+	{
+		g_data.prompt = ft_shellname();
+		s = readline((const char *)g_data.prompt);
+	}
 	if (!s)
 		return (printf("exit\n"), g_data.status = -420);
 	if (s && *s && *s != '\n')
@@ -89,6 +86,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	s = NULL;
 	g_data = init_global();
+	g_data.status = 0;
 	if (isatty(STDIN_FILENO) == 0)
 		return (gc_free(), 0);
 	if (!*env)

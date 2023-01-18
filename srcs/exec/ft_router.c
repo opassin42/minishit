@@ -69,7 +69,7 @@ static char	**path_in_env(t_env *envp, char *var_name)
 	return (path);
 }
 
-int	ft_router(t_env *envp, t_cmd *cmd)
+int	ft_router(t_env *envp, t_cmd *cmd, int i, int prev)
 {
 	int			id;
 	int			status;
@@ -78,16 +78,35 @@ int	ft_router(t_env *envp, t_cmd *cmd)
 
 	ft_init_builtin(builtin);
 	id = which_builtin(builtin, cmd);
-	if (id == -1)
+	if (id == -1 || (count_pipe(cmd) > 1))
 	{
-		path = path_in_env(envp, "PATH");
-		if (!path)
-			return (-1);
-		status = ft_non_builtin(envp, cmd, path);
+		if (pipe(cmd->fd) < 0)
+			return (perror("minishell: pipe:"), errno);
+		cmd->pid = fork();
+		if (cmd->pid < 0)
+			return (perror("minishell: fork:"), errno);
+		if (cmd->pid == 0)
+		{
+			if (id == -1)
+			{
+				path = path_in_env(envp, "PATH");
+				if (!path)
+					return (-1);
+				status = ft_non_builtin(envp, cmd, path, i, prev);
+				if (status == 127)
+					exit(status);
+			}
+			else
+				exit(exec_builtin(envp, cmd, builtin, id));
+		}
+		else
+			p_father(cmd, prev);
 	}
-	else
+	else if (count_pipe(cmd) == 1)
+	{
 		status = exec_builtin(envp, cmd, builtin, id);
-	p_father(cmd);
+		p_father(cmd, prev);
+	}
 	if (g_data.sigint == 1 || g_data.sigquit == 1)
 		return (g_data.status);
 	if (g_data.status == 512 || g_data.status == 256)

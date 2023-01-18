@@ -28,6 +28,7 @@ typedef struct s_data
 	pid_t			pid;
 	volatile int	keeprunning;
 	t_gc			*gc;
+	char			*prompt;
 }				t_data;
 
 typedef enum s_type
@@ -70,8 +71,7 @@ typedef struct s_cmd
 	int				pid;
 	int				status;
 	int				ret;
-	int				fd_in;
-	int				fd_out;
+	int				fd[2];
 	int				hdoc;
 	int				append;
 	char			*outfile;

@@ -128,8 +128,8 @@ void	ft_cmd_addback(t_cmd **cmd, t_cmd *new_cmd);
 void	*join_token(t_list *token);
 char	**ft_malloc_double_p(t_list *token);
 
-int		ft_non_builtin(t_env *envp, t_cmd *cmd, char **path);
-int		ft_router(t_env *envp, t_cmd *cmd);
+int		ft_non_builtin(t_env *envp, t_cmd *cmd, char **path, int i, int fd_in);
+int		ft_router(t_env *envp, t_cmd *cmd, int i, int prev);
 int		ft_exec(t_env *envp, t_cmd *cmd);
 
 void	input_without_cmd(t_list **token);
@@ -193,8 +193,10 @@ void	sig_handler(int dummy);
 /******************************************************************************/
 /**********************************  PIPES    *********************************/
 /******************************************************************************/
-void	p_child(t_env *envp, t_cmd *cmd);
-void	p_father(t_cmd *cmd);
+void	p_child(t_env *envp, t_cmd *cmd, int i, int prev);
+void	p_father(t_cmd *cmd, int prev);
 void	process(t_env *envp, t_cmd *cmd);
+int	    count_pipe(t_cmd *cmd);
+
 
 #endif
