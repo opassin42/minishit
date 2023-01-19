@@ -16,10 +16,11 @@ t_data	g_data;
 
 static void textgenerator(void)
 {
-	printf("\n ____ ____ ____ ____ ____ ____ ____ ____ \n");
-	printf("||M |||i |||n |||i |||s |||h |||i |||t || \n");
-	printf("||__|||__|||__|||__|||__|||__|||__|||__|| \n");
-	printf("|/__\\|/__\\|/__\\|/__\\|/__\\|/__\\|/__\\|/__\\| \n\n\n");
+	printf(BHBLU"\n\n\n ____ ____ ____ ____ ____ ____ ____ ____ \n"reset);
+	printf(BHBLU"||  |||  |||  |||  |||  |||  |||  |||  || \n"reset);
+	printf(BHGRN"||M |||I |||N |||I ||| S||| H||| I||| T|| \n"reset);
+	printf(BHYEL"||__|||__|||__|||__|||__|||__|||__|||__|| \n"reset);
+	printf(BHRED"|/__\\|/__\\|/__\\|/__\\|/__\\|/__\\|/__\\|/__\\| \n\n\n"reset);
 }
 
 static char	*ft_shellname(void)
@@ -27,8 +28,8 @@ static char	*ft_shellname(void)
 	char *tmp;
 
 	tmp = get_pwd();
-	tmp = ft_strjoin("\33[1;35m", tmp);
-	tmp = ft_strjoin(tmp, "\33[5;35m🔥\033[m\n\033[1;5;34;0m ↳ \033[0m");
+	tmp = ft_strjoin(GRNB"\33[1;35m", tmp);
+	tmp = ft_strjoin(tmp, "\33[5;35m🔥\033[m\n\033[1;5;34;0m ↳ \033[0m"reset);
 	return (tmp);
 }
 

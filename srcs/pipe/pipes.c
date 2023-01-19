@@ -46,7 +46,7 @@ void	p_father(t_cmd *cmd)
 	close(cmd->fd[1]);
 	if (g_data.prev != -1)
 		close(g_data.prev);
-	g_data.prev = cmd->fd[1];
+	g_data.prev = cmd->fd[0];
 	waitpid(cmd->pid, &g_data.status, 0);
 }
 
