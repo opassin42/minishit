@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/17 18:53:54 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/19 19:22:22 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_data	g_data;
 
-static void textgenerator(void)
+static void	textgenerator(void)
 {
 	printf(BHBLU"\n\n\n ____ ____ ____ ____ ____ ____ ____ ____ \n"reset);
 	printf(BHBLU"||  |||  |||  |||  |||  |||  |||  |||  || \n"reset);
@@ -25,25 +25,18 @@ static void textgenerator(void)
 
 static char	*ft_shellname(void)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = get_pwd();
+	if (!tmp)
+		return (NULL);
 	tmp = ft_strjoin(GRNB"\33[1;35m", tmp);
+	if (!tmp)
+		return (NULL);
 	tmp = ft_strjoin(tmp, "\33[5;35m🔥\033[m\n\033[1;5;34;0m ↳ \033[0m"reset);
+	if (!tmp)
+		return (NULL);
 	return (tmp);
-}
-
-static void	hash_var_value(t_var **var)
-{
-	t_var	*tmp;
-
-	tmp = *var;
-	while (tmp)
-	{
-		if (tmp->value)
-			positive_hashing(tmp->value, 0);
-		tmp = tmp->next;
-	}
 }
 
 static int	ft_minishell(t_env *envp, char *s, int status)
@@ -74,9 +67,9 @@ static int	ft_readline(t_env *envp, char *s)
 	{
 		g_data.prompt = ft_shellname();
 		s = readline((const char *)g_data.prompt);
+		if (!s)
+			return (printf("exit\n"), g_data.status = -420);
 	}
-	if (!s)
-		return (printf("exit\n"), g_data.status = -420);
 	if (s && *s && *s != '\n')
 	{
 		if (envp)
@@ -96,9 +89,9 @@ int	main(int ac, char **av, char **env)
 	s = NULL;
 	g_data = init_global();
 	g_data.status = 0;
-	textgenerator();
 	if (isatty(STDIN_FILENO) == 0)
 		return (gc_free(), 0);
+	textgenerator();
 	if (!*env)
 		env = when_no_env();
 	envp = ft_getenv(env);
@@ -109,7 +102,7 @@ int	main(int ac, char **av, char **env)
 		signal(SIGQUIT, SIG_IGN);
 		g_data.status = ft_readline(envp, s);
 		if (g_data.status == -420)
-			break;
+			break ;
 	}
 	return (gc_free(), 0);
 }

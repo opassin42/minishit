@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 05:04:34 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/13 19:51:14 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:27:49 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static int	rd_in(t_cmd *cmd)
 		printf("heredoc detected\n");
 	else
 		cmd->ret = open(cmd->infile, O_RDONLY, 0666);
-	//cmd->fd[0] = dup(STDIN_FILENO);
 	if (cmd->ret == -1)
 		return (errno);
 	dup2(cmd->ret, cmd->fd[0]);
@@ -59,7 +58,6 @@ static int	rd_out(t_cmd *cmd)
 		cmd->ret = open(cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	else
 		cmd->ret = open(cmd->outfile, O_WRONLY | O_CREAT | O_APPEND, 0666);
-	// cmd->fd[1] = dup(STDOUT_FILENO);
 	if (cmd->ret == -1)
 		return (errno);
 	dup2(cmd->ret, cmd->fd[1]);

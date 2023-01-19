@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:49:33 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/13 20:19:47 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/19 20:57:48 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ static int	which_builtin(t_builtin *builtin, t_cmd *cmd)
 	return (-1);
 }
 
-static int	exec_builtin(t_env *envp, t_cmd *cmd, t_builtin *builtin, int i)
+static void	exec_builtin(t_env *envp, t_cmd *cmd, t_builtin *builtin, int i)
 {
 	int	res;
 
 	res = builtin[i].f(envp, cmd);
-	return (res);
+	g_data.status = res;
 }
 
 static char	**path_in_env(t_env *envp, char *var_name)
@@ -72,11 +72,9 @@ static char	**path_in_env(t_env *envp, char *var_name)
 int	ft_router(t_env *envp, t_cmd *cmd, int i)
 {
 	int			id;
-	int			status;
 	char		**path;
 	t_builtin	builtin[7];
 
-	status = -1;
 	ft_init_builtin(builtin);
 	id = which_builtin(builtin, cmd);
 	if (id == -1 || (count_pipe(cmd) > 1))
@@ -93,21 +91,17 @@ int	ft_router(t_env *envp, t_cmd *cmd, int i)
 				path = path_in_env(envp, "PATH");
 				if (!path)
 					return (-1);
-				status = ft_non_builtin(envp, cmd, path, i);
-				if (status == 127)
-					exit(status);
+				ft_non_builtin(envp, cmd, path, i);
 			}
 			else
-				exit(exec_builtin(envp, cmd, builtin, id));
+				exec_builtin(envp, cmd, builtin, id);
+			printf("router/status = %d\n", g_data.status);
+			ft_exit(envp, cmd);
 		}
 		else
 			p_father(cmd);
 	}
 	else if (count_pipe(cmd) == 1)
-		status = exec_builtin(envp, cmd, builtin, id);
-	if (g_data.sigint == 1 || g_data.sigquit == 1)
-		return (g_data.status);
-	if (g_data.status == 512 || g_data.status == 256)
-			status = g_data.status / 256;
-	return (status);
+		exec_builtin(envp, cmd, builtin, id);
+	return (g_data.status);
 }

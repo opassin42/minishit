@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 23:14:35 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/06 18:28:05 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/19 16:28:34 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,19 @@ void	hash_quote(t_list **token)
 	{
 		if (tmp->quote && tmp->expand[0])
 			negative_hashing(tmp->expand, 0);
+		tmp = tmp->next;
+	}
+}
+
+void	hash_var_value(t_var **var)
+{
+	t_var	*tmp;
+
+	tmp = *var;
+	while (tmp)
+	{
+		if (tmp->value)
+			positive_hashing(tmp->value, 0);
 		tmp = tmp->next;
 	}
 }

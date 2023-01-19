@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:52 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/13 18:56:25 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/19 16:04:53 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define ERRNO_2 "Command not found"
 # define ERRNO_3 "No such file or directory"
 # define ERRNO_4 "Permission denied"
+# define ERRNO_5 "Not a valid identifier"
 # define ERRNO_ENV "There is no printable environment"
 
 # define MISSING_ENV "No env ; Cannot export variable.\n"

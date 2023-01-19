@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2023/01/17 19:22:48 by ccouliba         ###   ########.fr        #
+#    Updated: 2023/01/19 21:35:48 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,7 +93,8 @@ re: fclean all
 
 leak: re
 	@echo "\t\t\t\t\t$(_BG_CYAN)LEAK TEST$(_END) (valgrind)"
-	@valgrind --suppressions=.leaks.txt --leak-check=full --track-fds=yes --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
+	valgrind --suppressions=.leaks.txt --leak-check=full ./$(NAME)
+# @valgrind --suppressions=.leaks.txt --leak-check=full --track-fds=yes --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
 # --trace-children=yes --quiet --track-fds=yes : For checking lefting opened fd -> carefull about this
 
 debug : fclean
@@ -107,7 +108,7 @@ gitt: fclean
 	@echo "[$(_GREEN)!$(_END)] Adding files ... 	  [$(_GREEN)SUCCESS$(_END)]"
 	@echo "[$(_RED)!$(_END)] Committing ... 	  [$(_BK_RED)  FAIL $(_END)]"
 	@read -p "--> Need a name to commit (one word)&> " var
-	git commit -m var
+	git commit -m $(var)
 	@echo "[$(_GREEN)!$(_END)] Committing ... 	  [$(_GREEN)SUCCESS$(_END)]\n"
 	git push
 	@echo "[$(_GREEN)!$(_END)] Pushing :		    [$(_GREEN)SUCCESS$(_END)]\n"

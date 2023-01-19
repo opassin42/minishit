@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/17 19:12:07 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:04:46 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	positive_hashing(char *s, int c);
 void	negative_hashing(char *s, int c);
 void	hash_token(t_list *token);
 void	hash_quote(t_list **token);
+void	hash_var_value(t_var **var);
 
 int		ft_alnum_underscore(int c);
 int		check_quotes(char *s, int c);
@@ -128,7 +129,7 @@ void	ft_cmd_addback(t_cmd **cmd, t_cmd *new_cmd);
 void	*join_token(t_list *token);
 char	**ft_malloc_double_p(t_list *token);
 
-int		ft_non_builtin(t_env *envp, t_cmd *cmd, char **path, int i);
+void	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path, int i);
 int		ft_router(t_env *envp, t_cmd *cmd, int i);
 int		ft_exec(t_env *envp, t_cmd *cmd);
 
@@ -195,10 +196,9 @@ void	parent_handler(int sig);
 /******************************************************************************/
 /**********************************  PIPES    *********************************/
 /******************************************************************************/
-void	p_child(t_env *envp, t_cmd *cmd, int i);
+void	ft_pipe(t_env *envp, t_cmd *cmd, int i);
 void	p_father(t_cmd *cmd);
-void	process(t_env *envp, t_cmd *cmd);
-int	    count_pipe(t_cmd *cmd);
-
+int		count_pipe(t_cmd *cmd);
+int		ft_cmdsize(t_list *cmd);
 
 #endif
