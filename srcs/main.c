@@ -14,13 +14,21 @@
 
 t_data	g_data;
 
+static void textgenerator(void)
+{
+	printf("\n ____ ____ ____ ____ ____ ____ ____ ____ \n");
+	printf("||M |||i |||n |||i |||s |||h |||i |||t || \n");
+	printf("||__|||__|||__|||__|||__|||__|||__|||__|| \n");
+	printf("|/__\\|/__\\|/__\\|/__\\|/__\\|/__\\|/__\\|/__\\| \n\n\n");
+}
+
 static char	*ft_shellname(void)
 {
 	char *tmp;
 
 	tmp = get_pwd();
-	tmp = ft_strjoin("\e[0;32m", tmp);
-	tmp = ft_strjoin(tmp, ":$>\e[0m");
+	tmp = ft_strjoin("\33[1;35m", tmp);
+	tmp = ft_strjoin(tmp, "\33[5;35m🔥\033[m\n\033[1;5;34;0m ↳ \033[0m");
 	return (tmp);
 }
 
@@ -55,9 +63,7 @@ static int	ft_minishell(t_env *envp, char *s, int status)
 	hash_quote(&token);
 	cmd = ft_cmd(&token);
 	if (cmd)
-	{
 		status = ft_exec(envp, cmd);
-	}
 	return (status);
 }
 
@@ -89,6 +95,7 @@ int	main(int ac, char **av, char **env)
 	s = NULL;
 	g_data = init_global();
 	g_data.status = 0;
+	textgenerator();
 	if (isatty(STDIN_FILENO) == 0)
 		return (gc_free(), 0);
 	if (!*env)
@@ -97,7 +104,7 @@ int	main(int ac, char **av, char **env)
 	while (g_data.keeprunning)
 	{
 		init_sigflag();
-		signal(SIGINT, sig_handler);
+		signal(SIGINT, parent_handler);
 		signal(SIGQUIT, SIG_IGN);
 		g_data.status = ft_readline(envp, s);
 		if (g_data.status == -420)

@@ -46,7 +46,7 @@ void	p_father(t_cmd *cmd)
 	close(cmd->fd[1]);
 	if (g_data.prev != -1)
 		close(g_data.prev);
-	g_data.prev = cmd->fd[0];
+	g_data.prev = cmd->fd[1];
 	waitpid(cmd->pid, &g_data.status, 0);
 }
 
@@ -54,10 +54,16 @@ void	p_child(t_env *envp, t_cmd *cmd, int i)
 {
 	int		max;
 
-	max = count_pipe(cmd);
-	signal(SIGINT, sig_handler);
+	max = count_pipe(cmd) + 1;
+	signal(SIGINT, child_handler);
 	signal(SIGQUIT, SIG_DFL);
-	if (i != max - 1)
+	if ((i == 0 && max == 2) || (cmd->infile || cmd->outfile))
+	{
+		close(cmd->fd[0]);
+		close(cmd->fd[1]);
+		g_data.status = execve(cmd->bin, cmd->arg, envp->tab);
+	}
+	if (i + 1 != max)
 		dup2(cmd->fd[1], STDOUT_FILENO);
 	if (i != 0)
 	{
@@ -67,5 +73,4 @@ void	p_child(t_env *envp, t_cmd *cmd, int i)
 	close(cmd->fd[1]);
 	close(cmd->fd[0]);
 	g_data.status = execve(cmd->bin, cmd->arg, envp->tab);
-
 }

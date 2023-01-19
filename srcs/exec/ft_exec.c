@@ -83,6 +83,7 @@ int	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path, int i)
 	if (!cmd->bin || access(cmd->bin, F_OK | R_OK | X_OK) != 0)
 		return (cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd), 127);//exit herre if cmd failed
 	p_child(envp, cmd, i);
+	p_father(cmd);
 	return (g_data.status);
 }
 
