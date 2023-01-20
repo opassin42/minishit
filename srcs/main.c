@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 01:15:44 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 22:32:44 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ static int	ft_minishell(t_env *envp, char *s, int status)
 	hash_quote(&token);
 	cmd = ft_cmd(&token);
 	if (cmd)
+	{
+		cmd_index(&cmd);
 		status = ft_exec(envp, cmd);
+	}
 	return (status);
 }
 
@@ -97,7 +100,6 @@ int	main(int ac, char **av, char **env)
 	envp = ft_getenv(env);
 	while (g_data.keeprunning)
 	{
-		init_sigflag();
 		signal(SIGINT, parent_handler);
 		signal(SIGQUIT, SIG_IGN);
 		g_data.status = ft_readline(envp, s);

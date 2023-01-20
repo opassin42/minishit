@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 18:45:01 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 03:31:36 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 17:42:01 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,16 @@ static char	*check_name(char *name)
 	return (tmp);
 }
 
+static void	if_exp_flag(t_env *envp, t_list *tmp, char *first_val, char *(*f)())
+{
+	char	*exp_val;
+
+	exp_val = f(envp, first_val);
+	if (exp_val)
+		tmp->expand = exp_val;
+	return ;
+}
+
 /*
 ** $_ -> last arg given to a cmd ! If no arg, print build_in PATH
 ** 
@@ -80,16 +90,6 @@ char	*expand(t_env *envp, char *s)
 		return (ft_strdup(""));
 	negative_hashing(var_val, ' ');
 	return (var_val);
-}
-
-static void	if_exp_flag(t_env *envp, t_list *tmp, char *first_val, char *(*f)())
-{
-	char	*exp_val;
-
-	exp_val = f(envp, first_val);
-	if (exp_val)
-		tmp->expand = exp_val;
-	return ;
 }
 
 void	ft_expander(t_list **token, t_env *envp)

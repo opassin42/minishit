@@ -6,20 +6,20 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 17:55:21 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 09:42:39 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 23:38:37 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static void	init_struct(t_cmd *cmd, char *key)
+static void	init_cmd(t_cmd *cmd, char *key)
 {
-	cmd->id = 0;
+	cmd->i = -1;
+	cmd->id = -1;
 	cmd->pid = 0;
 	cmd->ret = 0;
-	// cmd->ret = 1;
-	cmd->fd[0] = 0;
-	cmd->fd[1] = 1;
+	cmd->fd[0] = -1;
+	cmd->fd[1] = -1;
 	cmd->append = 0;
 	cmd->infile = NULL;
 	cmd->outfile = NULL;
@@ -27,7 +27,7 @@ static void	init_struct(t_cmd *cmd, char *key)
 	cmd->param = (char **) NULL;
 	cmd->arg = (char **) NULL;
 	cmd->bin = NULL;
-	cmd->rd = (t_rd *)NULL;
+	cmd->rd = (t_rd *) NULL;
 }
 
 static void	*init_arg(t_list *token, t_cmd *cmd)
@@ -41,8 +41,7 @@ static void	*init_arg(t_list *token, t_cmd *cmd)
 			ft_lstadd_back(&arg, ft_lstnew(token->val));
 		if (token->type == RD)
 		{
-			// init_rd(cmd, token);
-			init_rd_struct(cmd, token);
+			init_rd(cmd, token);
 			token = token->next;
 			if (!token)
 				break ;
@@ -96,9 +95,8 @@ void	*first_cmd(t_list **token)
 				cmd = ft_new_cmd(tmp);
 				if (!cmd)
 					return (NULL);
-				init_struct(cmd, tmp->val);
-				// init_rd(cmd, rd);
-				init_rd_struct(cmd, rd);
+				init_cmd(cmd, tmp->val);
+				init_rd(cmd, rd);
 				return (init_cmd_arg(tmp, cmd), (void *)cmd);
 			}
 			input_without_cmd(token);
@@ -116,7 +114,7 @@ void	*make_cmd(t_list *token)
 		cmd = ft_new_cmd(token);
 		if (!cmd)
 			return (NULL);
-		init_struct(cmd, token->val);
+		init_cmd(cmd, token->val);
 		init_cmd_arg(token, cmd);
 	}
 	else

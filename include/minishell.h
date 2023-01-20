@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 09:11:13 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 23:52:54 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ extern t_data	g_data;
 /******************************************************************************/
 void	init_sigflag(void);
 t_data	init_global(void);
-void	ft_init_builtin(t_builtin *builtin);
+void	init_builtin(t_builtin *builtin);
 
 /******************************************************************************/
 /**********************************  LEXING  **********************************/
@@ -123,6 +123,7 @@ void	*ft_cmd(t_list **token);
 void	*make_cmd(t_list *token);
 void	*first_cmd(t_list **token);
 int		check_cmd(char *s);
+void	cmd_index(t_cmd **cmd);
 
 t_cmd	*ft_new_cmd(t_list *token);
 t_cmd	*ft_last_cmd(t_cmd *cmd);
@@ -131,8 +132,12 @@ void	*join_token(t_list *token);
 char	**ft_malloc_double_p(t_list *token);
 
 int		ft_exec(t_env *envp, t_cmd *cmd);
-void	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path, int i);
-int		exec_cmd(t_env *envp, t_cmd *cmd, int i);
+int		ft_process(t_env *envp, t_cmd *cmd);
+void	router(t_env *envp, t_cmd *cmd, t_builtin *builtin);
+int     which_builtin(t_builtin *builtin, t_cmd *cmd);
+void	exec_builtin(t_env *envp, t_cmd *cmd, t_builtin *builtin);
+void	exec_non_builtin(t_env *envp, t_cmd *cmd);
+char	*binary_file(t_cmd *cmd, char **path);
 
 void	input_without_cmd(t_list **token);
 void	init_rd(t_cmd *cmd, t_list *token);
@@ -199,9 +204,9 @@ void	parent_handler(int sig);
 /******************************************************************************/
 int		count_pipe(t_cmd *cmd);
 void	p_father(t_cmd *cmd);
-void	p_child(t_env *envp, t_cmd *cmd, int i);
+void	p_child(t_env *envp, t_cmd *cmd);
 void	ft_waitpid(t_cmd *cmd);
-int		ft_cmdsize(t_list *cmd);
+int		ft_cmdsize(t_cmd *cmd);
 
 
 void	init_rd_struct(t_cmd *cmd, t_list *token);

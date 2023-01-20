@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2023/01/20 12:34:12 by ccouliba         ###   ########.fr        #
+#    Updated: 2023/01/20 22:19:52 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,13 +45,14 @@ SRCS =	srcs/main.c \
 		srcs/env/getenv_utils.c \
 		srcs/cmd/ft_make_cmd.c \
 		srcs/cmd/ft_cmd.c \
-		srcs/cmd/redirec.c \
+		srcs/cmd/init_rd.c \
 		srcs/cmd/cmd_utils.c \
-		srcs/exec/ft_exec_cmd.c \
+		srcs/exec/open_files.c \
 		srcs/exec/ft_signal.c \
 		srcs/exec/ft_exec.c \
 		srcs/exec/exec_utils.c \
 		srcs/exec/hashing.c \
+		srcs/exec/router.c \
 		srcs/pipe/pipes.c \
 		utils/ft_init.c \
 		utils/ft_split.c \

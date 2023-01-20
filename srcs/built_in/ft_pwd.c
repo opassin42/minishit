@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 03:21:16 by opassin           #+#    #+#             */
-/*   Updated: 2023/01/20 01:10:32 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 23:56:22 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,14 @@ int	ft_pwd(t_env *envp, t_cmd *cmd)
 	char	buff[PATH_MAX];
 
 	(void)envp;
-	if (!cmd->param)
+	(void)cmd;
+	if (getcwd(buff, sizeof(buff)) == NULL)
 	{
-		if (getcwd(buff, sizeof(buff)) == NULL)
-		{
-			printf("error: %s", strerror(errno));
-			return (errno);
-		}
-		else
-			printf("%s\n", buff);
-		return (EXIT_SUCCESS);
+		printf("error: %s", strerror(errno));
+		return (errno);
 	}
-	printf ("minishell: pwd: too many arguments\n");
+	else
+		return (printf("%s\n", buff), EXIT_SUCCESS);
 	return (EXIT_FAILURE);
 }
 

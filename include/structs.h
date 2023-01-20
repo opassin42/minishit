@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:47 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 09:19:33 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 20:30:04 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,15 @@ typedef struct s_gc
 
 typedef struct s_data
 {
+	int				cmdsize;
 	int				status;
-	int				sigint;
-	int				sigquit;
 	int				rd_error;
 	int				prev;
-	pid_t			pid;
-	volatile int	keeprunning;
-	t_gc			*gc;
-	int				max;
+	int				pfd[2];
 	char			*prompt;
+	pid_t			pid;
+	t_gc			*gc;
+	volatile int	keeprunning;
 }				t_data;
 
 typedef enum s_type
@@ -76,10 +75,10 @@ typedef struct s_env
 
 typedef struct s_cmd
 {
+	int				i;
 	int				id;
 	int				pid;
 	int				ret;
-	// int				ret;
 	int				fd[2];
 	int				hdoc;
 	int				append;

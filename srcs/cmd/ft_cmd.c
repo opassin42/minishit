@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:30 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/13 16:49:00 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 20:37:21 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ static void	assign_a_type(t_list **token)
 static void	*final_token(t_list **token)
 {
 	t_list	*new;
-	t_list	*pre_cmd;
 	t_list	*tmp;
+	t_list	*pre_cmd;
 
 	tmp = *token;
 	if (tmp->type == VOID)

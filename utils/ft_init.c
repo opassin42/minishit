@@ -6,33 +6,30 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 03:34:51 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 03:34:53 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 22:33:27 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	init_sigflag(void)
-{
-	g_data.sigint = 0;
-	g_data.sigquit = 0;
-}
-
 t_data	init_global(void)
 {
 	t_data	g_data;
 
+	g_data.cmdsize = 0;
 	g_data.status = 0;
+	g_data.rd_error = 0;
+	g_data.prev = -1;
+	g_data.pfd[0] = -1;
+	g_data.pfd[1] = -1;
+	g_data.prompt = NULL;
 	g_data.pid = -1;
 	g_data.gc = 0;
 	g_data.keeprunning = 1;
-	g_data.rd_error = 0;
-	g_data.prompt = NULL;
-	g_data.prev = -1;
 	return (g_data);
 }
 
-void	ft_init_builtin(t_builtin *builtin)
+void	init_builtin(t_builtin *builtin)
 {
 	builtin[0].key = "echo";
 	builtin[0].f = ft_echo;

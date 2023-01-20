@@ -6,95 +6,56 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 12:32:41 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 23:54:25 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	*bin_path(t_cmd *cmd, char **path)
+static void	set_builtin_id(t_cmd *cmd, t_builtin *builtin)
 {
-	int		i;
-	char	*bin;
-	char	*tmp;
-
-	if (!path)
-		return (NULL);
-	bin = NULL;
-	if (!cmd->name || !*cmd->name)
-		return (NULL);
-	if (*cmd->name == '.' || *cmd->name == '/')
-		return (cmd->name);
-	i = -1;
-	while (path[++i])
-	{
-		tmp = ft_strjoin(path[i], "/");
-		if (!tmp)
-			return (NULL);
-		bin = ft_strjoin(tmp, cmd->name);
-		if (!bin)
-			return (NULL);
-		if (!access(bin, F_OK | R_OK | X_OK))
-			return (bin);
-	}
-	return (bin);
+	init_builtin(builtin);
+	cmd->id = which_builtin(builtin, cmd);
+	return ;
 }
 
-static char	*binary_file(t_cmd *cmd, char **path)
+int	ft_process(t_env *envp, t_cmd *cmd)
 {
-	if (!path)
-		return (NULL);
-	if ((*cmd->name == '.' || *cmd->name == '/') && access(cmd->name, F_OK))
-		cmd->bin = ft_strdup(cmd->name);
-	else
-		cmd->bin = bin_path(cmd, path);
-	if (!cmd->bin)
-		return (NULL);
-	return (cmd->bin);
-}
+	t_builtin	builtin[7];
 
-void	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path, int i)
-{
-	(void)envp;
-	if (!path)
-		ft_exit(envp, cmd);
-	cmd->bin = binary_file(cmd, path);
-	if (check_cmd(cmd->name))
+	set_builtin_id(cmd, builtin);
+	if (cmd->id == -1 || g_data.cmdsize > 1)
 	{
-		close(cmd->fd[0]);
-		close(cmd->fd[1]);
-		exec_error(cmd->name, ERRNO_3, 2, ft_putstr_fd);
+		if (pipe(g_data.pfd) < 0)
+			return (perror("minishell: pipe:"), errno);
+		cmd->pid = fork();
+		if (cmd->pid < 0)
+			return (perror("minishell: fork:"), errno);
+		if (cmd->pid == 0)
+		{
+			router(envp, cmd, builtin);
+			ft_exit(envp, cmd);
+		}
+		else
+			p_father(cmd);
 	}
-	else if (!cmd->bin || access(cmd->bin, F_OK | R_OK | X_OK) != 0)
-	{
-		g_data.status = 127;
-		close(cmd->fd[0]);
-		close(cmd->fd[1]);
-		exec_error(cmd->name, ERRNO_2, 2, ft_putstr_fd);
-	}
-	p_child(envp, cmd, i);
+	else if (g_data.cmdsize == 1)
+		exec_builtin(envp, cmd, builtin);
+	return (g_data.status);
 }
 
 int	ft_exec(t_env *envp, t_cmd *cmd)
 {
-	int		i;
-	int		ret;
 	t_cmd	*tmp;
 
-	i = 0;
-	ret = 0;
 	tmp = cmd;
-	g_data.max = count_pipe(cmd) + 1;
+	g_data.cmdsize = ft_cmdsize(cmd);
 	while (cmd)
 	{
 		if (cmd->ret == -1)
 			return (EXIT_FAILURE);
-		ret = exec_cmd(envp, cmd, i);
-		if (!cmd->next)
-			break ;
+		g_data.status = ft_process(envp, cmd);
 		cmd = cmd->next;
-		++i;
 	}
-	close(cmd->fd[0]);
-	return (ft_waitpid(tmp), ret | g_data.status);
+	return (ft_waitpid(tmp), g_data.status);
 }
