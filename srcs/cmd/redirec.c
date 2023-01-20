@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 05:04:34 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 09:19:06 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 12:11:04 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,46 +88,20 @@ void	open_files(t_cmd *cmd)
 				cmd->append = 1;
 			else
 				cmd->append = 0;
-			printf("open_files : cmd->name = %s | outfile = %s | cmd->fd[1] = %d | cmd->ret = %d\n", cmd->name, cmd->outfile, cmd->fd[1], cmd->ret);
+			// printf("open_files : cmd->name = %s | outfile = %s | cmd->fd[1] = %d | cmd->ret = %d\n", cmd->name, cmd->outfile, cmd->fd[1], cmd->ret);
 			rd_out(cmd);
-			printf("open_files : cmd->name = %s | outfile = %s | cmd->fd[1] = %d | cmd->ret = %d\n", cmd->name, cmd->outfile, cmd->fd[1], cmd->ret);
+			// printf("open_files : cmd->name = %s | outfile = %s | cmd->fd[1] = %d | cmd->ret = %d\n", cmd->name, cmd->outfile, cmd->fd[1], cmd->ret);
 		}
 		else if (rd->flag == 3)
 		{
 			cmd->infile = rd->file;
-			printf("open_files : cmd->name = %s | infile = %s | cmd->fd[0] = %d | cmd->ret = %d\n", cmd->name, cmd->infile, cmd->fd[0], cmd->ret);
+			// printf("open_files : cmd->name = %s | infile = %s | cmd->fd[0] = %d | cmd->ret = %d\n", cmd->name, cmd->infile, cmd->fd[0], cmd->ret);
 			rd_in(cmd);
-			printf("open_files : cmd->name = %s | infile = %s | cmd->fd[0] = %d | cmd->ret = %d\n", cmd->name, cmd->infile, cmd->fd[0], cmd->ret);
+			// printf("open_files : cmd->name = %s | infile = %s | cmd->fd[0] = %d | cmd->ret = %d\n", cmd->name, cmd->infile, cmd->fd[0], cmd->ret);
 		}
 		rd = rd->next;
 	}
 }
-
-// void	init_rd(t_cmd *cmd, t_list *token)
-// {
-// 	if (!ft_strcmp((char *)token->val, "<")
-// 		|| !ft_strcmp((char *)token->val, "<<"))
-// 	{
-// 		cmd->infile = (char *)token->next->val;
-// 		if (!ft_strcmp((char *)token->val, "<<"))
-// 			cmd->hdoc = 1;
-// 		else
-// 			cmd->hdoc = 0;
-// 		if (rd_in(cmd) != EXIT_SUCCESS)
-// 			exec_error((char *)token->next->val, ERRNO_3, 2, ft_putstr_fd);
-// 	}
-// 	else if (!ft_strcmp((char *)token->val, ">")
-// 		|| !ft_strcmp((char *)token->val, ">>"))
-// 	{
-// 		cmd->outfile = (char *)token->next->val;
-// 		if (!ft_strcmp((char *)token->val, ">>"))
-// 			cmd->append = 1;
-// 		else
-// 			cmd->append = 0;
-// 		if (rd_out(cmd) != EXIT_SUCCESS)
-// 			exec_error((char *)token->next->val, ERRNO_4, 2, ft_putstr_fd);
-// 	}
-// }
 
 int	define_rd(char *s)
 {

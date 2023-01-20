@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:35:41 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 09:43:49 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 12:23:44 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	p_child(t_env *envp, t_cmd *cmd, int i)
 	close(cmd->fd[0]);
 	if (execve(cmd->bin, cmd->arg, envp->tab) == -1)
 		exit(g_data.status = errno);
+	ft_exit(envp, cmd);
 }
 
 void	ft_waitpid(t_cmd *cmd)
@@ -76,7 +77,10 @@ void	ft_waitpid(t_cmd *cmd)
 	{
 		waitpid(cmd->pid, &g_data.status, 0);
 		g_data.status = WEXITSTATUS(g_data.status);
+		if (!cmd->next)
+			break ;
 		cmd = cmd->next;
 	}
+	// close(cmd->fd[0]);
 	g_data.prev = -1;
 }

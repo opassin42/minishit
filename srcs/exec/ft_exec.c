@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 09:45:31 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 12:32:41 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static char	*binary_file(t_cmd *cmd, char **path)
 void	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path, int i)
 {
 	(void)envp;
-	(void)path;
 	if (!path)
 		ft_exit(envp, cmd);
 	cmd->bin = binary_file(cmd, path);
@@ -91,8 +90,11 @@ int	ft_exec(t_env *envp, t_cmd *cmd)
 		if (cmd->ret == -1)
 			return (EXIT_FAILURE);
 		ret = exec_cmd(envp, cmd, i);
+		if (!cmd->next)
+			break ;
 		cmd = cmd->next;
 		++i;
 	}
+	close(cmd->fd[0]);
 	return (ft_waitpid(tmp), ret | g_data.status);
 }

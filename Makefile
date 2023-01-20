@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2023/01/20 06:35:55 by ccouliba         ###   ########.fr        #
+#    Updated: 2023/01/20 12:34:12 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,7 +108,7 @@ gitt: fclean
 	@echo "[$(_GREEN)!$(_END)] Adding files ... 	  [$(_GREEN)SUCCESS$(_END)]"
 	@echo "[$(_RED)!$(_END)] Committing ... 	  [$(_BK_RED)  FAIL $(_END)]"
 	@read -p "--> Need a name to commit (one word)&> " var
-	git commit -m $(var)
+	git commit -m var
 	@echo "[$(_GREEN)!$(_END)] Committing ... 	  [$(_GREEN)SUCCESS$(_END)]\n"
 	git push
 	@echo "[$(_GREEN)!$(_END)] Pushing :		    [$(_GREEN)SUCCESS$(_END)]\n"
