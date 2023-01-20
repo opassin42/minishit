@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 01:21:02 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 06:29:05 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ extern t_data	g_data;
 /******************************************************************************/
 /**********************************  INITS  ***********************************/
 /******************************************************************************/
-t_data	init_global(void);
 void	init_sigflag(void);
+t_data	init_global(void);
+void	ft_init_builtin(t_builtin *builtin);
 
 /******************************************************************************/
 /**********************************  LEXING  **********************************/
@@ -131,8 +132,7 @@ char	**ft_malloc_double_p(t_list *token);
 
 int		ft_exec(t_env *envp, t_cmd *cmd);
 void	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path, int i);
-int		ft_router(t_env *envp, t_cmd *cmd, int i);
-void	ft_waitpid(t_cmd *cmd);
+int		exec_cmd(t_env *envp, t_cmd *cmd, int i);
 
 void	input_without_cmd(t_list **token);
 void	init_rd(t_cmd *cmd, t_list *token);
@@ -185,7 +185,7 @@ void	ft_pop_in_gc(t_gc **gc, void *p);
 /******************************************************************************/
 /* Builtin errors*/
 void	export_error(char *s);
-void	cmd_error(char *token, char *err_msg, int fd, void (*f)());
+void	exec_error(char *token, char *err_msg, int fd, void (*f)());
 
 /******************************************************************************/
 /**********************************  SIGNALS  *********************************/
@@ -197,10 +197,14 @@ void	parent_handler(int sig);
 /******************************************************************************/
 /**********************************  PIPES    *********************************/
 /******************************************************************************/
-void	ft_pipe(t_env *envp, t_cmd *cmd, int i);
+int		count_pipe(t_cmd *cmd);
 void	p_father(t_cmd *cmd);
 void	p_child(t_env *envp, t_cmd *cmd, int i);
-int		count_pipe(t_cmd *cmd);
+void	ft_waitpid(t_cmd *cmd);
 int		ft_cmdsize(t_list *cmd);
+
+
+void	init_rd_struct(t_cmd *cmd, t_list *token);
+void	open_files(t_cmd *cmd);
 
 #endif

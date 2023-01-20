@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 01:52:47 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 07:08:05 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,6 @@ static char	*binary_file(t_cmd *cmd, char **path)
 }
 
 /*
-** Handle ./.etc and .//etc
-** Have to RE-make this function
-*/
-int	check_for_slash(char *s)
-{
-	while (*s)
-	{
-		if (*s != '/' && *s != '.')
-			return (EXIT_SUCCESS);
-		++s;
-	}
-	return (EXIT_FAILURE);
-}
-
-/*
 ** Flag existing means there is another char 
 */
 void	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path, int i)
@@ -81,14 +66,14 @@ void	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path, int i)
 	{
 		close(cmd->fd[0]);
 		close(cmd->fd[1]);
-		cmd_error(cmd->name, ERRNO_3, 2, ft_putstr_fd);
+		exec_error(cmd->name, ERRNO_3, 2, ft_putstr_fd);
 	}
 	else if (!cmd->bin || access(cmd->bin, F_OK | R_OK | X_OK) != 0)
 	{
 		g_data.status = 127;
 		close(cmd->fd[0]);
 		close(cmd->fd[1]);
-		cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd);
+		exec_error(cmd->name, ERRNO_2, 2, ft_putstr_fd);
 	}
 	p_child(envp, cmd, i);
 }
@@ -107,10 +92,9 @@ int	ft_exec(t_env *envp, t_cmd *cmd)
 	{
 		if (cmd->ret == -1)
 			return (EXIT_FAILURE);
-		ret = ft_router(envp, cmd, i);
+		ret = exec_cmd(envp, cmd, i);
 		cmd = cmd->next;
 		++i;
 	}
-	ft_waitpid(tmp);
-	return (ret);
+	return (ft_waitpid(tmp), ret | g_data.status);
 }

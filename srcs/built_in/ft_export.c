@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/19 16:31:20 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 02:59:38 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_var	*ft_new_var_env(t_cmd *cmd, int i)
 	if (!var->name)
 		return (NULL);
 	if (is_valid_name(var->name) == 0)
-		return (cmd_error(var->name, ERRNO_5, 2, ft_putstr_fd), NULL);
+		return (exec_error(var->name, ERRNO_5, 2, ft_putstr_fd), NULL);
 	if (!ft_strcmp(var->name, cmd->param[i]))
 		++i;
 	var->value = split_value(cmd, i);

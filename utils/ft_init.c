@@ -1,16 +1,22 @@
-/*************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/11 03:35:24 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/13 19:40:27 by ccouliba         ###   ########.fr       */
+/*   Created: 2023/01/20 03:34:51 by ccouliba          #+#    #+#             */
+/*   Updated: 2023/01/20 03:34:53 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	init_sigflag(void)
+{
+	g_data.sigint = 0;
+	g_data.sigquit = 0;
+}
 
 t_data	init_global(void)
 {
@@ -26,8 +32,20 @@ t_data	init_global(void)
 	return (g_data);
 }
 
-void	init_sigflag(void)
+void	ft_init_builtin(t_builtin *builtin)
 {
-	g_data.sigint = 0;
-	g_data.sigquit = 0;
+	builtin[0].key = "echo";
+	builtin[0].f = ft_echo;
+	builtin[1].key = "env";
+	builtin[1].f = ft_env;
+	builtin[2].key = "pwd";
+	builtin[2].f = ft_pwd;
+	builtin[3].key = "cd";
+	builtin[3].f = ft_cd;
+	builtin[4].key = "unset";
+	builtin[4].f = ft_unset;
+	builtin[5].key = "export";
+	builtin[5].f = ft_export;
+	builtin[6].key = "exit";
+	builtin[6].f = ft_exit;
 }

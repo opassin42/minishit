@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:47 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/19 23:22:59 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 03:52:47 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,13 @@ typedef enum s_type
 	WORD
 }				t_type;
 
+typedef struct s_rd
+{
+	int				flag;
+	char			*file;
+	struct s_rd		*next;
+}				t_rd;
+
 typedef struct s_list
 {
 	int				exp_flag;
@@ -71,19 +78,20 @@ typedef struct s_cmd
 {
 	int				id;
 	int				pid;
-	int				status;
+	// int				status;
 	int				ret;
 	int				fd[2];
 	int				hdoc;
 	int				append;
 	char			*outfile;
 	char			*infile;
-	char			*delim;
+	// char			*delim;
 	char			*name;
 	char			**param;
 	char			**arg;
 	char			*bin;
-	char			**heredoc;
+	// char			**heredoc;
+	t_rd			*rd;
 	struct s_cmd	*next;
 }				t_cmd;
 

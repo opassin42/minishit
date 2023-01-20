@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 04:45:05 by ccouliba          #+#    #+#             */
-/*   Updated: 2022/12/30 19:35:33 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 03:29:49 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_alnum_underscore(int c)
 {
 	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')
-		|| (c >= '0' && c <= '9') || c == '_')
+		|| (c >= '0' && c <= '9') || c == '_' || c == '?')
 		return (EXIT_SUCCESS);
 	return (EXIT_FAILURE);
 }
@@ -52,7 +52,7 @@ void	expand_quote_flag(t_list *token)
 	token->exp_flag = 0;
 	if (ft_strchr(s, '$') && *(s + 1))
 	{
-		if (!check_quotes(s, '\''))
+		if (!check_quotes(s, '\'') && !ft_alnum_underscore(*(s + 1)))
 			token->exp_flag = 1;
 	}
 	if (check_quotes(s, '"') || check_quotes(s, '\''))

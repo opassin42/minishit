@@ -6,13 +6,13 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:21:28 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 01:52:13 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 07:08:41 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	cmd_error(char *token, char *err_msg, int fd, void (*f)())
+void	exec_error(char *token, char *err_msg, int fd, void (*f)())
 {
 	f("minishell: ", fd);
 	f(token, fd);
