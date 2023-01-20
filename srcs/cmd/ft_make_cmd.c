@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 17:55:21 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 05:36:41 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 09:42:39 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	init_struct(t_cmd *cmd, char *key)
 	cmd->id = 0;
 	cmd->pid = 0;
 	cmd->ret = 0;
+	// cmd->ret = 1;
 	cmd->fd[0] = 0;
 	cmd->fd[1] = 1;
 	cmd->append = 0;

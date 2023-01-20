@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:35:41 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 07:18:28 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 09:43:49 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	p_father(t_cmd *cmd)
 	close(cmd->fd[1]);
 	if (g_data.prev != -1)
 		close(g_data.prev);
-	// g_data.prev = cmd->fd[0];
-	g_data.prev = cmd->ret;
+	g_data.prev = cmd->fd[0];
 	return ;
 }
 

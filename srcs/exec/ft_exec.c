@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 07:08:05 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 09:45:31 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,10 @@ static char	*binary_file(t_cmd *cmd, char **path)
 	return (cmd->bin);
 }
 
-/*
-** Flag existing means there is another char 
-*/
 void	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path, int i)
 {
 	(void)envp;
+	(void)path;
 	if (!path)
 		ft_exit(envp, cmd);
 	cmd->bin = binary_file(cmd, path);

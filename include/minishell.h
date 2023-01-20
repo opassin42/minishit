@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 06:29:05 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 09:11:13 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,5 +206,6 @@ int		ft_cmdsize(t_list *cmd);
 
 void	init_rd_struct(t_cmd *cmd, t_list *token);
 void	open_files(t_cmd *cmd);
+int		check_access(t_env *envp, t_cmd *cmd, char **path);
 
 #endif
