@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 17:55:21 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/17 18:39:07 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 01:09:26 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	init_struct(t_cmd *cmd, char *key)
 	cmd->append = 0;
 	cmd->infile = NULL;
 	cmd->outfile = NULL;
-	cmd->delim = NULL;
+	cmd->delim = NULL;printf("%i\n", __LINE__);
 	cmd->name = key;
 	cmd->param = (char **) NULL;
 	cmd->arg = (char **) NULL;

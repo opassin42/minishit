@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/19 18:04:46 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/19 23:13:45 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,7 @@ void	parent_handler(int sig);
 /******************************************************************************/
 void	ft_pipe(t_env *envp, t_cmd *cmd, int i);
 void	p_father(t_cmd *cmd);
+void	p_child(t_env *envp, t_cmd *cmd, int i);
 int		count_pipe(t_cmd *cmd);
 int		ft_cmdsize(t_list *cmd);
 

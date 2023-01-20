@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/19 19:22:22 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 01:15:44 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ t_data	g_data;
 
 static void	textgenerator(void)
 {
-	printf(BHBLU"\n\n\n ____ ____ ____ ____ ____ ____ ____ ____ \n"reset);
-	printf(BHBLU"||  |||  |||  |||  |||  |||  |||  |||  || \n"reset);
-	printf(BHGRN"||M |||I |||N |||I ||| S||| H||| I||| T|| \n"reset);
-	printf(BHYEL"||__|||__|||__|||__|||__|||__|||__|||__|| \n"reset);
-	printf(BHRED"|/__\\|/__\\|/__\\|/__\\|/__\\|/__\\|/__\\|/__\\| \n\n\n"reset);
+	printf(BHBLU"\n\n\n ____ ____ ____ ____ ____ ____ ____ ____ \n"RESET);
+	printf(BHBLU"||  |||  |||  |||  |||  |||  |||  |||  || \n"RESET);
+	printf(BHGRN"||M |||I |||N |||I ||| S||| H||| I||| T|| \n"RESET);
+	printf(BHYEL"||__|||__|||__|||__|||__|||__|||__|||__|| \n"RESET);
+	printf(BHRED"|/__\\|/__\\|/__\\|/__\\|/__\\|/__\\|/__\\|/__\\| \n\n\n"RESET);
 }
 
 static char	*ft_shellname(void)
@@ -33,7 +33,7 @@ static char	*ft_shellname(void)
 	tmp = ft_strjoin(GRNB"\33[1;35m", tmp);
 	if (!tmp)
 		return (NULL);
-	tmp = ft_strjoin(tmp, "\33[5;35m🔥\033[m\n\033[1;5;34;0m ↳ \033[0m"reset);
+	tmp = ft_strjoin(tmp, "\33[5;35m🔥\033[m\n\033[1;5;34;0m ↳ \033[0m"RESET);
 	if (!tmp)
 		return (NULL);
 	return (tmp);

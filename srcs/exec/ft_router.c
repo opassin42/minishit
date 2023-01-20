@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:49:33 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/19 20:57:48 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 01:15:25 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,12 @@ static char	**path_in_env(t_env *envp, char *var_name)
 
 int	ft_router(t_env *envp, t_cmd *cmd, int i)
 {
-	int			id;
 	char		**path;
 	t_builtin	builtin[7];
 
 	ft_init_builtin(builtin);
-	id = which_builtin(builtin, cmd);
-	if (id == -1 || (count_pipe(cmd) > 1))
+	cmd->id = which_builtin(builtin, cmd);
+	if (cmd->id == -1 || (count_pipe(cmd) > 1))
 	{
 		if (pipe(cmd->fd) < 0)
 			return (perror("minishell: pipe:"), errno);
@@ -86,7 +85,7 @@ int	ft_router(t_env *envp, t_cmd *cmd, int i)
 			return (perror("minishell: fork:"), errno);
 		if (cmd->pid == 0)
 		{
-			if (id == -1)
+			if (cmd->id == -1)
 			{
 				path = path_in_env(envp, "PATH");
 				if (!path)
@@ -94,14 +93,13 @@ int	ft_router(t_env *envp, t_cmd *cmd, int i)
 				ft_non_builtin(envp, cmd, path, i);
 			}
 			else
-				exec_builtin(envp, cmd, builtin, id);
-			printf("router/status = %d\n", g_data.status);
+				exec_builtin(envp, cmd, builtin, cmd->id);
 			ft_exit(envp, cmd);
 		}
 		else
 			p_father(cmd);
 	}
-	else if (count_pipe(cmd) == 1)
-		exec_builtin(envp, cmd, builtin, id);
+	else if (g_data.max == 1)
+		exec_builtin(envp, cmd, builtin, cmd->id);
 	return (g_data.status);
 }

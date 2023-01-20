@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:47 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/14 19:00:14 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/19 23:22:59 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_data
 	pid_t			pid;
 	volatile int	keeprunning;
 	t_gc			*gc;
+	int				max;
 	char			*prompt;
 }				t_data;
 

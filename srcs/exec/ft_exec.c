@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/19 21:32:05 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 01:14:48 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,36 +79,30 @@ void	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path, int i)
 	cmd->bin = binary_file(cmd, path);
 	if (check_cmd(cmd->name))
 	{
-		g_data.status = 127;
+		close(cmd->fd[0]);
+		close(cmd->fd[1]);
 		cmd_error(cmd->name, ERRNO_3, 2, ft_putstr_fd);
-		ft_exit(envp, cmd);
 	}
 	else if (!cmd->bin || access(cmd->bin, F_OK | R_OK | X_OK) != 0)
 	{
 		g_data.status = 127;
+		close(cmd->fd[0]);
+		close(cmd->fd[1]);
 		cmd_error(cmd->name, ERRNO_2, 2, ft_putstr_fd);
-		ft_exit(envp, cmd);
 	}
-	// if (cmd->next)
-	ft_pipe(envp, cmd, i);
-	ft_exit(envp, cmd);
+	p_child(envp, cmd, i);
 }
 
-/*
-** I have to change SHLVL->value
-** Each time i go into another minishell instance
-** 
-** Something like :
-** If (!ft_strcmp(cmd->name, "./minishell"))check_cmd(cmd)
-** 		->find_in_env(envp, "SHLVL", change_shlvl);
-*/
 int	ft_exec(t_env *envp, t_cmd *cmd)
 {
-	int	ret;
-	int	i;
+	int		i;
+	int		ret;
+	t_cmd	*temp;
 
-	ret = 0;
 	i = 0;
+	ret = 0;
+	temp = cmd;
+	g_data.max = count_pipe(cmd) + 1;
 	while (cmd)
 	{
 		if (cmd->ret == -1)
@@ -117,5 +111,14 @@ int	ft_exec(t_env *envp, t_cmd *cmd)
 		cmd = cmd->next;
 		++i;
 	}
+	if (temp->id == -1)
+		close(temp->fd[0]);
+	while (temp)
+	{
+		if (waitpid(temp->pid, &g_data.status, 0))
+			g_data.status = WEXITSTATUS(g_data.status);
+		temp = temp->next;
+	}
+	g_data.prev = -1;
 	return (ret);
 }
