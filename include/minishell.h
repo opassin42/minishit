@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/19 23:13:45 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 01:21:02 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,10 @@ int		ft_export(t_env *envp, t_cmd *cmd);
 void	ft_export_env(t_var *var);
 
 /* Exec */
+void	*ft_cmd(t_list **token);
 void	*make_cmd(t_list *token);
 void	*first_cmd(t_list **token);
 int		check_cmd(char *s);
-void	*ft_cmd(t_list **token);
 
 t_cmd	*ft_new_cmd(t_list *token);
 t_cmd	*ft_last_cmd(t_cmd *cmd);
@@ -129,9 +129,10 @@ void	ft_cmd_addback(t_cmd **cmd, t_cmd *new_cmd);
 void	*join_token(t_list *token);
 char	**ft_malloc_double_p(t_list *token);
 
+int		ft_exec(t_env *envp, t_cmd *cmd);
 void	ft_non_builtin(t_env *envp, t_cmd *cmd, char **path, int i);
 int		ft_router(t_env *envp, t_cmd *cmd, int i);
-int		ft_exec(t_env *envp, t_cmd *cmd);
+void	ft_waitpid(t_cmd *cmd);
 
 void	input_without_cmd(t_list **token);
 void	init_rd(t_cmd *cmd, t_list *token);

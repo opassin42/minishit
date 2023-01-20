@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:49:33 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 01:15:25 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 01:52:19 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,17 @@ int	ft_router(t_env *envp, t_cmd *cmd, int i)
 	else if (g_data.max == 1)
 		exec_builtin(envp, cmd, builtin, cmd->id);
 	return (g_data.status);
+}
+
+void	ft_waitpid(t_cmd *cmd)
+{
+	if (cmd->id == -1)
+		close(cmd->fd[0]);
+	while (cmd)
+	{
+		if (waitpid(cmd->pid, &g_data.status, 0))
+			g_data.status = WEXITSTATUS(g_data.status);
+		cmd = cmd->next;
+	}
+	g_data.prev = -1;
 }

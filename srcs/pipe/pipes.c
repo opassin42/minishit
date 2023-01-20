@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:35:41 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 01:10:43 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 01:52:06 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,6 @@ void	p_father(t_cmd *cmd)
 	// 	g_data.status = WEXITSTATUS(g_data.status);
 	return ;
 }
-
-/*
-< Makefile 	cat > out >> out2
-3	content		1 out 2 out2	
-*/
-
 
 void	p_child(t_env *envp, t_cmd *cmd, int i)
 {

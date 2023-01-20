@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 01:14:48 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/20 01:52:47 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ int	ft_exec(t_env *envp, t_cmd *cmd)
 {
 	int		i;
 	int		ret;
-	t_cmd	*temp;
+	t_cmd	*tmp;
 
 	i = 0;
 	ret = 0;
-	temp = cmd;
+	tmp = cmd;
 	g_data.max = count_pipe(cmd) + 1;
 	while (cmd)
 	{
@@ -111,14 +111,6 @@ int	ft_exec(t_env *envp, t_cmd *cmd)
 		cmd = cmd->next;
 		++i;
 	}
-	if (temp->id == -1)
-		close(temp->fd[0]);
-	while (temp)
-	{
-		if (waitpid(temp->pid, &g_data.status, 0))
-			g_data.status = WEXITSTATUS(g_data.status);
-		temp = temp->next;
-	}
-	g_data.prev = -1;
+	ft_waitpid(tmp);
 	return (ret);
 }
