@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:52 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/19 22:47:07 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/21 03:16:38 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,9 @@
 */
 # define ERRNO_1 "syntax error near unexpected token"
 # define ERRNO_2 "command not found"
-# define ERRNO_3 "no such file or directory"
-# define ERRNO_4 "permission denied"
-# define ERRNO_5 "not a valid identifier"
-# define ERRNO_ENV "There is no printable environment"
-
-# define MISSING_ENV "No env ; Cannot export variable.\n"
+# define ERRNO_3 "No such file or directory"
+# define ERRNO_4 "Permission denied"
+# define ERRNO_5 "Not a valid identifier"
 
 /*
 ** ANSI COLORS

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:35:41 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 23:55:40 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/21 04:55:08 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,9 @@ void	p_child(t_env *envp, t_cmd *cmd)
 		dup2(g_data.prev, STDIN_FILENO);
 		close(g_data.prev);
 	}
-	close(g_data.pfd[0]);
+	open_files(cmd);
 	close(g_data.pfd[1]);
+	close(g_data.pfd[0]);
 	if (cmd->id == -1)
 		if (execve(cmd->bin, cmd->arg, envp->tab) == -1)
 			exit(g_data.status = errno);

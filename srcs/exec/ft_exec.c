@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 23:54:25 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/21 05:10:17 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,15 @@ int	ft_process(t_env *envp, t_cmd *cmd)
 
 int	ft_exec(t_env *envp, t_cmd *cmd)
 {
+	int		status;
 	t_cmd	*tmp;
 
 	tmp = cmd;
 	g_data.cmdsize = ft_cmdsize(cmd);
 	while (cmd)
 	{
-		if (cmd->ret == -1)
-			return (EXIT_FAILURE);
-		g_data.status = ft_process(envp, cmd);
+		status = ft_process(envp, cmd);
 		cmd = cmd->next;
 	}
-	return (ft_waitpid(tmp), g_data.status);
+	return (ft_waitpid(tmp), status | g_data.status);
 }

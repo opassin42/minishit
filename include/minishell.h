@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 23:52:54 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/21 04:02:54 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,12 +134,12 @@ char	**ft_malloc_double_p(t_list *token);
 int		ft_exec(t_env *envp, t_cmd *cmd);
 int		ft_process(t_env *envp, t_cmd *cmd);
 void	router(t_env *envp, t_cmd *cmd, t_builtin *builtin);
-int     which_builtin(t_builtin *builtin, t_cmd *cmd);
+int		which_builtin(t_builtin *builtin, t_cmd *cmd);
 void	exec_builtin(t_env *envp, t_cmd *cmd, t_builtin *builtin);
 void	exec_non_builtin(t_env *envp, t_cmd *cmd);
 char	*binary_file(t_cmd *cmd, char **path);
 
-void	input_without_cmd(t_list **token);
+int		input_without_cmd(t_list **token);
 void	init_rd(t_cmd *cmd, t_list *token);
 
 /******************************************************************************/
