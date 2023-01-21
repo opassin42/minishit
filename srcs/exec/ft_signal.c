@@ -14,13 +14,13 @@
 
 void	child_handler(int sig)
 {
-	if (sig == SIGQUIT)
-		ft_putstr_fd("\b\b \b\b", 2);
+	if (sig == SIGQUIT){
+		ft_putstr_fd("Quit: (core dumped)\n", 2);
+	}
 	else if (sig == SIGINT)
 	{
 		ft_putstr_fd("\n", 1);
 		g_data.status = 130;
-		// g_data.sigint = 1;
 		g_data.keeprunning = 1;
 	}
 }
@@ -31,16 +31,15 @@ void	parent_handler(int sig)
 	{
 		g_data.status = 131;
 		g_data.keeprunning = 1;
-		fprintf(stderr, "child_pid: %i & parent_id: %i\n", getpid(), getppid());
 		if (getpid() == getppid()) 
 		{
-            printf("Quit: (core dumped)\n");
-			exit(g_data.status);
+			printf("Quit: (core dumped)\n");
+			exit(printf("Quit: (core dumped)\n"));
 		}
 		else 
 		{
-			signal(SIGQUIT, SIG_IGN);             
-        }
+			signal(SIGQUIT, SIG_IGN);
+		}
 	}
 	else if (sig == SIGINT)
 	{
