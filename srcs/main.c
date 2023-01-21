@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 04:04:03 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/21 04:03:31 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/21 12:47:44 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	main(int ac, char **av, char **env)
 	while (g_data.keeprunning)
 	{
 		signal(SIGINT, parent_handler);
-		signal(SIGQUIT, parent_handler);
+		signal(SIGQUIT, SIG_IGN);
 		g_data.status = ft_readline(envp, s);
 		if (g_data.status == -420)
 			break ;

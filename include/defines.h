@@ -6,21 +6,12 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:52 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/21 03:16:38 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/21 14:00:21 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINES_H
 # define DEFINES_H
-
-# define STDIN 0
-# define STDOUT 1
-
-# define PROMPT "$> "
-
-# define FAIL -1
-# define SUCCESS 0
-# define EXIT "exit"
 
 /*
 ** List of tokenizable
@@ -41,8 +32,6 @@
 # define ERRNO_6 "No such file or directory"
 # define ERRNO_7 "too many arguments"
 # define ERRNO_8 "numeric argument required"
-# define ERRNO_ENV "There is no printable environment"
-# define MISSING_ENV "No env ; Cannot export variable.\n"
 
 /*
 ** ANSI COLORS

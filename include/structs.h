@@ -6,12 +6,20 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:47 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 20:30:04 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/21 13:58:20 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
+
+typedef enum s_type
+{
+	PIPE,
+	RD,
+	VOID,
+	WORD
+}				t_type;
 
 typedef struct s_gc
 {
@@ -31,14 +39,6 @@ typedef struct s_data
 	t_gc			*gc;
 	volatile int	keeprunning;
 }				t_data;
-
-typedef enum s_type
-{
-	PIPE,
-	RD,
-	VOID,
-	WORD
-}				t_type;
 
 typedef struct s_rd
 {
@@ -92,12 +92,6 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }				t_cmd;
 
-typedef struct s_builtin
-{
-	char			*key;
-	int				(*f)();
-}				t_builtin;
-
 typedef struct s_upvarenv
 {
 	char	*oldpwd;
@@ -105,6 +99,12 @@ typedef struct s_upvarenv
 	char	*tmp;
 	char	*path;
 }				t_upvarenv;
+
+typedef struct s_builtin
+{
+	char			*key;
+	int				(*f)();
+}				t_builtin;
 
 typedef int(*t_syntaxer[4])(t_list *);
 typedef int(*t_exec[7])(t_env *, t_cmd *);

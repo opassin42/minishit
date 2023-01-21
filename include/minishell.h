@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 01:39:55 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/21 04:02:54 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/21 13:37:30 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ extern t_data	g_data;
 /******************************************************************************/
 /**********************************  INITS  ***********************************/
 /******************************************************************************/
-void	init_sigflag(void);
 t_data	init_global(void);
 void	init_builtin(t_builtin *builtin);
 
@@ -80,15 +79,15 @@ char	*remove_quotes(t_list *token);
 /******************************************************************************/
 /***********************************  ENV  ************************************/
 /******************************************************************************/
-char	*get_in_env(t_env *envp, char *name);
 void	up_in_env(t_env *envp, char *var_name, char *s);
+char	*get_in_env(t_env *envp, char *name);
 t_env	*ft_getenv(char **env);
 
-char	**when_no_env(void);
+void	ft_var_addback(t_var **var, t_var *new_var);
 char	*ft_var_name(char *s);
 t_var	*ft_new_var(t_list *token);
 t_var	*ft_last_var(t_var *var);
-void	ft_var_addback(t_var **var, t_var *new_var);
+char	**when_no_env(void);
 
 /******************************************************************************/
 /*********************************  BUILT_IN  *********************************/
@@ -132,15 +131,14 @@ void	*join_token(t_list *token);
 char	**ft_malloc_double_p(t_list *token);
 
 int		ft_exec(t_env *envp, t_cmd *cmd);
-int		ft_process(t_env *envp, t_cmd *cmd);
 void	router(t_env *envp, t_cmd *cmd, t_builtin *builtin);
 int		which_builtin(t_builtin *builtin, t_cmd *cmd);
 void	exec_builtin(t_env *envp, t_cmd *cmd, t_builtin *builtin);
-void	exec_non_builtin(t_env *envp, t_cmd *cmd);
 char	*binary_file(t_cmd *cmd, char **path);
 
 int		input_without_cmd(t_list **token);
 void	init_rd(t_cmd *cmd, t_list *token);
+void	open_files(t_cmd *cmd);
 
 /******************************************************************************/
 /**********************************  UTILS  ***********************************/
@@ -153,7 +151,7 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 
 /* Char_is utils */
-int     ft_atoi(const char *s);
+int		ft_atoi(const char *s);
 char	*ft_itoa(int n);
 int		ft_is_digit(int c);
 int		ft_isalnum(int a);
@@ -180,7 +178,6 @@ void	print_token(t_list *token);
 void	ft_print_env(t_var *var);
 void	ft_free_token(t_list **token, void (*clr)(void*));
 void	ft_add_history(void *s);
-void	*ft_void_skipper(t_list **token);
 void	*push_top(t_gc **head, size_t data_size);
 void	printlist(t_gc	*node);
 void	gc_free(void);
@@ -196,22 +193,15 @@ void	exec_error(char *token, char *err_msg, int fd, void (*f)());
 /******************************************************************************/
 /**********************************  SIGNALS  *********************************/
 /******************************************************************************/
-
 void	child_handler(int sig);
 void	parent_handler(int sig);
 
 /******************************************************************************/
 /**********************************  PIPES    *********************************/
 /******************************************************************************/
-int		count_pipe(t_cmd *cmd);
 void	p_father(t_cmd *cmd);
 void	p_child(t_env *envp, t_cmd *cmd);
 void	ft_waitpid(t_cmd *cmd);
 int		ft_cmdsize(t_cmd *cmd);
-
-
-void	init_rd_struct(t_cmd *cmd, t_list *token);
-void	open_files(t_cmd *cmd);
-int		check_access(t_env *envp, t_cmd *cmd, char **path);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:35:41 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/21 12:16:17 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/21 13:11:32 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ void	ft_waitpid(t_cmd *cmd)
 	while (cmd)
 	{
 		waitpid(cmd->pid, &g_data.status, 0);
-		g_data.status = WEXITSTATUS(g_data.status);
+		if (WEXITSTATUS(g_data.status))
+			g_data.status = WEXITSTATUS(g_data.status);
+		else if (WSTOPSIG(g_data.status))
+			g_data.status = WSTOPSIG(g_data.status);
 		cmd = cmd->next;
 	}
 	g_data.prev = -1;

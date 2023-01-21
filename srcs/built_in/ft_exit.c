@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 04:42:05 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/19 21:31:10 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/21 13:57:23 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	is_nb(char *s)
 	i = -1;
 	if (s[0] == '-')
 		i++;
-	while(s[++i])
+	while (s[++i])
 		if (s[i] < 48 || s[i] > 57)
 			return (0);
 	return (1);
@@ -33,16 +33,12 @@ int	ft_exit(t_env *envp, t_cmd *cmd)
 		if (cmd->param[1] || !is_nb(cmd->param[0]))
 		{
 			if (is_nb(cmd->param[0]) == 0)
-			{
-				g_data.status = 2;
-				// printf("minishell: %s: %s\n", cmd->name, ERRNO_7);
-				return(exit(g_data.status), g_data.status);
-
-			}
+				return (printf("exit\n"), g_data.status = 2,
+					exec_error(cmd->name, ERRNO_8, 2, ft_putstr_fd), 2);
 			else
 			{
-				g_data.status = 1;
-				return(printf("minishell: %s: %s\n", cmd->name, ERRNO_7), g_data.status);
+				printf("exit\nminishell: %s: %s\n", cmd->name, ERRNO_7);
+				return (g_data.status = 1);
 			}
 		}
 		else
@@ -54,6 +50,5 @@ int	ft_exit(t_env *envp, t_cmd *cmd)
 		g_data.status %= 256;
 		g_data.status = 256 - g_data.status;
 	}
-	gc_free();
-	return(exit(g_data.status), g_data.status);
+	return (gc_free(), exit(g_data.status), g_data.status);
 }

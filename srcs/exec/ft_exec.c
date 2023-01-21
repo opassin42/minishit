@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:48:13 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/21 08:42:57 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/21 13:26:30 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	set_builtin_id(t_cmd *cmd, t_builtin *builtin)
 	return ;
 }
 
-int	ft_process(t_env *envp, t_cmd *cmd)
+static int	ft_process(t_env *envp, t_cmd *cmd)
 {
 	t_builtin	builtin[7];
 
@@ -56,9 +56,11 @@ int	ft_exec(t_env *envp, t_cmd *cmd)
 		status = ft_process(envp, cmd);
 		cmd = cmd->next;
 	}
-				close(g_data.pfd[0]);
+	if (g_data.pfd[0] != -1)
+		close(g_data.pfd[0]);
+	if (g_data.pfd[1] != -1)
 		close(g_data.pfd[1]);
+	if (g_data.prev != -1)
 		close (g_data.prev);
-
 	return (ft_waitpid(tmp), status | g_data.status);
 }
