@@ -38,10 +38,10 @@
 # define ERRNO_3 "No such file or directory"
 # define ERRNO_4 "Permission denied"
 # define ERRNO_5 "Not a valid identifier"
+# define ERRNO_6 "No such file or directory"
 # define ERRNO_7 "too many arguments"
 # define ERRNO_8 "numeric argument required"
 # define ERRNO_ENV "There is no printable environment"
-
 # define MISSING_ENV "No env ; Cannot export variable.\n"
 
 /*

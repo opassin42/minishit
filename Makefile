@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2023/01/21 05:24:15 by ccouliba         ###   ########.fr        #
+#    Updated: 2023/01/21 12:14:21 by ccouliba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,11 +63,10 @@ SRCS =	srcs/main.c \
 		utils/ft_garbage_collector.c
 		
 OBJS = $(SRCS:.c=.o)
-# OBJS_D := $(addprefix $(OBJS_D), $(OBJS))
 
 all: $(NAME)
 
-$(NAME): $(OBJS) #$(OBJS_D)
+$(NAME): $(OBJS)
 		@echo "[$(_BLUE)!$(_END)] Rules :\t[$(_BLUE)all$(_END)] [$(_BLUE)clean$(_END)] [$(_BLUE)fclean$(_END)] [$(_BLUE)re$(_END)] [$(_BLUE)leak$(_END)] [$(_BLUE)debug$(_END)]"
 		@echo -n "\n"
 		$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lreadline
@@ -78,13 +77,10 @@ $(NAME): $(OBJS) #$(OBJS_D)
 
 %o: %.c
 	$(CC) $(FLAGS) -o $@ -c $<
-# mkdir -p $(OBJS_D)
 
 clean:
 	@rm -f $(OBJS)
 	@echo "[$(_RED)!$(_END)] Removing objects ...  [$(_GREEN)SUCCESS$(_END)]"
-# rm -f $(OBJS_D)
-# rm -f *.o
 
 fclean: clean
 	@rm -f $(NAME)
@@ -94,9 +90,7 @@ re: fclean all
 
 leak: re
 	@echo "\t\t\t\t\t$(_BG_CYAN)LEAK TEST$(_END) (valgrind)"
-	valgrind --suppressions=.leaks.txt --track-fds=yes ./$(NAME)
-# @valgrind --suppressions=.leaks.txt --leak-check=full --track-fds=yes --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
-# --trace-children=yes --quiet --track-fds=yes : For checking lefting opened fd -> carefull about this
+	@valgrind --suppressions=.leaks.txt --track-fds=yes ./$(NAME)
 
 debug : fclean
 	@echo "\t\t\t\t\t$(_BG_CYAN)BUGS SCAN$(_END)"

@@ -32,10 +32,12 @@ int	ft_exit(t_env *envp, t_cmd *cmd)
 	{
 		if (cmd->param[1] || !is_nb(cmd->param[0]))
 		{
-			if (!is_nb(cmd->param[0]))
+			if (is_nb(cmd->param[0]) == 0)
 			{
 				g_data.status = 2;
-				exec_error(cmd->name, ERRNO_8, 2, ft_putstr_fd);
+				// printf("minishell: %s: %s\n", cmd->name, ERRNO_7);
+				return(exit(g_data.status), g_data.status);
+
 			}
 			else
 			{

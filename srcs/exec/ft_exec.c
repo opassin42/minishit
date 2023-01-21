@@ -56,5 +56,9 @@ int	ft_exec(t_env *envp, t_cmd *cmd)
 		status = ft_process(envp, cmd);
 		cmd = cmd->next;
 	}
+				close(g_data.pfd[0]);
+		close(g_data.pfd[1]);
+		close (g_data.prev);
+
 	return (ft_waitpid(tmp), status | g_data.status);
 }
