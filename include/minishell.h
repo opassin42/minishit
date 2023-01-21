@@ -153,6 +153,7 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 
 /* Char_is utils */
+int     ft_atoi(const char *s);
 char	*ft_itoa(int n);
 int		ft_is_digit(int c);
 int		ft_isalnum(int a);
