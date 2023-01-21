@@ -6,7 +6,7 @@
 #    By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/12 20:03:20 by ccouliba          #+#    #+#              #
-#    Updated: 2023/01/21 13:02:23 by ccouliba         ###   ########.fr        #
+#    Updated: 2023/01/21 14:23:03 by opassin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,6 @@ NAME = minishell
 CC = @gcc
 
 CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
-
-OBJS_D	= objs/
 
 include .color_code.txt
 
