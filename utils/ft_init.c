@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 03:34:51 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/20 22:33:27 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/21 06:55:53 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_data	init_global(void)
 
 	g_data.cmdsize = 0;
 	g_data.status = 0;
-	g_data.rd_error = 0;
 	g_data.prev = -1;
 	g_data.pfd[0] = -1;
 	g_data.pfd[1] = -1;

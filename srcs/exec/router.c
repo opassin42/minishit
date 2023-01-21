@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 18:24:05 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/21 05:15:16 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/21 08:41:08 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,17 @@ int	which_builtin(t_builtin *builtin, t_cmd *cmd)
 
 void	exec_builtin(t_env *envp, t_cmd *cmd, t_builtin *builtin)
 {
-	printf("cmd->fd[1] = %d\n", cmd->fd[1]);
-	open_files(cmd);
-	if (g_data.pfd[1] != -1)
-		close(g_data.pfd[1]);
-	if (g_data.pfd[0] != -1)
+	if (g_data.cmdsize > 1 && cmd->i < g_data.cmdsize - 1)
+	{
+		dup2(g_data.pfd[0], STDIN_FILENO);
 		close(g_data.pfd[0]);
+		dup2(g_data.pfd[1], STDOUT_FILENO);
+		close(g_data.pfd[1]);
+	}
+	p_child(envp, cmd);
 	g_data.status = builtin[cmd->id].f(envp, cmd);
-	if (g_data.cmdsize > 1 || cmd->i < g_data.cmdsize - 1)
-		p_child(envp, cmd);
+	// if (g_data.cmdsize > 1)
+	// 	exit(g_data.status);
 	return ;
 }
 

@@ -6,7 +6,7 @@
 /*   By: ccouliba <ccouliba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 05:04:34 by ccouliba          #+#    #+#             */
-/*   Updated: 2023/01/21 05:10:34 by ccouliba         ###   ########.fr       */
+/*   Updated: 2023/01/21 08:43:16 by ccouliba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,18 @@ static void	open_cmd_fd(t_cmd *cmd, t_rd *rd)
 {
 	if (rd->flag == 1)
 		cmd->fd[1] = open(rd->file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	if (rd->flag == 2)
+	else if (rd->flag == 2)
 		cmd->fd[1] = open(rd->file, O_WRONLY | O_CREAT | O_APPEND, 0666);
-	if (rd->flag == 3)
+	else if (rd->flag == 3)
 		cmd->fd[0] = open(rd->file, O_RDONLY, 0666);
 	if (cmd->fd[1] == -1 || cmd->fd[0] == -1)
 	{
 		g_data.status = 1;
-		if (g_data.pfd[1] != -1)
-			close(g_data.pfd[1]);
-		if (g_data.pfd[0] != -1)
-			close(g_data.pfd[0]);
+		close(g_data.pfd[1]);
+		close(g_data.pfd[0]);
 		if (errno == 13)
 			exec_error(rd->file, ERRNO_4, 2, ft_putstr_fd);
-		else
-			exec_error(rd->file, ERRNO_3, 2, ft_putstr_fd);
+		exec_error(rd->file, ERRNO_3, 2, ft_putstr_fd);
 	}
 }
 
