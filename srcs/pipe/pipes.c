@@ -66,9 +66,10 @@ void	p_child(t_env *envp, t_cmd *cmd)
 	close(g_data.pfd[1]);
 	close(g_data.pfd[0]);
 	if (cmd->id == -1)
+	{
 		if (execve(cmd->bin, cmd->arg, envp->tab) == -1)
 			exit(g_data.status = errno);
-	exit(g_data.status = errno);
+	}
 }
 
 void	ft_waitpid(t_cmd *cmd)

@@ -45,15 +45,16 @@ int	which_builtin(t_builtin *builtin, t_cmd *cmd)
 
 void	exec_builtin(t_env *envp, t_cmd *cmd, t_builtin *builtin)
 {
-	printf("cmd->fd[1] = %d\n", cmd->fd[1]);
-	open_files(cmd);
-	if (g_data.pfd[1] != -1)
-		close(g_data.pfd[1]);
-	if (g_data.pfd[0] != -1)
-		close(g_data.pfd[0]);
-	g_data.status = builtin[cmd->id].f(envp, cmd);
-	if (g_data.cmdsize > 1 || cmd->i < g_data.cmdsize - 1)
+	int fdstd;
+			
+	if (g_data.cmdsize > 1 && cmd->i < g_data.cmdsize - 1)
 		p_child(envp, cmd);
+	fdstd = dup(STDOUT_FILENO);
+	if (g_data.cmdsize == 1 || cmd->i == (g_data.cmdsize - 1))
+		open_files(cmd);
+	g_data.status = builtin[cmd->id].f(envp, cmd);
+	dup2(fdstd, STDOUT_FILENO);
+	close(fdstd);
 	return ;
 }
 

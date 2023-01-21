@@ -39,59 +39,49 @@ int	input_without_cmd(t_list **token)
 	return (EXIT_SUCCESS);
 }
 
-static void	open_cmd_fd(t_cmd *cmd, t_rd *rd)
+void	print_lst(t_rd *rd)
 {
-	if (rd->flag == 1)
-		cmd->fd[1] = open(rd->file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	if (rd->flag == 2)
-		cmd->fd[1] = open(rd->file, O_WRONLY | O_CREAT | O_APPEND, 0666);
-	if (rd->flag == 3)
-		cmd->fd[0] = open(rd->file, O_RDONLY, 0666);
-	if (cmd->fd[1] == -1 || cmd->fd[0] == -1)
-	{
-		g_data.status = 1;
-		if (g_data.pfd[1] != -1)
-			close(g_data.pfd[1]);
-		if (g_data.pfd[0] != -1)
-			close(g_data.pfd[0]);
-		if (errno == 13)
-			exec_error(rd->file, ERRNO_4, 2, ft_putstr_fd);
-		else
-			exec_error(rd->file, ERRNO_3, 2, ft_putstr_fd);
-	}
-}
+	t_rd *temp;
 
-static void	duplicate_fd(t_cmd *cmd, t_rd *rd)
-{
-	if (rd->flag == 3)
+	temp = rd;
+	while(temp)
 	{
-		dup2(cmd->fd[0], STDIN_FILENO);
-		close(cmd->fd[0]);
-	}
-	else
-	{
-		dup2(cmd->fd[1], STDOUT_FILENO);
-		close(cmd->fd[1]);
+		fprintf(stderr, "%s %i\n", temp->file, temp->flag);
+		temp = temp->next;
 	}
 }
 
 void	open_files(t_cmd *cmd)
 {
+	int		fd;
 	t_rd	*rd;
 
 	rd = cmd->rd;
+	fd = -1;
 	while (rd)
 	{
-		open_cmd_fd(cmd, rd);
-		duplicate_fd(cmd, rd);
+		if (rd->flag == 1) // >
+			fd = open(rd->file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		if (rd->flag == 2) // >>
+			fd = open(rd->file, O_WRONLY | O_CREAT | O_APPEND, 0666);
+		if (rd->flag == 3) // < 
+			fd = open(rd->file, O_RDONLY);
+		if (fd == -1)
+		{
+			g_data.status = 1;
+			if (errno == 13)
+				printf("minishell: %s:: %s\n", cmd->name, ERRNO_4);
+			else
+				printf("minishell: %s:: %s\n", cmd->name, ERRNO_6);
+			close(g_data.pfd[1]);
+			close(g_data.pfd[0]);
+			exit(1);
+		}
+		if (rd->flag == 3)
+			dup2(fd, STDIN_FILENO);
+		if (rd->flag != 3)
+			dup2(fd, STDOUT_FILENO);
+		close(fd);
 		rd = rd->next;
 	}
 }
-
-/*
-// printf("open_files : cmd->name = %s | outfile = %s | cmd->fd[1] = %d | cmd->ret = %d\n", cmd->name, cmd->outfile, cmd->fd[1], cmd->ret);
-// printf("open_files : cmd->name = %s | outfile = %s | cmd->fd[1] = %d | cmd->ret = %d\n", cmd->name, cmd->outfile, cmd->fd[1], cmd->ret);
-// printf("open_files : cmd->name = %s | infile = %s | cmd->fd[0] = %d | cmd->ret = %d\n", cmd->name, cmd->infile, cmd->fd[0], cmd->ret);
-// printf("open_files : cmd->name = %s | infile = %s | cmd->fd[0] = %d | cmd->ret = %d\n", cmd->name, cmd->infile, cmd->fd[0], cmd->ret);
-*/
-

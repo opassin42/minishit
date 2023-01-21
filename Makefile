@@ -94,7 +94,7 @@ re: fclean all
 
 leak: re
 	@echo "\t\t\t\t\t$(_BG_CYAN)LEAK TEST$(_END) (valgrind)"
-	valgrind --suppressions=.leaks.txt ./$(NAME)
+	valgrind --suppressions=.leaks.txt --leak-check=full --track-fds=yes ./$(NAME)
 # @valgrind --suppressions=.leaks.txt --leak-check=full --track-fds=yes --show-reachable=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
 # --trace-children=yes --quiet --track-fds=yes : For checking lefting opened fd -> carefull about this
 

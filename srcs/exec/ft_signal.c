@@ -29,9 +29,18 @@ void	parent_handler(int sig)
 {
 	if (sig == SIGQUIT)
 	{
-		ft_putstr_fd("Quit: (core dumped)\n", 2);
 		g_data.status = 131;
 		g_data.keeprunning = 1;
+		fprintf(stderr, "child_pid: %i & parent_id: %i\n", getpid(), getppid());
+		if (getpid() == getppid()) 
+		{
+            printf("Quit: (core dumped)\n");
+			exit(g_data.status);
+		}
+		else 
+		{
+			signal(SIGQUIT, SIG_IGN);             
+        }
 	}
 	else if (sig == SIGINT)
 	{

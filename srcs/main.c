@@ -101,7 +101,7 @@ int	main(int ac, char **av, char **env)
 	while (g_data.keeprunning)
 	{
 		signal(SIGINT, parent_handler);
-		signal(SIGQUIT, SIG_IGN);
+		signal(SIGQUIT, parent_handler);
 		g_data.status = ft_readline(envp, s);
 		if (g_data.status == -420)
 			break ;
